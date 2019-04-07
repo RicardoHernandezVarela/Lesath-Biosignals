@@ -1,0 +1,14 @@
+{% extends 'ecg/senbase.html' %}
+
+{% block title %}Nuevo registro{% endblock %}
+{% block link %}<a class="nav-link" href="{% url 'registros:señales' %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
+
+{% load static %}
+
+{% block search %}
+{% endblock %}
+        
+{% block content %}
+    <button class="bluetooth">Conectar e iniciar registro</button>
+    <script src="{% static 'ecg/js/conect.js' %}"></script>
+{% endblock %}

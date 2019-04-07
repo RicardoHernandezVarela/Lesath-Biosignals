@@ -1,0 +1,55 @@
+/* Layout */
+body {
+    margin-bottom: 60px; 
+    background-color:#EBEBF2;
+  }
+
+
+  /*Header*/
+
+.encabezado {
+    width: 100%;
+    margin: 0;
+    background-color: #3E64CE; 
+    border-bottom: 3px solid #9e9e9e; /*Color del borde del encabezado*/
+}
+
+.encabezado a, .encabezado button {
+    color: #EBEBF2;
+}
+
+.navbar-toggler span {
+    background-color: #EBEBF2;
+    color: black;
+}
+
+/*Contenido principal*/
+.principal {
+    margin-top: 70px;
+    width: 95%;
+    border: 1px solid #9e9e9e;
+    border-radius: 15px;
+    font-size: 0.80em;
+}
+
+.nombre {
+    text-decoration: none;
+    color: black;
+}
+
+  /*Vista para tablet*/
+  @media screen and (min-width: 600px) {
+    .principal {
+        width: 85%;
+        margin-top: 10%;
+        font-size: 0.90em;
+    }
+
+    /*Vista para escritorio*/
+@media screen and (min-width: 800px) {
+    .principal {
+        width: 88%;
+        margin-top: 7%;
+        font-size: 1em;
+    }
+}

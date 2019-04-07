@@ -1,0 +1,50 @@
+{% extends 'ecg/senbase.html' %}
+
+{% block title %}Registros{% endblock %}
+{% block link %}<a class="nav-link" href="{% url 'registros:nueva' %}">Nuevo registro<span class="sr-only">(current)</span></a>{% endblock %}
+
+{% block search %}
+    <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+{% endblock %}
+
+{% block content %}
+<main role="main" class="container principal">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Bioseñal</th>
+            <th scope="col">Fecha de registro</th>
+            <th scope="col">Muestras</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <th scope="row">1</th>
+                <td><a class="nombre" href="#">Marco</a></td>
+                <td><span class="badge badge-pill badge-danger">ECG</span></td>
+                <td></td>
+                <td>500</td>
+            </tr>
+            <tr>
+            <th scope="row">2</th>
+                <td>Mónica</td>
+                <td><span class="badge badge-pill badge-primary">EMG</span></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+            <th scope="row">3</th>
+                <td>Ricardo</td>
+                <td><span class="badge badge-pill badge-danger">ECG</span></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+{% endblock %}

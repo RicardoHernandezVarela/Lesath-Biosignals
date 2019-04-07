@@ -1,0 +1,10 @@
+{% extends 'ecg/dash.html' %}
+
+{% block title %}Conexión{% endblock %}
+
+{% block content %}
+    {% for dispositivo in puertos %}
+        <h1>Puerto: {{dispositivo.puerto}}</h1>
+        <h2>Dispositivo: {{dispositivo.dispositivo}}</h2>
+    {%endfor%}
+{% endblock %}

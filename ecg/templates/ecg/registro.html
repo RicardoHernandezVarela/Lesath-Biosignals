@@ -1,0 +1,42 @@
+{% extends 'ecg/dash.html' %}
+
+{% block title %}BPM{% endblock %}
+
+{% block content %}
+    <br>
+    <canvas class="#" id="myChart" width="900" height="200"></canvas>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var labels = {{ labels }};
+        var muestras = {{ muestra }};
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+            labels: labels,
+            datasets: [{
+                data: muestras,
+                lineTension: 0,
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: 1,
+                pointBackgroundColor: '#007bff'
+            }]
+            },
+            options: {
+            scales: {
+                yAxes: [{
+                ticks: {
+                    beginAtZero: false
+                }
+                }]
+            },
+            legend: {
+                display: false,
+            }
+            }
+        });
+    </script>
+{% endblock %}

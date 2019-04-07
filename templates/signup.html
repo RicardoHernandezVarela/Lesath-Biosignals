@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Biosense{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="text-center mt-2">
+  <form class="form-signin" action="" method="post" enctype="multipart/form-data">
+    <img class="mb-4" src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-2 font-weight-normal">Crear cuenta</h1>
+    {% csrf_token %}
+
+    {% include 'form-template.html' %}
+    
+    <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Crear cuenta</button>
+  </form>
+</div>
+{% endblock %}
+

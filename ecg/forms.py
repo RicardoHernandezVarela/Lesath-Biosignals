@@ -9,4 +9,4 @@ from ecg.models import Signal
 class SignalForm(forms.ModelForm):
     class Meta:
         model = Signal
-        fields = ('nombre', 'categoria')
+        fields = ('nombre', 'categoria',)

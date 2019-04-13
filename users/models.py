@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
         return reverse('home')
 
     def __str__(self):
-        return self.email
+        return self.username

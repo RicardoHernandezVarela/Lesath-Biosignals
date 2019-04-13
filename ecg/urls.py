@@ -5,8 +5,10 @@ from . import views
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include(([
-        path('registros/', views.registros, name='señales'),
-        path('nuevoregistro/', views.nueva_senal, name='nueva'),
+        path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
+        #path('registros/', views.registros, name='señales'),
+        path('nuevoregistro/<int:pk>', views.nueva_senal, name='nueva'),
+        
     ], 'registros'), namespace='registros')),
 
     path('', include(([

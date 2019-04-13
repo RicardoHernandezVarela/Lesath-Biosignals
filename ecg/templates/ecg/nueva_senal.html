@@ -1,14 +1,72 @@
 {% extends 'ecg/senbase.html' %}
 
 {% block title %}Nuevo registro{% endblock %}
-{% block link %}<a class="nav-link" href="{% url 'registros:señales' %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
+{% block link %}<a class="nav-link" href="{% url 'registros:señales' user.username %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
 
 {% load static %}
 
 {% block search %}
+<div class="toolbar">
+
+    <div id="device-name" class="name">Dispositivo</div>
+
+    <div class="buttons">
+
+        <button class="but" id="connect" type="button" aria-label="Connect">
+            <i class="material-icons">bluetooth_connected</i>
+        </button>
+
+        <button class="but" id="disconnect" type="button" aria-label="Disconnect">
+            <i class="material-icons">bluetooth_disabled</i>
+        </button>
+
+        <button class="but mr-0" id="download">Descargar CSV</button> 
+
+    </div>
+
+</div>
 {% endblock %}
         
 {% block content %}
-    <button class="bluetooth">Conectar e iniciar registro</button>
-    <script src="{% static 'ecg/js/conect.js' %}"></script>
+<main role="main" class=" text-center mr-0">
+    <div class="row">
+        <div class="col-10">
+            <div id="chart_container" class="ml-3 mt-3">
+                <div id="y_axis" class="#"></div>
+                <div id="demo_chart"></div>
+                <div id="x_axis"></div>
+            </div>
+            
+        </div>
+                
+        <div class="col-2 mt-0">
+            <div id="terminal" class="terminal"></div>
+           
+            
+        </div>
+        
+    </div>
+
+    <div class="send-data">
+        <form id="send-form" class="send-form mr-0">
+
+            <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
+    
+            <button class="mr-0 mb-1" type="submit" aria-label="Send">
+                <i class="material-icons mt-1">send</i>
+            </button>
+    
+        </form>
+        
+        <button id="start" class="inicio" type="submit" aria-label="#">
+            <i class="material-icons mt-1">play_arrow</i>
+        </button>
+
+        <button id="stop" class="final" type="submit" aria-label="#">
+            <i class="material-icons mt-1">stop</i>
+        </button>
+    </div>
+    
+</main>
+
 {% endblock %}

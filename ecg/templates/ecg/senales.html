@@ -1,7 +1,12 @@
 {% extends 'ecg/senbase.html' %}
 
 {% block title %}Registros{% endblock %}
-{% block link %}<a class="nav-link" href="{% url 'registros:nueva' %}">Nuevo registro<span class="sr-only">(current)</span></a>{% endblock %}
+{% block link %}
+<button class="btn btn-secondary btn-sm mt-1 mr-2" data-toggle="modal" data-target="#signal">
+    Nuevo registro
+</button>
+
+{% endblock %}
 
 {% block search %}
     <form class="form-inline mt-2 mt-md-0">
@@ -11,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<main role="main" class="container principal">
+<main role="main" class="container principal text-center">
     <table class="table table-hover">
         <thead>
             <tr>
@@ -23,28 +28,49 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <th scope="row">1</th>
-                <td><a class="nombre" href="#">Marco</a></td>
-                <td><span class="badge badge-pill badge-danger">ECG</span></td>
-                <td></td>
-                <td>500</td>
-            </tr>
-            <tr>
-            <th scope="row">2</th>
-                <td>Mónica</td>
-                <td><span class="badge badge-pill badge-primary">EMG</span></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-            <th scope="row">3</th>
-                <td>Ricardo</td>
-                <td><span class="badge badge-pill badge-danger">ECG</span></td>
-                <td></td>
-                <td></td>
-            </tr>
+        {% for signal in signals %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a class="nombre" href="#">{{signal.nombre}}</a></td>
+            <td>
+                {% if signal.categoria == 'Electrocardiograma' %}
+                    <span class="badge badge-pill badge-danger">{{signal.categoria}}</span>
+
+                {% elif signal.categoria == 'Electromiograma' %}
+                    <span class="badge badge-pill badge-primary">{{signal.categoria}}</span>
+
+                {% elif signal.categoria == 'Oximetría' %}
+                    <span class="badge badge-pill badge-success">{{signal.categoria}}</span>
+
+                {% elif signal.categoria == 'Fonocardiograma' %}
+                    <span class="badge badge-pill badge-dark">{{signal.categoria}}</span>
+
+                {% else %}
+                    <span class="badge badge-pill badge-warning">{{signal.categoria}}</span>
+                {% endif %}
+            </td>
+            <td>{{signal.fecha}}</td>
+            <td class="mx-0 pr-0">{{signal.muestras}}</td>
+
+            <td>
+                {% if signal.muestras == 0 %}
+                <a class="#" href="{% url 'registros:nueva' signal.id %}">
+                    <i class="material-icons">note_add</i>
+                </a>   
+                {% else %}
+                <a class="#" href="#">
+                    <i class="material-icons">edit</i>
+                </a>  
+                <a class="#" href="#">
+                    <i class="material-icons">delete</i>
+                </a>  
+                {% endif %}
+            </td>
+            
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 </main>
+{% include "ecg/signal_form.html" %}
 {% endblock %}

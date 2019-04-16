@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from ecg.pruebas import hola, ecg, conect_device, registrar_datos
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, FormView
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
 
 from django.urls import reverse_lazy
 from ecg.forms import SignalForm
 from ecg.models import Signal
 from users.models import CustomUser
+from ecg.pruebas import hola, ecg, conect_device, registrar_datos
+from ecg.procesamiento import crear_csv, ecg_bpm
 
 #Vistas 
 
@@ -31,13 +33,35 @@ class ver_registros(ListView, FormView):
         signal.usuario = us
         signal.save()
         return redirect('registros:nueva', signal.pk)
-        #return redirect('registros:señales', us)
 
+    
 def nueva_senal(request, pk):
-    return render(request, 'ecg/nueva_senal.html')
+    return render(request, 'ecg/nueva_senal.html', {'key':pk})
+
+@csrf_exempt
+def senal_info(request, pk):
+    senal = request.POST.get('mediciones')
+    sign = senal.split(',')
+    sign = [int(x) for x in sign]
+   
+    print(type(sign[0]))
+    print(len(sign))
+    df = crear_csv(sign)
+
+    signal = Signal.objects.get(pk=pk)
+    signal.muestras = len(sign)
+    signal.data = df
+    signal.save()
+    return render(request, 'ecg/simple.html', {'key':pk})
+
+def ecg_dash(request, pk):
+    signal = Signal.objects.get(pk=pk)
+    bpm = ecg_bpm(signal.data)
+    return render(request, 'ecg/ecg_dash.html', {'bpm':bpm})
+
 
 def holis(request):
-    #resultado = hola(pk)
+    resultado = hola(pk)
     bpm = ecg()
     return render(request, 'ecg/simple.html', {'valor': bpm})
 

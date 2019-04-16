@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 import datetime
 from django.apps import apps
-#MyModel1 = apps.get_model('app1', 'MyModel1')
+
+from picklefield.fields import PickledObjectField
 
 # Modelos para la base de datos.
 
@@ -24,6 +25,7 @@ class Signal(models.Model):
     categoria = models.CharField(choices=CATEGORIAS, max_length=50)
     fecha = models.DateField(default=datetime.date.today)
     muestras = models.IntegerField(default=0)
+    data = PickledObjectField(default=0)
 
     def __str__(self):
         return self.nombre

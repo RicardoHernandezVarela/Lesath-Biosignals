@@ -11,7 +11,7 @@
 {% block search %}
     <form class="form-inline mt-2 mt-md-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" type="submit">Buscar</button>
     </form>
 {% endblock %}
 
@@ -31,7 +31,7 @@
         {% for signal in signals %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td><a class="nombre" href="#">{{signal.nombre}}</a></td>
+            <td><a class="nombre" href="{% url 'registros:ecg' signal.id %}">{{signal.nombre}}</a></td>
             <td>
                 {% if signal.categoria == 'Electrocardiograma' %}
                     <span class="badge badge-pill badge-danger">{{signal.categoria}}</span>
@@ -57,13 +57,16 @@
                 <a class="#" href="{% url 'registros:nueva' signal.id %}">
                     <i class="material-icons">note_add</i>
                 </a>   
-                {% else %}
+                {% else %}  
                 <a class="#" href="#">
                     <i class="material-icons">edit</i>
                 </a>  
                 <a class="#" href="#">
                     <i class="material-icons">delete</i>
-                </a>  
+                </a>
+                <a class="#" href="{% url 'registros:nueva' signal.id %}">
+                    <i class="material-icons">note_add</i>
+                </a>
                 {% endif %}
             </td>
             

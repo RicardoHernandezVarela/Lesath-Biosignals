@@ -8,6 +8,8 @@ urlpatterns = [
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
         #path('registros/', views.registros, name='señales'),
         path('nuevoregistro/<int:pk>', views.nueva_senal, name='nueva'),
+        path('info/<int:pk>/', views.senal_info, name='info'),
+        path('ecg/<int:pk>/', views.ecg_dash, name='ecg'),
         
     ], 'registros'), namespace='registros')),
 

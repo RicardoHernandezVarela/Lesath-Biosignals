@@ -1,12 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>BPM: {{bpm}}</h1>
-</body>
-</html>
+{% extends 'ecg/senbase.html' %}
+
+{% block title %}Resumen ECG{% endblock %}
+{% block link %}<a class="nav-link" href="{% url 'registros:señales' user.username %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
+
+{% load static %}
+
+{% block search %}
+{% endblock %}
+        
+{% block content %}
+<div class="dashboard">
+    <div class="row mt-0 rowdash">
+        <div class="col-1">
+            
+        </div>
+        <div class="col-11">
+            <script>
+                let labels = {{ labels }};
+                let muestras = {{ data }};
+                let categoria = 'Electrocardiograma';
+            </script>
+
+            <div class="card-deck h-40">
+                <div class="card  mt-1">
+                    <div class="card-header h-5">
+                        Gráfica 1
+                        <button id="return" class="btn btn-secondary btn-sm mt-0 mr-2 ml-4">
+                                <i class="material-icons">
+                                    keyboard_arrow_left
+                                </i>
+                            </button>
+                        <button id="scroll" class="btn btn-secondary btn-sm mt-0 mr-2">
+                            <i class="material-icons">
+                                keyboard_arrow_right
+                            </i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title mt-0">{{signal.nombre}}</h5>
+                        <canvas class="card-text" id="myChart" width="400" height="100"></canvas>
+                    </div>
+                </div>
+
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
+                   <h6 class="card-header">Latidos por mínuto</h6>
+                    <div class="card-body">
+                        <h6 class="card-title mt-0 text-center">{{bpm}}</h6>
+                    </div>
+                </div>
+
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
+                    <div class="card-header">Evento</div>
+                    <div class="card-body">
+                        <h6 class="card-title"></h6>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+
+                
+            </div>
+            
+
+            <div class="card-deck h-40">
+                <div class="card  mt-1">
+                    <div class="card-header h-5">
+                        Gráfica 2
+                        <button id="#" class="btn btn-secondary btn-sm mt-0 mr-2 ml-4">
+                                <i class="material-icons">
+                                    keyboard_arrow_left
+                                </i>
+                            </button>
+                        <button id="#" class="btn btn-secondary btn-sm mt-0 mr-2">
+                            <i class="material-icons">
+                                keyboard_arrow_right
+                            </i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{signal.nombre}}</h5>
+                        <canvas class="card-text" id="myChart" width="400" height="100"></canvas>
+                    </div>
+                </div>
+
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
+                        <div class="card-header">Evento</div>
+                        <div class="card-body">
+                            <h6 class="card-title"></h6>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    <script src="{% static 'ecg/js/graf.js' %}"></script>
+</div>
+
+
+{% endblock %}
+
+
+
+

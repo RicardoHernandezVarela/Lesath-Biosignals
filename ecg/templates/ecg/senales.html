@@ -11,7 +11,7 @@
 {% block search %}
     <form class="form-inline mt-2 mt-md-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 mr-1" type="submit">Buscar</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Buscar</button>
     </form>
 {% endblock %}
 
@@ -25,20 +25,23 @@
             <th scope="col">Bioseñal</th>
             <th scope="col">Fecha de registro</th>
             <th scope="col">Muestras</th>
+            <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
         {% for signal in signals %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td><a class="nombre" href="{% url 'registros:ecg' signal.id %}">{{signal.nombre}}</a></td>
+            <td>{{signal.nombre}}</td>
             <td>
                 {% if signal.categoria == 'Electrocardiograma' %}
-                    <span class="badge badge-pill badge-danger">{{signal.categoria}}</span>
-
+                    <a class="nombre" href="{% url 'registros:ecg' signal.id %}">
+                        <span class="badge badge-pill badge-danger">{{signal.categoria}}</span>
+                    </a>
                 {% elif signal.categoria == 'Electromiograma' %}
-                    <span class="badge badge-pill badge-primary">{{signal.categoria}}</span>
-
+                    <a class="nombre" href="{% url 'registros:emg' signal.id %}">
+                        <span class="badge badge-pill badge-primary">{{signal.categoria}}</span>
+                    </a>
                 {% elif signal.categoria == 'Oximetría' %}
                     <span class="badge badge-pill badge-success">{{signal.categoria}}</span>
 
@@ -46,7 +49,9 @@
                     <span class="badge badge-pill badge-dark">{{signal.categoria}}</span>
 
                 {% else %}
-                    <span class="badge badge-pill badge-warning">{{signal.categoria}}</span>
+                    <a class="nombre" href="{% url 'registros:edm' signal.id %}">
+                        <span class="badge badge-pill badge-warning">{{signal.categoria}}</span>
+                    </a>    
                 {% endif %}
             </td>
             <td>{{signal.fecha}}</td>

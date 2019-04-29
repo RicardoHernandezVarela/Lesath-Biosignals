@@ -9,7 +9,11 @@ urlpatterns = [
         #path('registros/', views.registros, name='señales'),
         path('nuevoregistro/<int:pk>', views.nueva_senal, name='nueva'),
         path('info/<int:pk>/', views.senal_info, name='info'),
+        path('rt/<int:pk>/', views.rt_info, name='rt'),
         path('ecg/<int:pk>/', views.ecg_dash, name='ecg'),
+        path('edm/<int:pk>/', views.edm_dash, name='edm'),
+        
+        path('emg/<int:pk>/', views.emg_dash, name='emg'),
         
     ], 'registros'), namespace='registros')),
 

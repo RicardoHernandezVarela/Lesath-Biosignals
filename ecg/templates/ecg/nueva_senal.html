@@ -24,6 +24,10 @@
         <button class="but mr-0" id="download">Descargar CSV</button> 
 
     </div>
+    <script>
+        let categoria = {{signal.categoria}};
+        console.log(categoria);
+    </script>
 
 </div>
 {% endblock %}
@@ -32,18 +36,32 @@
 <main role="main" class=" text-center mr-0">
     <div class="row">
         <div class="col-10">
-            <div id="chart_container" class="ml-3 mt-3">
-                <div id="y_axis" class="#"></div>
-                <div id="demo_chart"></div>
-                <div id="x_axis"></div>
+            <div id="chart" class="mt-2 ml-2 mr-1 card h-85 w-76">
+                <div class="card-header">
+                    <h5 class="card-title mt-0">{{signal.categoria}} de {{signal.nombre}}</h5>
+                </div>
+                <div id="demo_chart" class="card-body mt-1 ml-0">
+                    <!--
+                        <canvas class="card-text" id="realtime" width="400" height="200"></canvas>
+                        <div ></div>
+                    -->
+                    
+                </div>
             </div>
-            
+            <script src="{% static 'ecg/js/realtime.js' %}"></script>
         </div>
                 
         <div class="col-2 mt-0">
             <div id="terminal" class="terminal"></div>
+            <button id="enviar" class="btn btn-secondary btn-sm mt-1 mr-2">Enviar</button>
             <button id="guardar" class="btn btn-secondary btn-sm mt-1 mr-2">Guardar</button>
-           
+
+            <div class="card text-white bg-primary mt-4 mb-3 ml-4" style="max-width: 11rem;">
+                <div class="card-header">LPM</div>
+                <div class="card-body">
+                  <h5 id="respuesta" class="card-title">0</h5>
+                </div>
+            </div>
         </div>
         
     </div>
@@ -58,7 +76,6 @@
             </button>
     
         </form>
-        
         <button id="start" class="inicio" type="submit" aria-label="#">
             <i class="material-icons mt-1">play_arrow</i>
         </button>
@@ -67,6 +84,8 @@
             <i class="material-icons mt-1">stop</i>
         </button>
     </div>
+    <script src="{% static 'ecg/js/chartRT.js' %}"></script>
+    <script src="{% static 'ecg/js/post.js' %}"></script>
     
 </main>
 

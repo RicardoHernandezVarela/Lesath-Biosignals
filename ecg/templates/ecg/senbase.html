@@ -22,6 +22,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'ecg/css/regist.css' %}">
+    
 
   </head>
 
@@ -29,16 +30,16 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-md fixed-top encabezado">
         <a class="logo" href="{% url 'home' %}">Lesath</a>
-        <button class="navbar-toggler buscar" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler buscar" style="background-color: #3E64CE;" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color: #fff;"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse text-white" id="navbarCollapse" style="background-color: #3E64CE;">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item active ml-2">
                     {% block link %}{% endblock %}
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ml-2">
                     <a class="nav-link" href="#">Link</a>
                 </li>
             </ul>
@@ -47,22 +48,26 @@
         </div>
     </nav>
 
-    {% block content %}
-    {% endblock %} 
-
     <!-- Librerias para graficar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.0/d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.5/rickshaw.js"></script>
 
-    <!-- BT y plot JavaScript -->
-    <script src="{% static 'ecg/js/BluetoothTerminal.js' %}"></script>
-    <script src="{% static 'ecg/js/main.js' %}"></script>
-    <script src="{% static 'ecg/js/post.js' %}"></script>
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    {% block content %}
+    {% endblock %} 
+
+    <!-- BT y plot JavaScript -->
+    <script src="{% static 'ecg/js/BluetoothTerminal.js' %}"></script>
+    <script src="{% static 'ecg/js/main.js' %}"></script>
+    
   </body>
 </html>

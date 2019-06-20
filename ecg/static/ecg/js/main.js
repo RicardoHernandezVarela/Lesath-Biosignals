@@ -4,6 +4,8 @@ const connectButton = document.getElementById('connect');
 const downloadButton = document.getElementById('download');
 const reiniciar = document.getElementById('reiniciar');
 
+const tiempo = document.getElementById('tiempo');
+
 const disconnectButton = document.getElementById('disconnect');
 const terminalContainer = document.getElementById('terminal');
 const sendForm = document.getElementById('send-form');
@@ -44,45 +46,46 @@ Registro de datos a través del BT.
 *****************************/
 const terminal = new BluetoothTerminal();
 
-let avance = 300;
-let av = 625;
+/*Gráfica en tiempo real*/ 
+let avance = 200;
 let inicio = 0;
-let ini = 0;
 let final = inicio + avance-1;
-let fin = ini + av-1;
+
+/*Detección en tiempo real*/
+let av = 2940;
+let ini = 0;
+let fini = ini + av-1;
+
+/*Variables para el registro de los sensores*/ 
 let valor = 0;
+let factor = 3.7/1023;
 
 let mediciones = [];
 
 terminal.receive = function(data) {
-  //logToTerminal(data, 'in');
+  valor = (parseInt(data)*3.7)/1023;
+  //valor = valor * factor;
 
-  if (categoria == 'Electrodérmica') {
-    valor = 1 / (1 - (data/1023));
-  }
-  else {
-    valor = (parseInt(data)*3.3)/1023;
-  }
-  
-  
-  console.log(valor.toPrecision(4));
+  //console.log(valor.toPrecision(4));
   mediciones.push(valor.toPrecision(4));
-
-  if(mediciones.length % avance === 0) {
-    //console.log(mediciones.length);
-    insertDatapoints(mediciones, inicio, avance);
-    eventos(mediciones, inicio, final);
-    //insertData(mediciones, inicio, final)
-    inicio += avance;
-    final += avance-1;
-  }
-
-  if (mediciones.length % av === 0) {
-    eventos(mediciones, ini, fin);
-    ini += av;
-    fin += av-1;
-  }
   
+  /*Graficar*/ 
+  if(mediciones.length % avance === 0) {
+    insertDatapoints(mediciones, inicio, avance);
+    //insertData(mediciones, inicio, final);
+    inicio += avance;
+    final += avance;
+    
+    tiempo.innerHTML = parseInt(mediciones.length/588);
+  }
+
+  /*Procesar datos, enviar al servidor y regresar*/ 
+  if (mediciones.length % av === 0) {
+    eventos(mediciones, ini, fini);
+    ini += av;
+    fini += av-1;
+  }
+
 };
 
 /****************************

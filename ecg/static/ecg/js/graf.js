@@ -4,31 +4,40 @@ const back = document.getElementById('return');
 var ctx = document.getElementById("myChart");
 
 const step = 4000;
-let ini = 0;
-let final = step - 1;
+let inic = 0;
+let fin = step - 1;
 
-let tiempo = labels.slice(ini,final);
-let sensor = muestras.slice(ini,final);
+let fs = 588;
+
+let tiempo = labels.slice(inic,fin);
+let sensor = muestras.slice(inic,fin);
 
 console.log(categoria);
 
-let min = 0;
-let max = 3;
-let paso = 1;
+let max = Math.max(...muestras) + 0.1;
 
-
-if (categoria === 'Electrodérmica') {
-    min = 2400;
-    max = 2600;
-    paso = 10;
+if (max > 4) {
+    max = 3.7; 
 }
 
+let min = Math.min(...muestras) - 0.1;
+let paso = 0.2;
+
+console.log(max)
+console.log(min)
+
+let ejeX = 'Voltaje';
+
+if (categoria === 'Electrodérmica') {
+    ejeX = 'µS';
+}
 
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
     labels: tiempo,
     datasets: [{
+        label:'Señal',
         data: sensor,
         lineTension: 0,
         backgroundColor: 'transparent',
@@ -38,8 +47,20 @@ var myChart = new Chart(ctx, {
     }]
     },
     options: {
+        responsive: true,
     scales: {
+        xAxes: [{
+            display: true,
+            scaleLabel: {
+                display: true,
+                labelString: 'Muestras'
+            }
+        }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: ejeX
+            },
         ticks: {
             beginAtZero: false,
             max: max,
@@ -49,13 +70,13 @@ var myChart = new Chart(ctx, {
         }]
     },
     legend: {
-        display: false,
+        display: true,
+        text: 'ECG'
     }
     }
 });
 
 scroll.addEventListener('click', () => {
-    console.log('hola');
     
     function addData(chart, label, data) {
         chart.data.labels = label;
@@ -65,11 +86,12 @@ scroll.addEventListener('click', () => {
         chart.update();
     }
 
-    ini += step;
-    final += step;
+    console.log(fin);
+    inic += step;
+    fin += step;
 
-    tiempo = labels.slice(ini,final);
-    sensor = muestras.slice(ini,final);
+    tiempo = labels.slice(inic,fin);
+    sensor = muestras.slice(inic,fin);
 
     addData(myChart, tiempo, sensor);
 });
@@ -83,12 +105,12 @@ back.addEventListener('click', () => {
         });
         chart.update();
     }
+    console.log(fin)
+    inic -= step;
+    fin -= step;
 
-    ini -= step;
-    final -= step;
-
-    tiempo = labels.slice(ini,final);
-    sensor = muestras.slice(ini,final);
+    tiempo = labels.slice(inic,fin);
+    sensor = muestras.slice(inic,fin);
 
     addData(myChart, tiempo, sensor);
 });

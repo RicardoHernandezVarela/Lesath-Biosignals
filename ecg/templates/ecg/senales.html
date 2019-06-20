@@ -32,7 +32,9 @@
         {% for signal in signals %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{signal.nombre}}</td>
+            <td>
+                {{signal.nombre}}
+            </td>
             <td>
                 {% if signal.categoria == 'Electrocardiograma' %}
                     <a class="nombre" href="{% url 'registros:ecg' signal.id %}">
@@ -46,8 +48,10 @@
                     <span class="badge badge-pill badge-success">{{signal.categoria}}</span>
 
                 {% elif signal.categoria == 'Fonocardiograma' %}
-                    <span class="badge badge-pill badge-dark">{{signal.categoria}}</span>
-
+                    <a class="nombre" href="{% url 'registros:fcg' signal.id %}">
+                        <span class="badge badge-pill badge-dark">{{signal.categoria}}</span>
+                    </a>  
+                    
                 {% else %}
                     <a class="nombre" href="{% url 'registros:edm' signal.id %}">
                         <span class="badge badge-pill badge-warning">{{signal.categoria}}</span>
@@ -63,10 +67,10 @@
                     <i class="material-icons">note_add</i>
                 </a>   
                 {% else %}  
-                <a class="#" href="#">
+                <a class="#" href="{% url 'registros:editar' signal.id %}">
                     <i class="material-icons">edit</i>
                 </a>  
-                <a class="#" href="#">
+                <a class="#" href="{% url 'registros:eliminar' signal.id %}">
                     <i class="material-icons">delete</i>
                 </a>
                 <a class="#" href="{% url 'registros:nueva' signal.id %}">

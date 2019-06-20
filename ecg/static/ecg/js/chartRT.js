@@ -3,13 +3,13 @@ var ctx = document.getElementById("realtime");
 //let N = 60000; 
 //let labels = Array.apply(null, {length: N}).map(Number.call, Number);
 
-let tiempo = 0;
+let time = 0;
 let sensor = 0;
 
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: tiempo,
+    labels: time,
     datasets: [{
         data: sensor,
         lineTension: 0,
@@ -21,12 +21,23 @@ var myChart = new Chart(ctx, {
     },
     options: {
     scales: {
+        xAxes: [{
+            display: true,
+            scaleLabel: {
+                display: true,
+                labelString: 'Muestras'
+            }
+        }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Voltaje'
+            },
         ticks: {
             beginAtZero: false,
-            max: 700,
-            min: 200,
-            stepSize: 100
+            max: 4,
+            min: 0,
+            stepSize: 1
         }
         }]
     },
@@ -55,8 +66,9 @@ function range(start, end) {
 /* Función para obtener los datos que se grafican */
 function insertData(datos, inicio, final) {
 
-    tiempo = range(inicio,final);
+    time = range(inicio,final);
     sensor = datos.slice(inicio,final);
+    console.log(time.length);
 
-    addData(myChart, tiempo, sensor);
+    addData(myChart, time, sensor);
 }

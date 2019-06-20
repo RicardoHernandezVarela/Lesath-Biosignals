@@ -245,11 +245,6 @@ Dashboard
 }
 
 .col-1 li {
-    width: 70%;
-    margin: 10px 0;
-    margin-right: 70px;
-    background-color: #9E9E9E;
-    border-radius: 100%;
 }
 
 /****************************
@@ -257,7 +252,7 @@ Otros dispositivos
 *****************************/
 
   /*Vista para tablet*/
-  @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
     .principal {
         width: 85%;
         margin: 0 auto;
@@ -279,8 +274,8 @@ Otros dispositivos
     /*Contenido principal*/
     .principal {
         width: 90%;
-        border: 1px solid #9e9e9e;
-        border-radius: 15px;
+        /*border: 1px solid #9e9e9e;
+        border-radius: 15px;*/
     }
 }
 
@@ -292,8 +287,8 @@ Otros dispositivos
         margin: 0 auto;
         margin-top: 7%;
         font-size: 1em;
-        border: 1px solid #9e9e9e;
-        border-radius: 15px;
+        /*border: 1px solid #9e9e9e;
+        border-radius: 15px;*/
     }
 
     .row {

@@ -24,10 +24,6 @@
         <button class="but mr-0" id="download">Descargar CSV</button> 
 
     </div>
-    <script>
-        let categoria = {{signal.categoria}};
-        console.log(categoria);
-    </script>
 
 </div>
 {% endblock %}
@@ -41,10 +37,8 @@
                     <h5 class="card-title mt-0">{{signal.categoria}} de {{signal.nombre}}</h5>
                 </div>
                 <div id="demo_chart" class="card-body mt-1 ml-0">
-                    <!--
-                        <canvas class="card-text" id="realtime" width="400" height="200"></canvas>
-                        <div ></div>
-                    -->
+                    
+                        <!--<canvas class="card-text" id="realtime" width="400" height="150" style="margin-left:-4%;"></canvas>-->
                     
                 </div>
             </div>
@@ -57,18 +51,34 @@
             <button id="guardar" class="btn btn-secondary btn-sm mt-1 mr-2">Guardar</button>
 
             <div class="card text-white bg-primary mt-4 mb-3 ml-4" style="max-width: 11rem;">
-                <div class="card-header">LPM</div>
+                {% if signal.categoria == 'Electrocardiograma' %}
+                    <div class="card-header">LPM</div>
+                {% elif signal.categoria == 'Electromiograma' %}
+                    <div class="card-header">Evento</div>
+                {% elif signal.categoria == 'Oximetría' %}
+                    <div class="card-header">Evento</div>
+                {% elif signal.categoria == 'Fonocardiograma' %}
+                    <div class="card-header">LPM</div>
+                {% else %}
+                    <div class="card-header">Estado</div> 
+                {% endif %}
                 <div class="card-body">
                   <h5 id="respuesta" class="card-title">0</h5>
+                </div>
+            </div>
+
+            <div class="card text-white bg-primary mt-4 mb-3 ml-4" style="max-width: 11rem;">
+                <div class="card-header">Segundos</div>
+                <div class="card-body">
+                  <h5 id="tiempo" class="card-title"></h5>
                 </div>
             </div>
         </div>
         
     </div>
-
     <div class="send-data">
-        <form id="send-form" class="send-form mr-0">
-
+        <form id="send-form" class="send-form mr-0" style="display:none;">
+            
             <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
     
             <button class="mr-0 mb-1" type="submit" aria-label="Send">
@@ -84,7 +94,7 @@
             <i class="material-icons mt-1">stop</i>
         </button>
     </div>
-    <script src="{% static 'ecg/js/chartRT.js' %}"></script>
+    <!--<script src="{% static 'ecg/js/chartRT.js' %}"></script>-->
     <script src="{% static 'ecg/js/post.js' %}"></script>
     
 </main>

@@ -24,7 +24,6 @@ def to_float(data):
     return numeros
 
 
-
 def ecg_bpm(data):
     import pandas as pd
     import numpy as np
@@ -33,12 +32,12 @@ def ecg_bpm(data):
 
     ecg_data = data.iloc[:, 0].values #extraer muestras del dataframe, solo columna con valores
 
-    peaks, _ = find_peaks(ecg_data, height=(1, 4), distance=312)
+    peaks, _ = find_peaks(ecg_data, height=(2, 4), distance=235)
     distancias = np.diff(peaks)
 
     media = np.mean(distancias)
  
-    bpm = (ecg_data.size/media)/(ecg_data.size/37500) #625 por segundo
+    bpm = (ecg_data.size/media)/(ecg_data.size/35280) #625 por segundo
 
     """
     plt.figure(1)
@@ -57,16 +56,43 @@ def rt_bpm(data):
 
     ecg_data = np.array(data)
 
-    peaks, _ = find_peaks(ecg_data, height=(1, 4), distance=312)
+    peaks, _ = find_peaks(ecg_data, height=(1, 4), distance=235)
     distancias = np.diff(peaks)
 
     media = np.mean(distancias)
  
-    bpm = (ecg_data.size/media)/(ecg_data.size/37500) #625 por segundo
+    bpm = (ecg_data.size/media)/(ecg_data.size/35280) #588 por segundo
 
-    return bpm
+    return int(bpm)
 
 def edm_units(data):
-    muestras = [2500-(4.6*i) for i in data]
+    muestras = [round((i*1023)/3.7) for i in data]
+    muestras = [round(1/(1-i/1023), 3) for i in muestras]
     
     return muestras
+
+def proc_edm(data):
+    import statistics as st
+    import math 
+    media = st.mean(data)
+    sd = st.stdev(data)
+    lcl = media - 2.58 * sd/math.sqrt(len(data))
+    ucl = media + 2.58 * sd/math.sqrt(len(data))
+
+    estres = 0
+    relajado = 0
+
+    for i in data:
+        if i > ucl:
+            estres += 1
+        elif i < lcl:
+            relajado += 1
+    
+    resultado = ''
+
+    if estres > relajado:
+        resultado = 'Estresado'
+    elif relajado > estres:
+        resultado = 'Relajado'
+    
+    return resultado

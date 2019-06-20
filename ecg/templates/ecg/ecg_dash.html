@@ -1,7 +1,9 @@
 {% extends 'ecg/senbase.html' %}
 
 {% block title %}Resumen ECG{% endblock %}
-{% block link %}<a class="nav-link" href="{% url 'registros:señales' user.username %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
+{% block link %}
+    <a class="nav-link" href="{% url 'registros:señales' user.username %}">Ver registros<span class="sr-only">(current)</span></a>  
+{% endblock %}
 
 {% load static %}
 
@@ -12,6 +14,21 @@
 <div class="dashboard">
     <div class="row mt-0 rowdash">
         <div class="col-1">
+            <ul>
+                <li class="text-center">
+                    {% if not signal.descripcion_set.all %}
+                        <a class="#" href="#">
+                            Agregar descripción
+                            <i class="material-icons">description</i>
+                        </a> 
+                    {%else%}
+                        <a class="#" href="#">
+                            Ver descripción
+                            <i class="material-icons text-center">description</i>
+                        </a> 
+                    {%endif%}
+                </li>
+            </ul>
             
         </div>
         <div class="col-11">
@@ -23,7 +40,7 @@
 
             <div class="card-deck h-40">
                 <div class="card  mt-1">
-                    <div class="card-header h-5">
+                    <div class="card-header h-2">
                         Gráfica 1
                         <button id="return" class="btn btn-secondary btn-sm mt-0 mr-2 ml-4">
                                 <i class="material-icons">
@@ -37,30 +54,29 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title mt-0">{{signal.nombre}}</h5>
+                        <h5 class="card-title mt-0 h-40">{{signal.nombre}}</h5>
                         <canvas class="card-text" id="myChart" width="400" height="100"></canvas>
                     </div>
                 </div>
 
-                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
-                   <h6 class="card-header">Latidos por mínuto</h6>
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 8rem; max-height: 7rem;">
+                   <h6 class="card-header" style="font-size: 0.8rem;">Latidos por mínuto</h6>
                     <div class="card-body">
                         <h6 class="card-title mt-0 text-center">{{bpm}}</h6>
                     </div>
                 </div>
 
-                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
-                    <div class="card-header">Evento</div>
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 8rem; max-height: 7rem;">
+                    <h6 class="card-header" style="font-size: 0.8rem;">Condición</h6>
                     <div class="card-body">
-                        <h6 class="card-title"></h6>
-                        <p class="card-text"></p>
+                        <h6 class="card-title text-center">{{condicion}}</h6>
                     </div>
                 </div>
 
                 
             </div>
             
-
+            
             <div class="card-deck h-40">
                 <div class="card  mt-1">
                     <div class="card-header h-5">
@@ -82,11 +98,10 @@
                     </div>
                 </div>
 
-                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 10rem; max-height: 10rem;">
-                        <div class="card-header">Evento</div>
+                <div class="card text-white bg-danger mb-3 mt-2" style="max-width: 8rem; max-height: 7rem;">
+                        <h6 class="card-header">Evento</h6>
                         <div class="card-body">
-                            <h6 class="card-title"></h6>
-                            <p class="card-text"></p>
+                            <h6 class="card-title">Dato</h6>
                         </div>
                     </div>
                 

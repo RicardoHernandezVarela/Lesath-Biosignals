@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, UpdateView, DetailView, FormView
+from django.views.generic import CreateView, ListView, UpdateView, DetailView, FormView, DeleteView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from ecg.forms import SignalForm
-from ecg.models import Signal
+from ecg.models import Signal, Descripcion
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
-from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, edm_units, rt_bpm
+from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, edm_units, rt_bpm, proc_edm
 
 #Vistas 
 
@@ -35,10 +35,24 @@ class ver_registros(ListView, FormView):
         signal.save()
         return redirect('registros:nueva', signal.pk)
 
-    
+class SignalDelete(DeleteView):
+    model = Signal
+
+    def get_success_url(self):
+        user = self.object.usuario
+        
+        return reverse_lazy('registros:señales', kwargs={'username': user})
+
+class SignalUpdate(UpdateView):
+    model = Signal
+    fields = ['nombre', 'categoria']
+    template_name = 'ecg/editSignal_form.html'
+
 def nueva_senal(request, pk):
     signal = Signal.objects.get(pk=pk)
-    return render(request, 'ecg/nueva_senal.html', {'key':pk, 'signal':signal, 'maxim': 0})
+    categoria = signal.categoria
+
+    return render(request, 'ecg/nueva_senal.html', {'key':pk, 'signal':signal, 'categoria': categoria})
 
 @csrf_exempt
 def senal_info(request, pk):
@@ -54,7 +68,6 @@ def senal_info(request, pk):
     signal.muestras = len(sign)
     signal.data = df
     signal.save()
-    print(sign)
     return render(request, 'ecg/simple.html', {'key':pk})
 
 @csrf_exempt
@@ -62,27 +75,60 @@ def rt_info(request, pk):
     senal = request.POST.get('lista')
     sign = senal.split(',')
     sign = [float(x) for x in sign]
-    maximo = max(sign)
-    #print(maximo)
-    #bpm = rt_bpm(sign)
-    return HttpResponse(maximo)
+
+    respuesta = 0
+
+    signal = Signal.objects.get(pk=pk)
+    if signal.categoria == 'Electromiograma':
+        respuesta = max(sign)
+    elif signal.categoria == 'Electrodérmica':
+        respuesta = max(sign)
+    else:
+        respuesta = rt_bpm(sign)
+
+    return HttpResponse(respuesta)
 
 def ecg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
     data = signal.data[0][0:]
     muestras = to_float(data)
     bpm = ecg_bpm(signal.data)
+    condicion = ''
+    if bpm < 50:
+        condicion = 'Bradicardia'
+    elif bpm > 100:
+        condicion = 'Taquicardia'
+    else:
+        condicion = 'Normal'
+
     labels = list(range(0, len(muestras)))
-    return render(request, 'ecg/ecg_dash.html', {'signal':signal, 'bpm':bpm, 'data':muestras, 'labels': labels})
+    return render(request, 'ecg/ecg_dash.html', {'signal':signal, 'bpm':bpm, 'data':muestras, 'labels': labels, 'condicion':condicion})
+
+def fcg_dash(request, pk):
+    signal = Signal.objects.get(pk=pk)
+    data = signal.data[0][0:]
+    muestras = to_float(data)
+    bpm = ecg_bpm(signal.data)
+    condicion = ''
+    if bpm < 50:
+        condicion = 'Bradicardia'
+    elif bpm > 100:
+        condicion = 'Taquicardia'
+    else:
+        condicion = 'Normal'
+
+    labels = list(range(0, len(muestras)))
+    return render(request, 'ecg/fcg_dash.html', {'signal':signal, 'bpm':bpm, 'data':muestras, 'labels': labels, 'condicion':condicion})
 
 def edm_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
     data = signal.data [0][0:]
     muestras = to_float(data)
     muestras = edm_units(muestras)
+    res = proc_edm(muestras)
    
     labels = list(range(0, len(muestras)))
-    return render(request, 'ecg/edm_dash.html', {'signal':signal, 'data':muestras, 'labels': labels})
+    return render(request, 'ecg/edm_dash.html', {'signal':signal, 'data':muestras, 'labels': labels, 'res':res})
 
 def emg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
@@ -92,17 +138,3 @@ def emg_dash(request, pk):
     labels = list(range(0, len(muestras)))
     return render(request, 'ecg/emg_dash.html', {'signal':signal, 'data':muestras, 'labels': labels})
 
-
-def holis(request):
-    resultado = hola(pk)
-    bpm = ecg()
-    return render(request, 'ecg/simple.html', {'valor': bpm})
-
-def conectar(request):
-    disponibles = conect_device()
-    return render(request, 'ecg/conectar.html', {'puertos': disponibles})
-
-def registrar(request):
-    data = registrar_datos()
-    labels = list(range(0, len(data)))
-    return render(request, 'ecg/registro.html', {'muestra': data, 'labels': labels})

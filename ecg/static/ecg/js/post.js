@@ -64,6 +64,7 @@ function eventos(datos, inicio, final) {
 
         success: function (data){
             respuesta.innerHTML = data;
+            
         },
 
         processData: false,

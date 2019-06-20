@@ -30,16 +30,20 @@ var yAxis = new Rickshaw.Graph.Axis.Y({
     tickFormat: Rickshaw.Fixtures.Number.formatKMBT
 });
 
-var xAxis = new Rickshaw.Graph.Axis.X( {
-    graph: chart2
-} );
+var time = new Rickshaw.Fixtures.Time();
+var seconds = time.unit('miliseconds');
+
+var xAxis = new Rickshaw.Graph.Axis.Time({
+    graph: chart2,
+    timeUnit: seconds
+});
 
 var hoverDetail = new Rickshaw.Graph.HoverDetail( {
     graph: chart2,
     xFormatter: function(x) { 
-        return x + "milisegundos" 
+        return x/1000 + "ms" 
     },
-    yFormatter: function(y) { return Math.floor(y) + " mV" }
+    yFormatter: function(y) { return y + "V" }
 } );
 
 /* Función para obtener los datos que se grafican */

@@ -1,0 +1,5 @@
+<p>Usar userbase, mostrar resultados en lista</p>
+{%for colaboracion in colaboraciones %}
+  <h1>{{ colaboracion.experimento }}</h1>
+  <h1>{{ colaboracion.experimento.usuario }}</h1>
+{% endfor %}

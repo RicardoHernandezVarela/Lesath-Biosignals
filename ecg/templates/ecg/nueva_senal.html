@@ -21,13 +21,13 @@
             <i class="material-icons">bluetooth_disabled</i>
         </button>
 
-        <button class="but mr-0" id="download">Descargar CSV</button> 
+        <button class="but mr-0" id="download">Descargar CSV</button>
 
     </div>
 
 </div>
 {% endblock %}
-        
+
 {% block content %}
 <main role="main" class=" text-center mr-0">
     <div class="row">
@@ -37,14 +37,14 @@
                     <h5 class="card-title mt-0">{{signal.categoria}} de {{signal.nombre}}</h5>
                 </div>
                 <div id="demo_chart" class="card-body mt-1 ml-0">
-                    
+
                         <!--<canvas class="card-text" id="realtime" width="400" height="150" style="margin-left:-4%;"></canvas>-->
-                    
+
                 </div>
             </div>
             <script src="{% static 'ecg/js/realtime.js' %}"></script>
         </div>
-                
+
         <div class="col-2 mt-0">
             <div id="terminal" class="terminal"></div>
             <button id="enviar" class="btn btn-secondary btn-sm mt-1 mr-2">Enviar</button>
@@ -60,7 +60,7 @@
                 {% elif signal.categoria == 'Fonocardiograma' %}
                     <div class="card-header">LPM</div>
                 {% else %}
-                    <div class="card-header">Estado</div> 
+                    <div class="card-header">Estado</div>
                 {% endif %}
                 <div class="card-body">
                   <h5 id="respuesta" class="card-title">0</h5>
@@ -74,17 +74,17 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <div class="send-data">
-        <form id="send-form" class="send-form mr-0" style="display:none;">
-            
+        <form id="send-form" class="send-form mr-0" style="display:none;"> <!--style="display:none;"-->
+
             <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
-    
+
             <button class="mr-0 mb-1" type="submit" aria-label="Send">
                 <i class="material-icons mt-1">send</i>
             </button>
-    
+
         </form>
         <button id="start" class="inicio" type="submit" aria-label="#">
             <i class="material-icons mt-1">play_arrow</i>
@@ -96,7 +96,7 @@
     </div>
     <!--<script src="{% static 'ecg/js/chartRT.js' %}"></script>-->
     <script src="{% static 'ecg/js/post.js' %}"></script>
-    
+
 </main>
 
 {% endblock %}

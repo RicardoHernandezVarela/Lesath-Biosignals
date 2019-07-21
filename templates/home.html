@@ -14,6 +14,7 @@
     </a>
   </nav>
   <li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">Señales registradas</a></li>
+  <li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:experimentos' user.username %}">Experimentos</a></li>
   <li><a class="btn btn-outline-primary mx-1" href="{% url 'logout' %}">Salir</a></li>
   {% else %}
   <li><a class="btn btn-outline-primary mx-1" href="{% url 'login' %}">Iniciar sesión</a> </li>
@@ -27,7 +28,7 @@
     <div class="card-body">
       <h5 class="card-title">Oximetro</h5>
       <p class="card-text">Sensor 1</p>
-      
+
     </div>
   </div>
 
@@ -36,7 +37,7 @@
     <div class="card-body">
       <h5 class="card-title">Electrocardiograma</h5>
       <p class="card-text">Sensor 2</p>
-      
+
     </div>
   </div>
 
@@ -45,7 +46,7 @@
     <div class="card-body">
       <h5 class="card-title">Electromiograma</h5>
       <p class="card-text">Sensor 3</p>
-      
+
     </div>
   </div>
 
@@ -54,7 +55,7 @@
     <div class="card-body">
       <h5 class="card-title">Fonocardiograma</h5>
       <p class="card-text">Sensor 4</p>
-    
+
     </div>
   </div>
   <div class="card">
@@ -62,13 +63,12 @@
     <div class="card-body">
       <h5 class="card-title">Electrodermico</h5>
       <p class="card-text">Sensor 5</p>
-    
+
     </div>
 
 </div>
 
 
 
-  
-{% endblock %}
 
+{% endblock %}

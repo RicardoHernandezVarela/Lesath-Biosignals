@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+    <!-- CSS Rickshaw -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.3/rickshaw.min.css" rel="stylesheet">
+
+    {% load static %}
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'ecg/css/userbase.css' %}">
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!--LOGO-->
+      <div class="logo">
+        <h1><a class="logo" href="{% url 'home' %}">Lesath</a></h1>
+      </div>
+
+      <!--HEADER-->
+      <nav class="navbar navbar-expand-md fixed-top header">
+
+          <button class="navbar-toggler buscar" style="background-color: #3E64CE;" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon" style="color: #fff;"></span>
+          </button>
+
+          <div class="collapse navbar-collapse text-white" id="navbarCollapse" style="background-color: #3E64CE;">
+
+            <a class="navbar-brand" href="#">
+              <img src="{% static 'ecg/img/avatar.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+              <span class="username">{{user.username}}</span>
+            </a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active ml-2">
+                    {% block link %}{% endblock %}
+                </li>
+            </ul>
+
+          </div>
+      </nav>
+      {% block add %}
+      {% endblock %}
+
+      {% block colaboracion %}
+      {% endblock %}
+
+      <!--SIDEBAR-->
+      <div class="sidebar">
+        <ul class="opciones">
+          <li>
+            <a href="{% url 'registros:experimentos' user.username %}">
+              Proyectos
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'registros:colaboracion' user.username %}">
+              Colaboraciones
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              Electrocardiogramas
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              Electromiogramas
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              Fonocardiogramas
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              Electrodérmicas
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      <!--CONTENT-->
+      <div class="content">
+        <div class="senales">
+          {% block content %}
+          {% endblock %}
+        </div>
+        <div class="info">
+          info
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Librerias para graficar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.0/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.5/rickshaw.js"></script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- BT y plot JavaScript -->
+    <script src="{% static 'ecg/js/BluetoothTerminal.js' %}"></script>
+    <script src="{% static 'ecg/js/main.js' %}"></script>
+  </body>
+</html>

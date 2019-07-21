@@ -5,19 +5,46 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 from django.urls import reverse_lazy, reverse
-from ecg.forms import SignalForm
-from ecg.models import Signal, Descripcion
+from ecg.forms import ExperimentoForm, SignalForm
+from ecg.models import Experimento, Colaboracion, Signal, Descripcion
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
 from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, edm_units, rt_bpm, proc_edm
 
-#Vistas 
+#Vistas
 
 def registros(request):
     return render(request, 'ecg/senales.html')
 
 # Ver secciones (unidades) y crear nuevas secciones
 #@method_decorator([login_required], name='dispatch')
+class experimentos(ListView, FormView):
+    context_object_name = 'experimentos'
+    template_name = 'ecg/experimentos.html'
+    model = Experimento
+    form_class = ExperimentoForm
+
+    def get_queryset(self):
+        queryset = self.request.user.experimento_set.all()
+        return queryset
+
+    def form_valid(self, form):
+        us = CustomUser.objects.get(username=self.kwargs['username'])
+        experimento = form.save(commit=False)
+        experimento.usuario = us
+        experimento.save()
+        print(experimento.nombre)
+        return redirect('registros:experimentos', experimento.usuario.username)
+
+class colaboracion(ListView):
+    context_object_name = 'colaboraciones'
+    template_name = 'ecg/colaboraciones.html'
+    model = Colaboracion
+
+    def get_queryset(self):
+        queryset = self.request.user.colaboracion_set.all()
+        return queryset
+
 class ver_registros(ListView, FormView):
     context_object_name = 'signals'
     template_name = 'ecg/senales.html'
@@ -40,7 +67,7 @@ class SignalDelete(DeleteView):
 
     def get_success_url(self):
         user = self.object.usuario
-        
+
         return reverse_lazy('registros:señales', kwargs={'username': user})
 
 class SignalUpdate(UpdateView):
@@ -59,7 +86,7 @@ def senal_info(request, pk):
     senal = request.POST.get('mediciones')
     sign = senal.split(',')
     sign = [float(x) for x in sign]
-   
+
     print(type(sign[0]))
     print(len(sign))
     df = crear_df(sign)
@@ -126,7 +153,7 @@ def edm_dash(request, pk):
     muestras = to_float(data)
     muestras = edm_units(muestras)
     res = proc_edm(muestras)
-   
+
     labels = list(range(0, len(muestras)))
     return render(request, 'ecg/edm_dash.html', {'signal':signal, 'data':muestras, 'labels': labels, 'res':res})
 
@@ -134,7 +161,6 @@ def emg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
     data = signal.data[0][0:]
     muestras = to_float(data)
-   
+
     labels = list(range(0, len(muestras)))
     return render(request, 'ecg/emg_dash.html', {'signal':signal, 'data':muestras, 'labels': labels})
-

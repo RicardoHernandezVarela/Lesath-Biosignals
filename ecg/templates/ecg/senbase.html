@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.3/rickshaw.min.css" rel="stylesheet">
 
     {% load static %}
-
+    <link rel="icon" href="{% static 'ecg/img/logo.png' %}">
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'ecg/css/regist.css' %}">
     
@@ -37,7 +37,7 @@
         <div class="collapse navbar-collapse text-white" id="navbarCollapse" style="background-color: #3E64CE;">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-2">
-                    {% block link %}{% endblock %}
+                  <a href="{% url 'registros:senalesExp' signal.experimento.id %}">Ver señales</a>
                 </li>
             </ul>
             {% block search %}

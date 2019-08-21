@@ -9,6 +9,8 @@
       <a href="{% url 'registros:senalesExp' experimento.id %}">{{experimento.nombre}}</a>
     </h5>
 
+    <h6>Colaboradores:</h6>
+    <br>
     <p class="card-text">
       {% for colaboracion in experimento.colaboracion_set.all%}
         {{colaboracion.colaborador}}

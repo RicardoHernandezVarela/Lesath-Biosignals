@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'ecg/formbase.html' %}
 
 {% block title %}Eliminar señal{% endblock %}
 
@@ -8,7 +8,7 @@
 <div class="text-center">
     <form method="post">{% csrf_token %}
         <h1>Estas seguro de eliminar la señal "{{ object }}"?</h1>
-        <button class="btn btn-lg btn-primary btn-block mt-2 w-25 text-center" type="submit">Confirmar</button>
+        <button class="btn btn-lg btn-primary btn-block mt-2 w-25 text-center" type="submit" style="margin:0 auto;">Confirmar</button>
     </form>
 </div>
 {% endblock %}

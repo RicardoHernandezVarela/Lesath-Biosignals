@@ -5,28 +5,31 @@
 <div class="card mx-1 my-2">
   <div class="card-body">
     <!--{{ forloop.counter }}-->
-    {% if senal.categoria == 'Electrocardiograma' %}
-        <a class="nombre" href="{% url 'registros:ecg' senal.id %}">
-            <span class="badge badge-pill badge-danger">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
-        </a>
-    {% elif senal.categoria == 'Electromiograma' %}
-        <a class="nombre" href="{% url 'registros:emg' senal.id %}">
-            <span class="badge badge-pill badge-primary">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
-        </a>
-    {% elif senal.categoria == 'Oximetría' %}
-        <span class="badge badge-pill badge-success">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
-
-    {% elif senal.categoria == 'Fonocardiograma' %}
-        <a class="nombre" href="{% url 'registros:fcg' senal.id %}">
-            <span class="badge badge-pill badge-dark">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
-        </a>
-
+    {% if senal.muestras == 0 %}
+      <span class="badge badge-pill badge-light" onclick="alert('Esta señal no tiene muestras')">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
     {% else %}
-        <a class="nombre" href="{% url 'registros:edm' senal.id %}">
-            <span class="badge badge-pill badge-warning">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
-        </a>
-    {% endif %}
+      {% if senal.categoria == 'Electrocardiograma' %}
+          <a class="nombre" href="{% url 'registros:ecg' senal.id %}">
+              <span class="badge badge-pill badge-danger">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+          </a>
+      {% elif senal.categoria == 'Electromiograma' %}
+          <a class="nombre" href="{% url 'registros:emg' senal.id %}">
+              <span class="badge badge-pill badge-primary">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+          </a>
+      {% elif senal.categoria == 'Oximetría' %}
+          <span class="badge badge-pill badge-success">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
 
+      {% elif senal.categoria == 'Fonocardiograma' %}
+          <a class="nombre" href="{% url 'registros:fcg' senal.id %}">
+              <span class="badge badge-pill badge-dark">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+          </a>
+
+      {% else %}
+          <a class="nombre" href="{% url 'registros:edm' senal.id %}">
+              <span class="badge badge-pill badge-warning">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+          </a>
+      {% endif %}
+    {% endif %}
     <div class="card-text">
       <ul class="cardlist pl-0">
         <li>
@@ -36,6 +39,9 @@
           {% if senal.muestras == 0 %}
           <a class="#" href="{% url 'registros:nueva' senal.id %}">
               <i class="material-icons">note_add</i>
+          </a>
+          <a class="#" href="{% url 'registros:eliminar' senal.id %}">
+            <i class="material-icons">delete</i>
           </a>
           {% else %}
           <a class="#" href="{% url 'registros:editar' senal.id %}">

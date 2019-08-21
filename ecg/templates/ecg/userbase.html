@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'ecg/css/userbase.css' %}">
 
     <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'ecg/img/logo.png' %}">
   </head>
   <body>
     <!-- HEADER -->
@@ -38,6 +39,7 @@
            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
              <a class="dropdown-item" href="#">Perfil</a>
              <a class="dropdown-item" href="{% url 'registros:experimentos' user.username %}">Proyectos</a>
+             <a class="dropdown-item" href="{% url 'registros:colaboracion' user.username %}">Colaboraciones</a>
              <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
            </div>
         </li>

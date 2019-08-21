@@ -1,62 +1,58 @@
 {% extends 'ecg/userbase.html' %}
 
-{% block title %}Experimentos{% endblock %}
-{% block link %}
-<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#proyecto">
-    Nuevo proyecto
-</button>
-{% endblock %}
-
-{% block search %}
-    <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Buscar</button>
-    </form>
-{% endblock %}
-
 {% block content %}
-  <div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Señales</th>
-            <th scope="col">Colaboradores</th>
-            <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for experimento in experimentos %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>
-                {{experimento.nombre}}
-            </td>
-            <td>{{experimento.fecha}}</td>
-            <td># señales</td>
-            <td>
-              {% for colaboracion in experimento.colaboracion_set.all%}
-                {{colaboracion.colaborador}}
-              {% endfor %}
-            </td>
+{% for experimento in experimentos %}
+<div class="card mx-1 my-2">
+  <div class="card-body">
+    <!--{{ forloop.counter }} -->
+    <h5 class="card-title">
+      <a href="{% url 'registros:senalesExp' experimento.id %}">{{experimento.nombre}}</a>
+    </h5>
 
-            <td>
-              none
-            </td>
+    <p class="card-text">
+      {% for colaboracion in experimento.colaboracion_set.all%}
+        {{colaboracion.colaborador}}
+      {% endfor %}
+    </p>
 
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <p class="card-text">
+      señales: {{ experimento.signal_set.all.count }}
+    </p>
+
+    <a class="#" href="#">
+        <i class="material-icons">edit</i>
+    </a>
+    <a class="#" href="#">
+        <i class="material-icons">delete</i>
+    </a>
+    <a class="#" href="#">
+        <i class="material-icons">note_add</i>
+    </a>
+    <br>
+    {{experimento.detalle}}
+
   </div>
+  <div class="card-footer">
+    <small class="#">
+      {{experimento.fecha}}
+    </small>
+
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}
 
 {% block add %}
 {% include "ecg/experimento_form.html" %}
 {% endblock %}
 
-{% block colaboracion %}
-{% include "ecg/colaboracion_form.html" %}
+{% block title %}Experimentos{% endblock %}
+{% block link %}
+<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#proyecto">
+    Nuevo proyecto
+</button>
 {% endblock %}
+
+{% block dashName %}Dashboard{% endblock %}
+{% block activePr %}active{% endblock %}

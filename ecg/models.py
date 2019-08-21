@@ -13,6 +13,7 @@ class Experimento(models.Model):
     usuario = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=255)
     fecha = models.DateField(default=datetime.date.today)
+    detalle = models.TextField(max_length=800, blank=True, null=True)
 
     def __str__(self):
         return self.nombre
@@ -26,6 +27,7 @@ class Colaboracion(models.Model):
 
 
 class Signal(models.Model):
+    experimento = models.ForeignKey(Experimento, on_delete=models.CASCADE, null=True)
     usuario = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=255)
 

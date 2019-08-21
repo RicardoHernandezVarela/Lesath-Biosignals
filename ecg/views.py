@@ -5,11 +5,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 from django.urls import reverse_lazy, reverse
-from ecg.forms import ExperimentoForm, SignalForm
+from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
 from ecg.models import Experimento, Colaboracion, Signal, Descripcion
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
 from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, edm_units, rt_bpm, proc_edm
+
+from ecg.filters import *
+from dal import autocomplete
 
 #Vistas
 
@@ -33,17 +36,80 @@ class experimentos(ListView, FormView):
         experimento = form.save(commit=False)
         experimento.usuario = us
         experimento.save()
-        print(experimento.nombre)
         return redirect('registros:experimentos', experimento.usuario.username)
+
+class senales_exp(ListView, FormView):
+    context_object_name = 'senales'
+    template_name = 'ecg/senalesExp.html'
+    model = Signal
+    form_class = SignalForm
+
+    def get_queryset(self):
+        experimento = Experimento.objects.get(pk=self.kwargs['pk'])
+        print(experimento.usuario)
+        queryset = experimento.signal_set.all()
+        return queryset
+
+    def form_valid(self, form):
+        experimento = Experimento.objects.get(pk=self.kwargs['pk'])
+        print(experimento)
+        senal = form.save(commit=False)
+        senal.experimento = experimento
+        senal.usuario = experimento.usuario
+        senal.save()
+        return redirect('registros:senalesExp', experimento.pk)
 
 class colaboracion(ListView):
     context_object_name = 'colaboraciones'
     template_name = 'ecg/colaboraciones.html'
     model = Colaboracion
+    form_class = ColaboracionForm
 
     def get_queryset(self):
         queryset = self.request.user.colaboracion_set.all()
         return queryset
+
+class UserAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        user = self.request.user
+        #print(user.username)
+        #print(user.is_authenticated)
+        # Don't forget to filter out results depending on the visitor !
+        if user.is_authenticated == False:
+            return CustomUser.objects.none()
+
+        qs = CustomUser.objects.all()
+
+        if self.q:
+            #print(self.q)
+            qs = qs.filter(username__istartswith=self.q)
+
+        else:
+            qs = CustomUser.objects.none()
+
+        return qs
+
+class nueva_colaboracion(CreateView):
+    template_name = 'ecg/colaboracion_form.html'
+    form_class = ColaboracionForm
+    model = Colaboracion
+
+    def get_form_kwargs(self):
+        kwargs = super( nueva_colaboracion, self).get_form_kwargs()
+        # update the kwargs for the form init method with yours
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ColaboracionFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
+    def form_valid(self, form):
+        us = CustomUser.objects.get(username=self.kwargs['username'])
+        colaboracion = form.save(commit=False)
+        colaboracion.save()
+        return redirect('registros:colaboracion', us.username)
 
 class ver_registros(ListView, FormView):
     context_object_name = 'signals'
@@ -97,6 +163,7 @@ def senal_info(request, pk):
     signal.save()
     return render(request, 'ecg/simple.html', {'key':pk})
 
+#Vista para procesar los dato en tiempo real
 @csrf_exempt
 def rt_info(request, pk):
     senal = request.POST.get('lista')

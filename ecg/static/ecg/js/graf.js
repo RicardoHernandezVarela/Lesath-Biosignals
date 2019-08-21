@@ -17,7 +17,7 @@ console.log(categoria);
 let max = Math.max(...muestras) + 0.1;
 
 if (max > 4) {
-    max = 3.7; 
+    max = 3.7;
 }
 
 let min = Math.min(...muestras) - 0.1;
@@ -77,7 +77,7 @@ var myChart = new Chart(ctx, {
 });
 
 scroll.addEventListener('click', () => {
-    
+
     function addData(chart, label, data) {
         chart.data.labels = label;
         chart.data.datasets.forEach((dataset) => {
@@ -97,7 +97,7 @@ scroll.addEventListener('click', () => {
 });
 
 back.addEventListener('click', () => {
-    
+
     function addData(chart, label, data) {
         chart.data.labels = label;
         chart.data.datasets.forEach((dataset) => {

@@ -2,117 +2,159 @@
 body {
   margin: 0;
   padding: 0;
-
+  background-color: #edf0fa;
 }
 
 a {
   text-decoration: none;
 }
 
-.wrapper {
-    display: grid;
-    grid-gap: 0px;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 8vh 92vh;
+ul {
+  list-style: none;
 }
 
 /*GENERAL*/
 
-/*LOGO*/
-.logo {
-    font-family: 'Lobster', cursive;
-    font-weight: 400;
-    grid-column: 1 / 3;
-    background-color: #284084;
-    color: #fff;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    border-bottom: 3px solid #9e9e9e;
-
+/* HEADER */
+.navbar {
+  border-bottom: 3px solid #9e9e9e;
 }
 
-.logo h1 {
-  margin: 1% auto;
-  font-size: 1.7em;
+.logo {
+  font-family: 'Lobster', cursive;
+  font-weight: 400;
+  font-size: 1.4em;
+  background-color:#284084;
   text-align: center;
 }
 
-/*LOGO*/
-
-/*HEADER*/
-.header {
-    grid-column: 3 / -1;
-    position: relative;
-    background-color: #3E64CE;
-    z-index: 1;
-    box-shadow: 0px 5px 10px 1px #888888;
-    display: flex;
-}
-
-.btn-secondary {
-    background-color: #3E64CE;
-    border:none;
-    font-size: 1em;
-    margin-left: 350px;
-    border: 1px solid #9e9e9e;
-}
-
-.username {
+.opciones a {
   color: #fff;
-  font-size: 1em;
-  margin-left: 10%;
 }
 
-.navbar-brand {
-  margin-left: 5%;
+.dropdown-menu a {
+  color: #284084;
+
 }
 
-/*HEADER*/
+/* HEADER */
 
-/*SIDEBAR*/
+/* CONTENIDO */
+.container-fluid {
+  height: 93vh;
+}
+
+.container-fluid .row {
+  height: 93vh;
+  background-color: #edf0fa;
+}
+
+
+/* SIDEBAR */
 .sidebar {
-    grid-column: 1 / 3;
-    background-color: #dbe2f6;
-    box-shadow: 10px 0px 20px 1px #888888;
-    position: relative;
-    z-index: 1;
+  background-color: #dbe2f6;
+  box-shadow: 10px 0px 10px 0.5px #888888;
+  height: 95vh;
+  position: fixed;
 }
 
-.opciones {
+.opcionesBar li {
+  text-align: center;
+  margin: 1% 0;
+  margin-bottom: 5%;
+  font-size: 95%;
+}
+
+.active {
+  background-color: #3E64CE;
+  color: #fff;
+}
+
+/* SIDEBAR */
+
+/* SUBENCABEZDO */
+.subEnc {
+  border-bottom: 2px solid #9e9e9e;
+}
+
+/* SUBENCABEZDO */
+
+/* DASH */
+.card-footer {
+  background-color: #728edb;
+  color: #fff;
+}
+
+/* DASH CARDS */
+.cardlist {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding-left: 0;
 }
 
-.opciones li {
-  margin: 15% auto;
-  padding: 0;
-  text-align: center;
+.cardlist li {
+  margin-top: 6%;
 }
 
-/*SIDEBAR*/
+/* DASH CARDS */
 
-/*CONTENIDO*/
-.content {
-    grid-column: 3 / -1;
-    background-color: #edf0fa;
-    position: relative;
-    z-index: -1;
+/* CONTENIDO */
+
+
+/****************************
+Otros dispositivos
+*****************************/
+
+@media screen and (min-width: 300px) {
+  .opciones {
+    margin: 0 auto;
+  }
+
+  .container-fluid {
+    margin-top: 21%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .opciones {
+    margin: 0 auto;
+  }
+
+  .container-fluid {
+    margin-top: 8%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .opciones {
     margin: 0;
+    margin-right: 1.5%;
+  }
+
+  .container-fluid {
+    margin-top: 3%;
+  }
+
+  .card-group .card {
     display: flex;
+    flex: 1 1 33.3%;
+    max-width: 32.3%;
+  }
 }
 
-.senales {
-  background-color: #A7B8E8;
-  margin: 2.5% 2.5%;
-  width: 55%;
-  box-shadow: 10px 0px 15px 1px #888888;
-}
+@media screen and (min-width: 800px) {
+  .opciones {
+    margin: 0;
+    margin-right: 1.5%;
+  }
 
-.info {
-  background-color: #849CDF;
-  margin: 2.5% 2.5%;
-  width: 35%;
-  box-shadow: 10px 0px 15px 1px #888888;
+  .container-fluid {
+    margin-top: 3%;
+  }
+
+  .card-group .card {
+    display: flex;
+    flex: 1 1 33.3%;
+    max-width: 32.3%;
+  }
 }

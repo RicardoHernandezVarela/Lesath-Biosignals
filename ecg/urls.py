@@ -6,7 +6,12 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include(([
         path('experimentos/<username>/', views.experimentos.as_view(), name='experimentos'),
+        path('experimento/<int:pk>/', views.senales_exp.as_view(), name='senalesExp'),
+
         path('colaboraciones/<username>/', views.colaboracion.as_view(), name='colaboracion'),
+        path('user-autocomplete/', views.UserAutocomplete.as_view(), name='user-autocomplete'),
+        path('colaboracionNueva/<username>/', views.nueva_colaboracion.as_view(), name='nueva_colaboracion'),
+
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
         path('registros/<int:pk>/eliminar/', views.SignalDelete.as_view(), name='eliminar'),
         path('editar/<int:pk>/', views.SignalUpdate.as_view(), name='editar'),

@@ -25,7 +25,7 @@ SECRET_KEY = 'd1kcblc0r8059e((n22xnd3i4_3%d)w0vk75299p6@07%c@x7f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.85']
+ALLOWED_HOSTS = ['lesath.pythonanywhere.com']
 
 
 # Application definition
@@ -123,6 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/home/lesath/lesath/static'
 
 """
 STATICFILES_DIRS = [

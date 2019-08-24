@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 """
-#Hola rick
+#Hola rick22
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

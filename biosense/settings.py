@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 """
+STATIC_ROOT = '/home/lesath/lesath/static'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

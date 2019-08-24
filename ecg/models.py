@@ -45,10 +45,12 @@ class Signal(models.Model):
     muestras = models.IntegerField(default=0)
     data = PickledObjectField(default=0)
 
+    """
     def get_absolute_url(self):
         #from django.urls import reverse
         return reverse('registros:señales', args=[str(self.usuario)])
-
+    """
+    
     def __str__(self):
         return self.nombre
 

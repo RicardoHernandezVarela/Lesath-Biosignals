@@ -36,16 +36,8 @@
           Muestras: {{senal.muestras}}
         </li>
         <li>
-          {% if senal.muestras == 0 %}
-          <a class="#" href="{% url 'registros:nueva' senal.id %}">
-              <i class="material-icons">note_add</i>
-          </a>
-          <a class="#" href="{% url 'registros:eliminar' senal.id %}">
-            <i class="material-icons">delete</i>
-          </a>
-          {% else %}
           <a class="#" href="{% url 'registros:editar' senal.id %}">
-              <i class="material-icons">edit</i>
+            <i class="material-icons">edit</i>
           </a>
           <a class="#" href="{% url 'registros:eliminar' senal.id %}">
               <i class="material-icons">delete</i>
@@ -53,7 +45,6 @@
           <a class="#" href="{% url 'registros:nueva' senal.id %}">
               <i class="material-icons">note_add</i>
           </a>
-          {% endif %}
         </li>
       </ul>
     </div>

@@ -13,7 +13,7 @@ urlpatterns = [
         path('colaboracionNueva/<username>/', views.nueva_colaboracion.as_view(), name='nueva_colaboracion'),
 
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
-        path('registros/<int:pk>/eliminar/', views.SignalDelete.as_view(), name='eliminar'),
+        path('experimento/<int:pk>/eliminar/', views.SignalDelete.as_view(), name='eliminar'),
         path('editar/<int:pk>/', views.SignalUpdate.as_view(), name='editar'),
 
         path('nuevoregistro/<int:pk>', views.nueva_senal, name='nueva'),

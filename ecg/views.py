@@ -57,7 +57,8 @@ class senales_exp(ListView, FormView):
         senal.experimento = experimento
         senal.usuario = experimento.usuario
         senal.save()
-        return redirect('registros:senalesExp', experimento.pk)
+        return redirect('registros:nueva', senal.pk)
+        #return redirect('registros:senalesExp', experimento.pk)
 
 class colaboracion(ListView):
     context_object_name = 'colaboraciones'
@@ -132,9 +133,9 @@ class SignalDelete(DeleteView):
     model = Signal
 
     def get_success_url(self):
-        user = self.object.usuario
+        exp = self.object.experimento
 
-        return reverse_lazy('registros:señales', kwargs={'username': user})
+        return reverse_lazy('registros:senalesExp', kwargs={'pk': exp.pk})
 
 class SignalUpdate(UpdateView):
     model = Signal

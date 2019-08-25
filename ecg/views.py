@@ -142,6 +142,12 @@ class SignalUpdate(UpdateView):
     fields = ['nombre', 'categoria']
     template_name = 'ecg/editSignal_form.html'
 
+    def get_success_url(self):
+        exp = self.object.experimento
+
+        return reverse_lazy('registros:senalesExp', kwargs={'pk': exp.pk})
+        
+
 def nueva_senal(request, pk):
     signal = Signal.objects.get(pk=pk)
     categoria = signal.categoria

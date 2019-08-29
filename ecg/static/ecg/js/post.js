@@ -3,14 +3,11 @@ const enviar = document.getElementById('enviar');
 const respuesta = document.getElementById('respuesta');
 
 let pathname = window.location.pathname;
-let id = pathname.replace('/se%C3%B1ales/nuevoregistro/','');
-let url = "/señales/info/" + id + "/"
-let url2 = "/señales/rt/" + id + "/"
+let id = pathname.replace('/senales/nuevoregistro/','');
+let url = "/senales/info/" + id + "/"
+let url2 = "/senales/rt/" + id + "/"
 
 guardar.addEventListener('click', () => {
-    //console.log(pathname);
-    //console.log(id);
-    //console.log(url);
 
     var formData = new FormData();
     formData.append('mediciones', mediciones);
@@ -19,16 +16,19 @@ guardar.addEventListener('click', () => {
         url: url,
         type:'POST',
         data: formData,
+
+        success: function (data){
+            guardar.innerHTML = "Guardado";
+            guardar.style.backgroundColor = "#9e9e9e";
+        },
+
         processData: false,
         contentType: false
 
     });
 
-    guardar.innerHTML = "Guardado";
-    guardar.style.backgroundColor = "#9e9e9e";
-
-
   });
+
 
 /*Prueba para enviar y procesar datos en tiempo real*/
   enviar.addEventListener('click', () => {

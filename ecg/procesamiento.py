@@ -12,7 +12,7 @@ def to_int(data):
     enteros = []
     for num in data:
         enteros.append(int(num))
-    
+
     return enteros
 
 def to_float(data):
@@ -20,7 +20,7 @@ def to_float(data):
     numeros = []
     for num in data:
         numeros.append(float(num))
-    
+
     return numeros
 
 
@@ -28,7 +28,7 @@ def ecg_bpm(data):
     import pandas as pd
     import numpy as np
     from scipy.signal import find_peaks
-    import matplotlib.pyplot as plt
+    #import matplotlib.pyplot as plt
 
     ecg_data = data.iloc[:, 0].values #extraer muestras del dataframe, solo columna con valores
 
@@ -36,7 +36,7 @@ def ecg_bpm(data):
     distancias = np.diff(peaks)
 
     media = np.mean(distancias)
- 
+
     bpm = (ecg_data.size/media)/(ecg_data.size/35280) #625 por segundo
 
     """
@@ -60,7 +60,7 @@ def rt_bpm(data):
     distancias = np.diff(peaks)
 
     media = np.mean(distancias)
- 
+
     bpm = (ecg_data.size/media)/(ecg_data.size/35280) #588 por segundo
 
     return int(bpm)
@@ -68,12 +68,12 @@ def rt_bpm(data):
 def edm_units(data):
     muestras = [round((i*1023)/3.7) for i in data]
     muestras = [round(1/(1-i/1023), 3) for i in muestras]
-    
+
     return muestras
 
 def proc_edm(data):
     import statistics as st
-    import math 
+    import math
     media = st.mean(data)
     sd = st.stdev(data)
     lcl = media - 2.58 * sd/math.sqrt(len(data))
@@ -87,12 +87,12 @@ def proc_edm(data):
             estres += 1
         elif i < lcl:
             relajado += 1
-    
+
     resultado = ''
 
     if estres > relajado:
         resultado = 'Estresado'
     elif relajado > estres:
         resultado = 'Relajado'
-    
+
     return resultado

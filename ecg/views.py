@@ -9,7 +9,7 @@ from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
 from ecg.models import Experimento, Colaboracion, Signal, Descripcion
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
-from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, edm_units, rt_bpm, proc_edm
+from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
 
 from ecg.filters import *
 from dal import autocomplete
@@ -188,6 +188,13 @@ def rt_info(request, pk):
         respuesta = rt_bpm(sign)
 
     return HttpResponse(respuesta)
+
+def descargar_datos(request, pk):
+    signal = Signal.objects.get(pk=pk)
+    data = signal.data[0][0:]
+    muestras = to_download(data)
+
+    return HttpResponse(muestras)
 
 def ecg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)

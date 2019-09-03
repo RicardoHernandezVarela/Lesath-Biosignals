@@ -2,24 +2,30 @@ const guardar = document.getElementById('guardar');
 const enviar = document.getElementById('enviar');
 const respuesta = document.getElementById('respuesta');
 
+const close = document.querySelector('.close')
+const modal = document.querySelector('.modal')
+
 let pathname = window.location.pathname;
 let id = pathname.replace('/senales/nuevoregistro/','');
 let url = "/senales/info/" + id + "/"
 let url2 = "/senales/rt/" + id + "/"
 
+close.addEventListener('click', e => {
+    modal.style.display = 'none'
+})
+
 guardar.addEventListener('click', () => {
 
     var formData = new FormData();
     formData.append('mediciones', mediciones);
-
+    
     $.ajax({
         url: url,
         type:'POST',
         data: formData,
 
         success: function (data){
-            guardar.innerHTML = "Guardado";
-            guardar.style.backgroundColor = "#9e9e9e";
+            modal.style.display = 'block'
         },
 
         processData: false,

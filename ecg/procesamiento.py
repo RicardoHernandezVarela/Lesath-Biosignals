@@ -23,6 +23,15 @@ def to_float(data):
 
     return numeros
 
+def to_download(data):
+
+    numeros = []
+    for num in data:
+        numeros.append(float(num))
+        numeros.append(',')
+
+    return numeros
+
 
 def ecg_bpm(data):
     import pandas as pd

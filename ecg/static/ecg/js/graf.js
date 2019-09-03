@@ -1,116 +1,140 @@
-const scroll = document.getElementById('scroll');
-const back = document.getElementById('return');
+/****************************
+Graficar
+*****************************/
+const replay = document.getElementById("replay");
+const pause = document.getElementById("pause");
+const play = document.getElementById("play");
 
-var ctx = document.getElementById("myChart");
+const nombreSenal = document.querySelector('.nombreSenal');
+const nombreArchivo = nombreSenal.innerHTML;
 
-const step = 4000;
-let inic = 0;
-let fin = step - 1;
+const descargar = document.getElementById("descargar");
 
-let fs = 588;
+var path = pathname = window.location.pathname;
+path_arr = path.split('/');
 
-let tiempo = labels.slice(inic,fin);
-let sensor = muestras.slice(inic,fin);
+var id = path_arr[3];
+var url = "/senales/descargarData/" + id + "/"
 
-console.log(categoria);
+var anchura = document.getElementById("chartContainer").clientWidth;
+var altura = document.getElementById("chartContainer").clientHeight;
 
-let max = Math.max(...muestras) + 0.1;
+function adjustWindowSize() {
+    anchura = document.getElementById("chartContainer").clientWidth;
+    altura = document.getElementById("chartContainer").clientHeight;
 
-if (max > 4) {
-    max = 3.7;
+    chartSenal.width = 1*anchura;
+    chartSenal.height = 0.9*altura;
+}
+  
+window.onresize = adjustWindowSize;
+
+var updateSenal = 100;
+
+/* Rickshaw.js initialization */
+var chartSenal = new Rickshaw.Graph({
+    element: document.querySelector("#chartSenal"),
+    width: 1*anchura,
+    height: 0.9*altura,
+    renderer: "line",
+    min: "0",
+    max: "4",
+    series: new Rickshaw.Series.FixedDuration([{
+        name: 'señal',
+        color: '#446CB3'
+    }], undefined, {
+        timeInterval: updateSenal,
+        maxDataPoints: 3 * anchura
+    })
+});
+
+var yAxis = new Rickshaw.Graph.Axis.Y({
+    graph: chartSenal,
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT
+});
+
+var time = new Rickshaw.Fixtures.Time();
+var seconds = time.unit('seconds');
+
+var xAxis = new Rickshaw.Graph.Axis.Time({
+    graph: chartSenal,
+    timeUnit: seconds
+});
+
+var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: chartSenal,
+    xFormatter: function(x) { 
+        return x/1000 + "ms" 
+    },
+    yFormatter: function(y) { return y + "V" }
+} );
+
+
+var inic = 0;
+/* Timer para llamar a la función cada x milisegundos*/
+var ploter = setInterval(insertRandomDatapoints, updateSenal);
+
+/* Función para obtener los datos que se grafican */
+function insertRandomDatapoints() {
+
+    replay.addEventListener('click', e => {
+        inic = 0;
+    })
+
+    for (var i = 0; i < 20; i++) {
+        let tmpData = {
+            señal: muestras[inic + i] // Cambiar para seleccionar ventanas de mediciones.
+        };
+        
+        chartSenal.series.addData(tmpData);
+    }
+
+    inic = inic + 20;
+    chartSenal.render();
 }
 
-let min = Math.min(...muestras) - 0.1;
-let paso = 0.2;
+pause.addEventListener('click', e => {
+    clearInterval(ploter);
+})
 
-console.log(max)
-console.log(min)
+play.addEventListener('click', e => {
+    ploter = setInterval(insertRandomDatapoints, updateSenal);
+})
 
-let ejeX = 'Voltaje';
-
-if (categoria === 'Electrodérmica') {
-    ejeX = 'µS';
+function download_csv(data) {
+    var csv = 'Muestra\n';
+    
+    data.forEach(function(row) {
+            csv += row;//.join(',');
+            csv += "\n";
+    });
+  
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = nombreArchivo + '.csv';
+    hiddenElement.click();
 }
 
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-    labels: tiempo,
-    datasets: [{
-        label:'Señal',
-        data: sensor,
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 1,
-        pointRadius: 0,
-    }]
-    },
-    options: {
-        responsive: true,
-    scales: {
-        xAxes: [{
-            display: true,
-            scaleLabel: {
-                display: true,
-                labelString: 'Muestras'
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: ejeX
-            },
-        ticks: {
-            beginAtZero: false,
-            max: max,
-            min: min,
-            stepSize: paso
-        }
-        }]
-    },
-    legend: {
-        display: true,
-        text: 'ECG'
-    }
-    }
-});
+/* DESCARGAR DATA*/
 
-scroll.addEventListener('click', () => {
+descargar.addEventListener('click', e => {
 
-    function addData(chart, label, data) {
-        chart.data.labels = label;
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data = data;
-        });
-        chart.update();
-    }
+    $.ajax({
+        url: url,
+        type:'GET',
+        //data: muestra,
 
-    console.log(fin);
-    inic += step;
-    fin += step;
+        success: function (data){
+            
+            let muestras = data.split(",");
+            download_csv(muestras);
 
-    tiempo = labels.slice(inic,fin);
-    sensor = muestras.slice(inic,fin);
+        },
 
-    addData(myChart, tiempo, sensor);
-});
+        processData: false,
+        contentType: false
 
-back.addEventListener('click', () => {
+    });
 
-    function addData(chart, label, data) {
-        chart.data.labels = label;
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data = data;
-        });
-        chart.update();
-    }
-    console.log(fin)
-    inic -= step;
-    fin -= step;
-
-    tiempo = labels.slice(inic,fin);
-    sensor = muestras.slice(inic,fin);
-
-    addData(myChart, tiempo, sensor);
-});
+})

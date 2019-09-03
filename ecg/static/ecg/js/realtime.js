@@ -3,8 +3,9 @@ Graficar
 *****************************/
 ancho = document.getElementById("chart").clientWidth;
 largo = document.getElementById("chart").clientHeight;
-chartWidth = 0.9*ancho;
-chartHeigth = 4.1*largo;
+console.log(ancho, largo);
+chartWidth = 1*ancho;
+chartHeigth = 0.9*largo;
 
 /* Rickshaw.js initialization */
 var updateInterval = 50;

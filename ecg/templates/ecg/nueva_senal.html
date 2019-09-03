@@ -1,102 +1,106 @@
 {% extends 'ecg/senbase.html' %}
 
-{% block title %}Nuevo registro{% endblock %}
+{% block title %}Nueva señal{% endblock %}
 {% block link %}<a class="nav-link" href="{% url 'registros:señales' user.username %}">Ver registros<span class="sr-only">(current)</span></a>{% endblock %}
 
 {% load static %}
 
 {% block search %}
-<div class="toolbar">
+<span id="device-name" class="name" style="display:none;">Dispositivo</span>
 
-    <!--<a href="#" class="name">{{key}}</a>-->
-    <div id="device-name" class="name">Dispositivo</div>
+<a href="{% url 'registros:senalesExp' signal.experimento.id %}" class="boton btnFold">
+    <i class="material-icons">folder</i>
+</a>
 
-    <div class="buttons">
+<button class="boton" id="connect" type="button" aria-label="Connect">
+    <i class="material-icons">bluetooth_connected</i>
+</button>
 
-        <button class="but connect" id="connect" type="button" aria-label="Connect">
-            <i class="material-icons">bluetooth_connected</i>
-        </button>
+<button class="boton" id="disconnect" type="button" aria-label="Disconnect">
+    <i class="material-icons">bluetooth_disabled</i>
+</button>
 
-        <button class="but" id="disconnect" type="button" aria-label="Disconnect">
-            <i class="material-icons">bluetooth_disabled</i>
-        </button>
-
-        <button class="but mr-0" id="download">Descargar CSV</button>
-
-    </div>
-
-</div>
+<button class="boton" id="download">
+    <i class="material-icons">cloud_download</i>
+</button>
 {% endblock %}
 
 {% block content %}
-<main role="main" class=" text-center mr-0">
-    <div class="row">
-        <div class="col-10">
-            <div id="chart" class="mt-2 ml-2 mr-1 card h-85 w-76">
-                <div class="card-header">
-                    <h5 class="card-title mt-0">{{signal.categoria}} de {{signal.nombre}}</h5>
-                </div>
-                <div id="demo_chart" class="card-body mt-1 ml-0">
+<div class="menu">
+    <div id="terminal" class="terminal"></div>
 
-                        <!--<canvas class="card-text" id="realtime" width="400" height="150" style="margin-left:-4%;"></canvas>-->
+    <div class="eventosRT">
+        {% if signal.categoria == 'Electrocardiograma' %}
+            <span class="#">LPM</span>
+        {% elif signal.categoria == 'Electromiograma' %}
+            <span class="#">Evento</span>
+        {% elif signal.categoria == 'Oximetría' %}
+            <span class="#">Evento</span>
+        {% elif signal.categoria == 'Fonocardiograma' %}
+            <span class="#">LPM</span>
+        {% else %}
+            <span class="#">Estado</span>
+        {% endif %}
 
-                </div>
-            </div>
-            <script src="{% static 'ecg/js/realtime.js' %}"></script>
-        </div>
-
-        <div class="col-2 mt-0">
-            <div id="terminal" class="terminal"></div>
-            <button id="enviar" class="btn btn-secondary btn-sm mt-1 mr-2">Enviar</button>
-            <button id="guardar" class="btn btn-secondary btn-sm mt-1 mr-2">Guardar</button>
-
-            <div class="card text-white bg-primary mt-4 mb-3 ml-4" style="max-width: 11rem;">
-                {% if signal.categoria == 'Electrocardiograma' %}
-                    <div class="card-header">LPM</div>
-                {% elif signal.categoria == 'Electromiograma' %}
-                    <div class="card-header">Evento</div>
-                {% elif signal.categoria == 'Oximetría' %}
-                    <div class="card-header">Evento</div>
-                {% elif signal.categoria == 'Fonocardiograma' %}
-                    <div class="card-header">LPM</div>
-                {% else %}
-                    <div class="card-header">Estado</div>
-                {% endif %}
-                <div class="card-body">
-                  <h5 id="respuesta" class="card-title">0</h5>
-                </div>
-            </div>
-
-            <div class="card text-white bg-primary mt-4 mb-3 ml-4" style="max-width: 11rem;">
-                <div class="card-header">Segundos</div>
-                <div class="card-body">
-                  <h5 id="tiempo" class="card-title"></h5>
-                </div>
-            </div>
-        </div>
-
+        <h5 id="respuesta" class="resp">0</h5>
     </div>
-    <div class="send-data">
-        <form id="send-form" class="send-form mr-0" style="display:none;"> <!--style="display:none;"-->
 
-            <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
+    <div class="segundos">
+        <h5 id="tiempo">0</h5>
+        <span class="unidad">segundos</span>
+    </div>
 
-            <button class="mr-0 mb-1" type="submit" aria-label="Send">
-                <i class="material-icons mt-1">send</i>
-            </button>
+    <button id="enviar" class="#" style="display:none;">Enviar</button>
+    
+</div>
 
-        </form>
-        <button id="start" class="inicio" type="submit" aria-label="#">
-            <i class="material-icons mt-1">play_arrow</i>
+<div class="content">
+    <h5 class="nombreSenal">{{signal.categoria}} de {{signal.nombre}}</h5>
+    <div id="chart" class="#">
+        <div id="demo_chart" class="#">
+
+                <!--<canvas class="card-text" id="realtime" width="400" height="150" style="margin-left:-4%;"></canvas>-->
+
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal-content modalSenal">
+            <span class="close">&times;</span>
+            <h5 class="modalText">Señal guardada</h5>
+        </div>
+    </div>
+
+    <script src="{% static 'ecg/js/realtime.js' %}"></script>
+</div>
+
+<div class="footer">
+    <form id="send-form" class="send-form mr-0" style="display:none;"> <!--style="display:none;"-->
+
+        <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
+
+        <button class="mr-0 mb-1" type="submit" aria-label="Send">
+            <i class="material-icons mt-1">send</i>
         </button>
 
-        <button id="stop" class="final" type="submit" aria-label="#">
-            <i class="material-icons mt-1">stop</i>
+    </form>
+
+    <div class="opcionesSenal">
+        <button id="start" class="circleBtn opc" type="submit">
+            <i class="material-icons">play_arrow</i>
+        </button>
+
+        <button id="stop" class="circleBtn opc" type="submit">
+            <i class="material-icons">stop</i>
+        </button>
+
+        <button id="guardar" class="circleBtn opc">
+            <i class="material-icons">save</i>
         </button>
     </div>
+    
     <!--<script src="{% static 'ecg/js/chartRT.js' %}"></script>-->
     <script src="{% static 'ecg/js/post.js' %}"></script>
-
-</main>
+</div>
 
 {% endblock %}

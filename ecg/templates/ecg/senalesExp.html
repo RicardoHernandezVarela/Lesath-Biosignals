@@ -6,7 +6,19 @@
   <div class="card-body">
     <!--{{ forloop.counter }}-->
     {% if senal.muestras == 0 %}
-      <span class="badge badge-pill badge-light" onclick="alert('Esta señal no tiene muestras')">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+      <div class="nomCat">
+          <span class="badge badge-pill badge-light">
+            {{senal.nombre}} &nbsp {{senal.categoria}}
+          </span>
+      </div>
+      
+
+      <div class="mdl">
+        <div class="modal-content modalSenal">
+            <span class="cls">&times;</span>
+            <h5 class="modalText">Esta señal no tiene muestras</h5>
+        </div>
+      </div>
     {% else %}
       {% if senal.categoria == 'Electrocardiograma' %}
           <a class="nombre" href="{% url 'registros:ecg' senal.id %}">

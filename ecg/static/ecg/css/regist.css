@@ -1,104 +1,67 @@
-/* Layout */
 body {
-    margin-bottom: 60px; 
-    background-color:#EBEBF2;
     margin: 0;
-    width: 100%;
-  }
-
-
-  /*Header*/
-
-.encabezado {
-    width: 100%;
-    height: 55px;
     padding: 0;
-    margin: 0;
-    background-color: #3E64CE; 
+}
+
+a {
+    text-decoration: none;
+}
+
+/******************************************************************
+GRID LAYOUT
+******************************************************************/
+.wrapper {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 8vh 6vh 78vh 8vh;
+
+}
+
+/******************************************************************
+ENCABEZADO
+******************************************************************/
+.header {
+    grid-column: 1 / -1;
+    background-color: #3E64CE;
     border-bottom: 3px solid #9e9e9e; /*Color del borde del encabezado*/
 }
 
-.encabezado a, .encabezado button {
-    color: #EBEBF2;
-}
-
-.buscar {
-    background-color: #9e9e9e;
-}
-
-.btn-secondary {
-    background-color: #3E64CE; 
-    border:none;
-    font-size: 1em;
-}
-
-.logo {
-    font-family: 'Lobster', cursive;
-    color: #05547b; /*#EBEBF2;*/
-    font-size: 1.8em;
-    margin-left: 1%;
-    margin-right: 1.7%;
-  }
-
-.navbar-toggler span {
-    background-color: #EBEBF2;
-    color: black;
-}
-
-/*Contenido principal*/
-.principal {
-    margin: 0 auto;
-    margin-top: 70px;
-    margin-left: 0;
-    width: 50%;
-    /*border: 1px solid #9e9e9e;
-    border-radius: 15px;*/
-    font-size: 0.75em;
-}
-
-.nombre {
-    text-decoration: none;
-    color: black;
-}
-
-/*estilo de la fila y columnas*/
-
-.row {
-    margin: 0;
-    width: 100%;
-    height: 80vh;
-    padding: 0;
-
-}
-
-.col-10 {
-    margin: 0;
-    padding: 0;
-}
-
-.col-2 {
-    margin: 0;
-    padding: 0;
-}
-
-/*Terminal BT*/
-
-.toolbar {
-    align-items: center;
+.opcionesNav {
     display: flex;
-    flex-shrink: 0; 
 }
-.toolbar .name {
-    flex-grow: 1;
-    padding: 0 8px;
-    user-select: none; 
+
+.lesathLogo {
+    font-family: 'Lobster', cursive;
+    color: #EBEBF2;
+    font-size: 1.8em;
+    margin: 0.4% 3.5%;
+    margin-left: 6%;
+}
+
+.lesathLogo:hover, .btnFold:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.boton, .boton:active {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 12px;
+}
+
+#device-name {
     color: #fff;
 }
-.toolbar .buttons {
-    flex-shrink: 0; 
-}
-.toolbar .buttons button {
-    float: left; 
+
+/******************************************************************
+MENU DE LA SEÑAL
+******************************************************************/
+.menu {
+    grid-column: 1 / -1;
+    background-color: #284084;
+    display: flex;
 }
 
 .terminal {
@@ -108,6 +71,7 @@ body {
     flex-grow: 1;
     overflow: auto;
     padding: 4px 0; 
+    color: #EBEBF2;
 }
 
 .terminal div {
@@ -123,9 +87,154 @@ body {
     color: #2196F3; 
 }
 
-.send-data {
-    display: block;
-    margin: 0;
+.eventosRT {
+    display: flex;
+    margin-top: 0.5%;
+    margin-right: 4%;
+    color: #EBEBF2;
+}
+
+.resp {
+    margin-left: 20%;
+}
+
+.segundos {
+    display:flex;
+    margin-top: 0.5%;
+    margin-right: 7%;
+    color: #EBEBF2;
+}
+
+.unidad {
+    margin-left: 10%;
+}
+
+/******************************************************************
+GRAFICA DE LA SEÑAL
+******************************************************************/
+.content {
+    grid-column: 1 / -1;
+    background-color: #e0e3da;
+}
+
+.nombreSenal {
+    text-align: center;
+}
+
+/*CSS Graficas*/
+#chart, #chartContainer {
+    position: relative;
+    max-width: 95vw;
+    margin-right: 0;
+    padding: 0;
+  }
+  
+#demo_chart, #chartSenal {
+    position: relative;
+}
+
+#y_axis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    height: 500px;
+}
+
+#x_axis {
+	position: relative;
+	/*left: 40px;*/
+    height: 40px;
+    width: 80%;
+    margin-left: 40px;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+     /* Could be more or less, depending on screen size */
+    display: grid;
+    grid-template-columns: 2fr 6fr 1fr;
+    grid-template-areas: "imagen detalles cerrar";
+  }
+
+  .modalText {
+    grid-area: detalles;
+  }
+
+  /* The Close Button */
+  .close {
+    grid-area: cerrar;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+/******************************************************************
+OPCIONES DE REGISTRO DE LA SEÑAL
+******************************************************************/
+.footer {
+    grid-column: 1 / -1;
+    background-color: #e0e3da;
+}
+
+.opcionesSenal {
+    margin-top: -0.5%;
+}
+
+.circleBtn{
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #FFF;
+    width: 50px;
+    height: 50px;
+    line-height: 30px;
+    padding: 5px;
+    font-size: 25px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.25), inset 0 -2px 0px rgba(0, 0, 0, 0.18);
+    transition: .2s;
+}
+
+.circleBtn:hover{
+    box-shadow: none;
+}
+
+.circleBtn.opc{
+    background: #3E64CE;
+    border: solid 5px #3E64CE;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .send-form {
@@ -165,58 +274,6 @@ body {
 }
 
 
-/*Botones terminal*/
-.but {
-    background: none;
-    border: none;
-    color: rgba(0, 0, 0, 0.87);
-    cursor: pointer;
-    margin: 0;
-    padding: 12px;
-    transition: background 0.3s, color 0.3s;
-    user-select: none; 
-}
-.but:active {
-    background: rgba(0, 0, 0, 0.12);
-    color: rgba(0, 0, 0, 0.54); 
-}
-.but i.material-icons {
-    vertical-align: middle; 
-}
-
-.final, .inicio {
-    margin: 0 1vw;
-    margin-top: 4vh;
-}
-
-/****************************
-CSS Graficas
-*****************************/
-#chart_container {
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-#demo_chart {
-    position: relative;
-    left: 40px;
-}
-
-#y_axis {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    height: 500px;
-}
-
-#x_axis {
-	position: relative;
-	/*left: 40px;*/
-    height: 40px;
-    width: 80%;
-    margin-left: 40px;
-}
 
 /****************************
 Dashboard
@@ -247,77 +304,133 @@ Dashboard
 .col-1 li {
 }
 
-/****************************
-Otros dispositivos
-*****************************/
+/******************************************************************
+VISTA PARA OTROS DISPOSITIVOS
+******************************************************************/
 
-  /*Vista para tablet*/
-@media screen and (min-width: 600px) {
-    .principal {
-        width: 85%;
-        margin: 0 auto;
-        margin-top: 10%;
-        font-size: 0.90em;
+/*Vista para móvil*/
+@media screen and (min-width: 300px) {
+    
+    .botones {
+        margin-left: 10%;
     }
 
-    .row {
-        margin-top: 60px;
-        
+    .opcSenalView {
+        margin-left: 100px;
     }
 
-    .send-form {
-        height: 6vh; 
-        margin-top: 9vh;
-        width: 75vw;
+    .evtSenal {
+        margin-top: 6px;
+        margin-right: 48px;
     }
 
-    /*Contenido principal*/
-    .principal {
-        width: 90%;
-        /*border: 1px solid #9e9e9e;
-        border-radius: 15px;*/
+    .evtEDM {
+        margin-top: 5px;
+        margin-right: 125px;
+    }
+
+    #chart, #chartContainer {
+        max-width: 89vw;
+        height: 500px;
+    }
+
+    #demo_chart, #chartSenal {
+        left: 10px;
+    }
+
+    .opcionesSenal {
+        margin-left: 23%;
+    }
+
+    .modalSenal {
+        width: 80%;
     }
 }
 
+/*Vista para tablet*/
+@media screen and (min-width: 600px) {
+    .wrapper {
+        grid-template-rows: 13vh 7vh 73vh 7vh;
+    }
 
-    /*Vista para escritorio*/
+    .botones {
+        margin-left: 43%;
+    }
+
+    .opcSenalView {
+        margin-left: 105px;
+    }
+
+    .evtSenal {
+        margin-top: 0.5px;
+        margin-right: 60px;
+    }
+
+    .evtEDM {
+        margin-top: -1.2px;
+        margin-right: 260px;
+    }
+
+    #chart, #chartContainer {
+        max-width: 90vw;
+        height: 215px;
+    }
+
+    #demo_chart, #chartSenal {
+        position: relative;
+        left: 15px;
+    }
+
+    .opcionesSenal {
+        margin-top: -4.5%;
+        margin-left: 35%;
+    }
+
+    .modalSenal {
+        width: 80%;
+    }
+}
+
+/*Vista para desktop*/
 @media screen and (min-width: 800px) {
-    .principal {
-        width: 88%;
-        margin: 0 auto;
-        margin-top: 7%;
-        font-size: 1em;
-        /*border: 1px solid #9e9e9e;
-        border-radius: 15px;*/
+    .wrapper {
+        grid-template-rows: 8vh 6vh 78vh 8vh;
     }
 
-    .row {
-        margin-right: 0;
-        margin-top: 65px;
-        
+    .botones {
+        margin-left: 64%;
     }
 
-    .send-data {
-        width: 100%; 
-        margin-right: 0;
-        width: 100vw;
+    .opcSenalView {
+        margin-left: 80px;
     }
 
-    .send-form {
-        height: 6vh; 
-        margin-top: 4vh;
-        margin-right: 0;
-        width: 90vw;
+    .evtSenal {
+        margin-top: 6px;
+        margin-right: 137px;
     }
 
-    .send-form input {
-        width: 70vw;
+    .evtEDM {
+        margin-top: 6px;
+        margin-right: 102px;
     }
 
-    .final, .inicio {
-        margin: 0 1vw;
-        margin-top: 4vh;
+    #chart, #chartContainer {
+        max-width: 95vw;
+        height: 500px;
     }
-    
 
+    #demo_chart, #chartSenal {
+        position: relative;
+        left: 20px;
+    }
+
+    .opcionesSenal {
+        margin-top: -0.5%;
+        margin-left: 41%;
+    }
+
+    .modalSenal {
+        width: 30%;
+    }
 }

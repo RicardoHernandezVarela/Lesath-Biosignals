@@ -125,16 +125,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #descomentar
-#STATIC_ROOT = '/home/lesath/lesath/static'
+STATIC_ROOT = '/home/lesath/lesath/static'
 
 #comentar
+"""
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-
-#STATIC_ROOT = '/home/lesath/lesath/static'
-
+"""
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = 'home'

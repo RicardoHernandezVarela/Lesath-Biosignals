@@ -4,71 +4,51 @@
 {% load static %}
 
 {% block content %}
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow fixed-top">
-  <h5 class="my-0 mr-md-auto mb-1 logo">LESATH</h5>
-  {% if user.is_authenticated %}
-  <nav class="my-2 my-md-0 mr-md-3">
-    Hola {{ user.username }}!
-    <a class="#" href="{% url 'useredit' user.id %}">
-      <i class="material-icons">edit</i>
+<div class="homeContent">
+  
+  <div class="appName">
+    <h5 class="logo">
+      Lesath
+    </h5>
+    <h5 class="biosig">
+      Biosignals
+    </h5>
+  </div>
+  
+  <div class="sesion">
+    {% if user.is_authenticated %}
+    <div class="bienvUser">
+      Hola {{ user.username }}!
+      <a class="#" href="{% url 'useredit' user.id %}">
+        <i class="material-icons">edit</i>
+      </a>
+    </div>
+
+    <br>
+
+    <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">
+      Señales registradas</a></li>-->
+    <a class="btn btn-light" href="{% url 'registros:experimentos' user.username %}">
+        Experimentos
     </a>
-  </nav>
-  <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">Señales registradas</a></li>-->
-  <li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:experimentos' user.username %}">Experimentos</a></li>
-  <li><a class="btn btn-outline-primary mx-1" href="{% url 'logout' %}">Salir</a></li>
-  {% else %}
-  <li><a class="btn btn-outline-primary mx-1" href="{% url 'login' %}">Iniciar sesión</a> </li>
-  <li><a class="btn btn-outline-primary mx-1" href="{% url 'signup' %}">Crear cuenta</a></li>
-  {% endif %}
+
+    <a class="btn btn-light" href="{% url 'logout' %}">
+        Salir
+    </a>
+  
+    {% else %}
+
+    <a class="btn btn-light" href="{% url 'login' %}">
+      Iniciar sesión
+    </a>
+
+    <a class="btn btn-light" href="{% url 'signup' %}">
+      Crear cuenta
+    </a>
+
+    {% endif %}
+  </div>
+  
 </div>
-
-<div class="card-deck">
-  <div class="card">
-    <img class="card-img-top" src="{% static 'img/oximetro.png' %}" alt="oximetro">
-    <div class="card-body">
-      <h5 class="card-title">Oximetro</h5>
-      <p class="card-text">Sensor 1</p>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img-top" src="{% static 'img/ECG.png' %}" alt="ecg">
-    <div class="card-body">
-      <h5 class="card-title">Electrocardiograma</h5>
-      <p class="card-text">Sensor 2</p>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img-top" src="{% static 'img/EMG.png' %}" alt="emg">
-    <div class="card-body">
-      <h5 class="card-title">Electromiograma</h5>
-      <p class="card-text">Sensor 3</p>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img-top" src="{% static 'img/FCG.png' %}" alt="fcg">
-    <div class="card-body">
-      <h5 class="card-title">Fonocardiograma</h5>
-      <p class="card-text">Sensor 4</p>
-
-    </div>
-  </div>
-  <div class="card">
-    <img class="card-img-top" src="{% static 'img/dermico.png' %}" alt="edm">
-    <div class="card-body">
-      <h5 class="card-title">Electrodermico</h5>
-      <p class="card-text">Sensor 5</p>
-
-    </div>
-
-</div>
-
-
-
 
 {% endblock %}

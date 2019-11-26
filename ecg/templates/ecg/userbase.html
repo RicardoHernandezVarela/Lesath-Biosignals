@@ -57,33 +57,18 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column opcionesBar mt-2">
               <li class="nav-item">
-                <a class="nav-link {% block activePr %}{% endblock %} mt-2" href="{% url 'registros:experimentos' user.username %}">
+                <a class="nav-link {% block activePr %}{% endblock %} mt-2 opUser" href="{% url 'registros:experimentos' user.username %}">
                   Proyectos
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% block activeC %}{% endblock %}" href="{% url 'registros:colaboracion' user.username %}">
+                <a class="nav-link {% block activeC %}{% endblock %} opUser" href="{% url 'registros:colaboracion' user.username %}">
                   Colaboraciones
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link opUser" href="#">
                   Perfil
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Electrocardiogramas
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Electromiogramas
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Fonocardiogramas
                 </a>
               </li>
             </ul>

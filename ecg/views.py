@@ -14,13 +14,14 @@ from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, to_download, 
 from ecg.filters import *
 from dal import autocomplete
 
-#Vistas
-
 def registros(request):
     return render(request, 'ecg/senales.html')
 
-# Ver secciones (unidades) y crear nuevas secciones
-#@method_decorator([login_required], name='dispatch')
+###########################################################
+# Ver los experimentos del usuario y crear nuevos
+# @method_decorator([login_required], name='dispatch')
+###########################################################
+
 class experimentos(ListView, FormView):
     context_object_name = 'experimentos'
     template_name = 'ecg/experimentos.html'
@@ -38,6 +39,28 @@ class experimentos(ListView, FormView):
         experimento.save()
         return redirect('registros:experimentos', experimento.usuario.username)
 
+###########################################################
+# Borrar experimento
+###########################################################
+class borrarExperimento(DeleteView):
+    model = Experimento
+
+    def get_success_url(self, **kwargs):
+        pk = self.object.pk
+        experimento = Experimento.objects.get(pk=pk)
+        username = experimento.usuario.username
+        return reverse_lazy('registros:experimentos', kwargs={'username': username})
+
+###########################################################
+# Editar experimento
+###########################################################
+class editarExperimento(UpdateView):
+    model = Experimento
+    fields = ['nombre', 'detalle']
+
+###########################################################
+# Ver las señales existentes dentro del experimento.
+###########################################################
 class senales_exp(ListView, FormView):
     context_object_name = 'senales'
     template_name = 'ecg/senalesExp.html'
@@ -60,6 +83,10 @@ class senales_exp(ListView, FormView):
         return redirect('registros:nueva', senal.pk)
         #return redirect('registros:senalesExp', experimento.pk)
 
+        
+###########################################################
+# Ver las colaboraciones del usuario y crear nuevas.
+###########################################################
 class colaboracion(ListView):
     context_object_name = 'colaboraciones'
     template_name = 'ecg/colaboraciones.html'
@@ -70,6 +97,9 @@ class colaboracion(ListView):
         queryset = self.request.user.colaboracion_set.all()
         return queryset
 
+###########################################################
+# Autocomplete para buscar usuarios y compartir un experimento.
+###########################################################
 class UserAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         user = self.request.user
@@ -90,6 +120,9 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
 
         return qs
 
+###########################################################
+# Crear nueva colaboración.
+###########################################################
 class nueva_colaboracion(CreateView):
     template_name = 'ecg/colaboracion_form.html'
     form_class = ColaboracionForm
@@ -111,6 +144,9 @@ class nueva_colaboracion(CreateView):
         colaboracion = form.save(commit=False)
         colaboracion.save()
         return redirect('registros:colaboracion', us.username)
+
+
+
 
 class ver_registros(ListView, FormView):
     context_object_name = 'signals'

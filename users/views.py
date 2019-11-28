@@ -7,12 +7,13 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import CustomUserCreationForm
 
-class SignUp(generic.CreateView):
+class SignUp(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
+    
 
 class UserUpdate(UpdateView):
     model = CustomUser
     fields = ['username', 'email']
-    template_name = 'users/customuser_form.html'
+    template_name = 'registration/editUser.html'

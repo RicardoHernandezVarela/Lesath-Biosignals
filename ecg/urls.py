@@ -1,16 +1,36 @@
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from . import views
+from ecg.viewsFolder import experimentos, senales, colaboraciones
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include(([
-        path('experimentos/<username>/', views.experimentos.as_view(), name='experimentos'),
-        path('experimento/<int:pk>/', views.senales_exp.as_view(), name='senalesExp'),
 
-        path('colaboraciones/<username>/', views.colaboracion.as_view(), name='colaboracion'),
-        path('user-autocomplete/', views.UserAutocomplete.as_view(), name='user-autocomplete'),
-        path('colaboracionNueva/<username>/', views.nueva_colaboracion.as_view(), name='nueva_colaboracion'),
+        #Ver los experimentos del usuario y crear nuevos.
+        path('experimentos/<username>/', experimentos.experimentos.as_view(), name='experimentos'),
+       
+        #Borrar experimento.
+        path('borrar-experimento/<int:pk>/', experimentos.borrarExperimento.as_view(), name='exp-delete'),
+
+        #Editar experimento.
+        path('editar-experimento/<int:pk>/', experimentos.editarExperimento.as_view(), name='exp-edit'),
+
+        
+
+        #Ver las colaboraciones del usuario y crear nuevas.
+        path('colaboraciones/<username>/', colaboraciones.colaboracion.as_view(), name='colaboracion'),
+
+        #Autocomplete para buscar usuarios y compartir un experimento.
+        path('user-autocomplete/', colaboraciones.UserAutocomplete.as_view(), name='user-autocomplete'),
+
+        #Crear nueva colaboración. BORRAR
+        path('colaboracionNueva/<username>/', colaboraciones.nueva_colaboracion.as_view(), name='nueva_colaboracion'),
+
+
+
+        #Ver las señales existentes dentro del experimento.
+        path('experimento/<int:pk>/', senales.senales_exp.as_view(), name='senalesExp'),
 
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
         path('experimento/<int:pk>/eliminar/', views.SignalDelete.as_view(), name='eliminar'),

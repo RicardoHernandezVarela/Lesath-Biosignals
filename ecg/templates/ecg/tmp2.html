@@ -1,0 +1,31 @@
+{% block content %}
+<!--
+{% for exp in user.experimento_set.all %}
+  <h6>{{ exp.colaboracion_set.all}}</h6>
+{% endfor %}
+-->
+{%for colaboracion in colaboraciones %}
+<div class="card mx-1 my-2">
+  <div class="card-body">
+
+    <h5 class="card-title">
+      <a href="{% url 'registros:senalesExp' colaboracion.experimento.id %}">
+        {{ colaboracion.experimento }}
+      </a>
+    </h5>
+    <p class="card-text">
+      Creador: {{ colaboracion.experimento.usuario }}
+    </p>
+
+    <p class="card-text">
+      señales: {{ colaboracion.experimento.signal_set.all.count }}
+    </p>
+
+  </div>
+  <div class="card-footer">
+    <small class="#">{{ colaboracion.experimento.fecha }}</small>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

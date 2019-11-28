@@ -1,60 +1,72 @@
 {% extends 'ecg/userbase.html' %}
 
 {% block content %}
-{% for experimento in experimentos %}
-<div class="card mx-1 my-2">
-  <div class="card-body">
-    <!--{{ forloop.counter }} -->
-    <h5 class="card-title">
-      <a href="{% url 'registros:senalesExp' experimento.id %}">{{experimento.nombre}}</a>
-    </h5>
-
-    <h6>Colaboradores:</h6>
-    <br>
-    <p class="card-text">
-      {% for colaboracion in experimento.colaboracion_set.all%}
-        {{colaboracion.colaborador}}
-      {% endfor %}
-    </p>
-
-    <p class="card-text">
-      señales: {{ experimento.signal_set.all.count }}
-    </p>
-
-    <a class="#" href="#">
-        <i class="material-icons">edit</i>
-    </a>
-    <a class="#" href="#">
-        <i class="material-icons">delete</i>
-    </a>
-    <a class="#" href="#">
-        <i class="material-icons">note_add</i>
-    </a>
-    <br>
-    {{experimento.detalle}}
-
+  {% if experimentos|length_is:"0" %}
+  <div class="card-empty">
+    <h6>
+      Aun no tienes experimentos, crea uno nuevo.
+    </h6>
   </div>
-  <div class="card-footer">
-    <small class="#">
-      {{experimento.fecha}}
-    </small>
+  {% endif %}
+  {% for experimento in experimentos %}
+    <div class="card">
+      <div class="card-header">
+        <h6>
+          <a href="{% url 'registros:senalesExp' experimento.id %}">{{experimento.nombre}}</a>
+        </h6>
+      </div>
 
-  </div>
-</div>
-{% endfor %}
+      <div class="card-content">
+        <div class="detalle">
+          <h6>Detalles</h6>
+          <p>{{experimento.detalle}}</p>
+        </div>
+        <div class="colaboradores">
+          <h6>Colaboradores</h6>
+          <ul class="colaboradores-list">
+            {% for colaboracion in experimento.colaboracion_set.all%}
+              <li>
+                {{colaboracion.colaborador}}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="muestras">
+          <h6>Muestras</h6>
+          <p>{{ experimento.signal_set.all.count }}</p>
+        </div>
+      </div>
 
+      <div class="card-footer">
+          <h6>Creado: {{experimento.fecha}}</h6>
+          <div class="options">
+            <a href="{% url 'registros:exp-edit' experimento.id %}">
+              <i class="material-icons">edit</i>
+            </a>
+
+            <!-- Borrar experimento -->
+            <form action="{% url 'registros:exp-delete' experimento.id %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button class="btn-delete">
+                  <i class="material-icons">delete</i>
+              </button>
+            </form>
+
+          </div>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}
 
-{% block add %}
-{% include "ecg/experimento_form.html" %}
+{% block form %}
+  {% include "ecg/experimento_form.html" %}
 {% endblock %}
 
 {% block title %}Experimentos{% endblock %}
-{% block link %}
-<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#proyecto">
-    Nuevo proyecto
-</button>
+
+{% block add %}
+  <button class="add">
+      <i class="material-icons">add</i>
+  </button>
 {% endblock %}
 
-{% block dashName %}Dashboard{% endblock %}
-{% block activePr %}active{% endblock %}

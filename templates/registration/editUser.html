@@ -9,7 +9,7 @@
 
   <form class="form" action="" method="post" enctype="multipart/form-data">
     <img src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
-    <h1>Inicia sesión</h1>
+    <h1>Editar información</h1>
 
     {% csrf_token %}
 
@@ -24,7 +24,7 @@
 
     {% endfor %}
 
-    <button type="submit">Iniciar sesión</button>
+    <button type="submit">Guardar cambios</button>
   </form>
 
 </div>

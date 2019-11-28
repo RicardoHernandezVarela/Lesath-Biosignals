@@ -1,22 +1,35 @@
-{% extends 'ecg/formbase.html' %}
+<div class="modal">
+  <div class="modal-content">
+      <span class="close">
+        <i class="material-icons">close</i>
+      </span>
 
-{% block title %}Nueva colaboración{% endblock %}
-
-{% block content %}
-
-<form class="form-signin text-center d-block p-2" action="" method="post" enctype="multipart/form-data">
-  <h1 class="logo">Lesath</h1>
-  {% csrf_token %}
-  <div class="mb-4">
-    <label class="mb-2" for="id_experimento">Proyecto</label>
-    {{ form.experimento }}
+      <form class="form" action="" method="post" 
+      enctype="multipart/form-data">
+      
+        <h1 class="logoColab">Crear nueva colaboración</h1>
+        
+        {% csrf_token %}
+        
+        <div class="form-field">
+        <label for="id_experimento">Proyecto</label>
+        <br>
+        {{ form.experimento }}
+        </div>
+        
+        <div class="form-field">
+        <label for="id_colaborador">Colaborador</label>
+        <br>
+        {{ form.colaborador }}
+        </div>
+        
+        <button type="submit">Crear colaboración</button>
+      </form>
+      
+      {{ form.media }}
   </div>
-  <div class="mb-4">
-    <label class="mb-2" for="id_colaborador">Colaborador</label>
-    {{ form.colaborador }}
-  </div>
-  <button type="submit" class="btn btn-primary mt-2">Crear colaboración</button>
-</form>
+</div>
 
-{{ form.media }}
-{% endblock %}
+
+
+

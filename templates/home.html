@@ -5,46 +5,56 @@
 
 {% block content %}
 <div class="homeContent">
-  
-  <div class="appName">
-    <h5 class="logo">
-      Lesath
-    </h5>
-    <h5 class="biosig">
-      Biosignals
-    </h5>
+  <div class="prim"></div>
+  <div class="logo">
+    Lesath
   </div>
-  
+
+  <div class="biosignals">
+    Biosignals
+  </div>
+
   <div class="sesion">
+
     {% if user.is_authenticated %}
-    <div class="bienvUser">
-      Hola {{ user.username }}!
-      <a class="#" href="{% url 'useredit' user.id %}">
-        <i class="material-icons">edit</i>
+
+      <div class="bienvUser">
+        Hola {{ user.username }}!
+        <a href="{% url 'useredit' user.id %}">
+          <i class="material-icons">edit</i>
+        </a>
+      </div>
+
+    {% else %}
+      <div>
+        Inicia sesión o crea una cuenta.
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="botones">
+    {% if user.is_authenticated %}
+
+      <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">
+        Señales registradas</a></li>-->
+
+      <a class="btn left" href="{% url 'registros:experimentos' user.username %}">
+          Experimentos
       </a>
-    </div>
 
-    <br>
-
-    <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">
-      Señales registradas</a></li>-->
-    <a class="btn btn-light" href="{% url 'registros:experimentos' user.username %}">
-        Experimentos
-    </a>
-
-    <a class="btn btn-light" href="{% url 'logout' %}">
-        Salir
-    </a>
-  
+      <a class="btn right" href="{% url 'logout' %}">
+          Salir
+      </a>
+    
     {% else %}
 
-    <a class="btn btn-light" href="{% url 'login' %}">
-      Iniciar sesión
-    </a>
+      <a class="btn left" href="{% url 'login' %}">
+        Iniciar sesión
+      </a>
 
-    <a class="btn btn-light" href="{% url 'signup' %}">
-      Crear cuenta
-    </a>
+      <a class="btn right" href="{% url 'signup' %}">
+        Crear cuenta
+      </a>
 
     {% endif %}
   </div>

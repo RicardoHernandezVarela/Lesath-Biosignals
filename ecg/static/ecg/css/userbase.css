@@ -236,6 +236,8 @@ CONTENT CARDS
 .colaboradores-list {
   font-size: 0.75em;
   list-style: none;
+  padding-left: 5px;
+  text-align: left;
 }
 
 .muestras {
@@ -257,7 +259,8 @@ CONTENT CARDS
   grid-template-columns: repeat(3, 1fr);
 }
 
-.card-footer h6 {
+.card-footer h6,
+.signal-footer h6 {
   grid-column: 1/2;
   text-align: center;
   margin: 13px auto;
@@ -265,26 +268,35 @@ CONTENT CARDS
   font-size: 0.75em;
 }
 
-.card-footer .options {
+.card-footer .options,
+.signal-footer .signal-options {
   grid-column: 3/-1;
   text-align: center;
   margin-top: 7px;
 }
 
-.card-footer a {
+.card-footer a,
+.signal-footer a {
   color: #80cbc4;
 }
 
-.btn-delete {
+.btn-delete, .editTrigger {
   border: none;
   background-color: #039be5;
   color: #80cbc4;
 }
 
+.btn-delete:hover {
+  cursor: pointer;
+}
+
+.editTrigger span {
+  display: none;
+}
 /******************************************
 MODAL FORM
 ******************************************/
-.modal {
+.modal, .modalEdit {
   background-color: #1976d2;
   z-index: 1;
   display: none;
@@ -309,7 +321,7 @@ MODAL FORM
   grid-template-rows: 50px auto;
 }
 
-.modal-content .close {
+.modal-content .close, .closeEdit {
   display: block;
   margin: 0 auto;
   background-color: #bbdefb;
@@ -322,7 +334,8 @@ MODAL FORM
   text-align: center;
 }
 
-.modal-content .close i {
+.modal-content .close i,
+.closeEdit i {
   padding-top: 7px;
 }
 
@@ -356,29 +369,34 @@ MODAL FORM
   color: #fafafa;
 }
 
+.edit h1, .edit label{
+  color:#284084;
+}
+
 .form-field input {
   border: none; outline: none;
   background-color: #bbdefb;
   color: #009688;
   margin: 4px 0;
   border-radius: 10px;
-  width: 300px;
+  width: 250px;
   height: 30px;
   text-align: center;
 }
 
 .form-field textarea {
   background-color: #bbdefb;
+  width: 250px;
   color: #009688;
 }
 
-.form-field select{
+.form-field select {
   border: none; outline: none;
   background-color: #bbdefb;
   color: #009688;
   margin: 10px 0;
   border-radius: 10px;
-  width: 300px;
+  width: 250px;
   height: 30px;
   text-align: center;
 }
@@ -391,7 +409,7 @@ MODAL FORM
 .select2-selection {
   background-color: #bbdefb;
   color: #009688;
-  width: 90%;
+  width: 250px;
 }
 
 .select2-selection__arrow {
@@ -406,7 +424,7 @@ MODAL FORM
   display: block;
   margin: 8px auto;
   border-radius: 10px;
-  width: 300px;
+  width: 250px;
   height: 35px;
 }
 
@@ -414,9 +432,64 @@ MODAL FORM
   background-color: #01579b;
 }
 
+.editBTN button:hover {
+  background-color: #1976d2;
+}
+
 /******************************************
-FORM-COLABORACIONES
+SIGNAL CARDS
 ******************************************/
+.signal {
+  height: 140px;
+  border-radius: 10px;
+  background-color: #e0f2f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 12px;
+  
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 40px auto 40px;
+}
+
+.signal-header {
+  grid-column: 1/-1;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.signal-header a {
+  color: #e0f2f1;
+  font-size: 0.85em;
+  display: inline-block;
+  margin: 10px auto;
+}
+
+.signal-content {
+  grid-column: 1/-1;
+}
+
+.signal-footer {
+  grid-column: 1/-1;
+  background-color:#fafafa;
+  border-radius:  0 0 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.signal-delete {
+  background-color:#fafafa;
+}
+
+.creador {
+  text-align: center;
+  font-size: 0.85em;
+}
+
+.signal-muestras {
+  font-size: 0.2em;
+  display: block;
+  text-align: center;
+}
 
 /******************************************
 VISTA PARA OTROS DISPOSITIVOS
@@ -432,7 +505,8 @@ VISTA PARA OTROS DISPOSITIVOS
     margin-left: 83%;
   }
 
-  .card-footer h6 {
+  .card-footer h6,
+  .signal-footer h6 {
     font-size: 0.48em;
   }
   
@@ -444,9 +518,22 @@ VISTA PARA OTROS DISPOSITIVOS
     width: 81%;
   }
 
+  .form-container {
+    margin-left: -3%;
+  }
+
   .form span {
     margin: 0 auto;
     font-size: 1em;
+  }
+
+  .signal-muestras {
+    font-size: 1em;
+  }
+
+  .signal {
+    margin-top: 8px;
+    margin-bottom: 25px;
   }
 
 }
@@ -461,7 +548,8 @@ VISTA PARA OTROS DISPOSITIVOS
     margin-left: 85%;
   }
 
-  .card-footer h6 {
+  .card-footer h6,
+  .signal-footer h6 {
     font-size: 0.6em;
   }
 
@@ -470,8 +558,18 @@ VISTA PARA OTROS DISPOSITIVOS
   }
 
   .modal-content {
-    width: 60%;
+    width: 50%;
   }
+
+  .form-container {
+    margin-left: 0;
+  }
+
+  .signal {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
 }
 
 @media screen and (min-width: 800px) {
@@ -484,7 +582,8 @@ VISTA PARA OTROS DISPOSITIVOS
     margin-left: 85%;
   }
 
-  .card-footer h6 {
+  .card-footer h6,
+  .signal-footer h6 {
     font-size: 0.7em;
   }
 
@@ -496,6 +595,10 @@ VISTA PARA OTROS DISPOSITIVOS
     width: 60%;
   }
 
+  .signal-muestras {
+    font-size: 1.3em;
+  }
+
 }
 
 @media screen and (min-width: 1100px) {
@@ -505,6 +608,6 @@ VISTA PARA OTROS DISPOSITIVOS
   }
 
   .modal-content {
-    width: 45%;
+    width: 35%;
   }
 }

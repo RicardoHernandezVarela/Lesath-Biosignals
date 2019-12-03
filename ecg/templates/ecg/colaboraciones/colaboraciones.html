@@ -1,6 +1,7 @@
 {% extends 'ecg/userbase.html' %}
 
 {% block content %}
+  {{username}}
   {% if colaboraciones|length_is:"0" %}
     <div class="card-empty">
       <h6>
@@ -25,7 +26,7 @@
         </div>
         <div class="colaboradores">
           <h6>Creado por</h6>
-          <ul>
+          <ul class="colaboradores-list">
             <li>
               {{ colaboracion.experimento.usuario }}
             </li>
@@ -44,8 +45,10 @@
             Creado: {{ colaboracion.experimento.fecha }}
           </h6>
           <div class="options">
+            <!--
             <i class="material-icons">edit</i>
             <i class="material-icons">delete</i>
+            -->
           </div>
       </div>
     </div>

@@ -1,20 +1,27 @@
-<!-- Modal -->
-<div class="modal fade" id="signal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Nueva señal</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form class="#" action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% include 'form-template.html' %}
-                <button type="submit" class="btn btn-primary mt-2">Guardar</button>
-            </form>
-        </div>
-        </div>
+<div class="modal">
+    <div class="modal-content">
+        <span class="close">
+            <i class="material-icons">close</i>
+        </span>
+        
+        <form class="form" action="" method="post" 
+              enctype="multipart/form-data">
+
+            <h1>Nueva señal</h1>
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="form-field">
+                    <span>{{ field.errors }}</span>
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                </div>
+        
+            {% endfor %}
+            
+            <button type="submit" class="">Guardar</button>
+        </form>
     </div>
 </div>

@@ -1,0 +1,29 @@
+{% extends 'ecg/userbase.html' %}
+{% block title %}Editar experimento{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <div class="form-container">
+        <form class="form edit" action="" method="post" enctype="multipart/form-data">
+            <img src="{% static 'ecg/img/logo.png' %}" alt="" width="72" height="72">
+            <h1>Editar experimento</h1>
+            
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="form-field edit">
+                    <span>{{ field.errors }}</span>
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                </div>
+        
+            {% endfor %}
+            
+            <button type="submit" class="editBTN">Guardar cambios</button>
+        </form>
+
+    </div>
+{% endblock %}

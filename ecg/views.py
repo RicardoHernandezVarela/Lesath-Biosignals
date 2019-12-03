@@ -169,8 +169,8 @@ class SignalDelete(DeleteView):
     model = Signal
 
     def get_success_url(self):
+        print(self.object)
         exp = self.object.experimento
-
         return reverse_lazy('registros:senalesExp', kwargs={'pk': exp.pk})
 
 class SignalUpdate(UpdateView):
@@ -190,6 +190,7 @@ def nueva_senal(request, pk):
 
     return render(request, 'ecg/nueva_senal.html', {'key':pk, 'signal':signal, 'categoria': categoria})
 
+# Modificar para separa data de la info de la señal.
 @csrf_exempt
 def senal_info(request, pk):
     senal = request.POST.get('mediciones')
@@ -200,7 +201,7 @@ def senal_info(request, pk):
     print(len(sign))
     df = crear_df(sign)
 
-    signal = Signal.objects.get(pk=pk)
+    signal = Signal.objects.get(pk=pk) # Modificar para separa data de la info de la señal.
     signal.muestras = len(sign)
     signal.data = df
     signal.save()

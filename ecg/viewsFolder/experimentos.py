@@ -18,7 +18,7 @@ from dal import autocomplete
 
 class experimentos(ListView, FormView):
     context_object_name = 'experimentos'
-    template_name = 'ecg/experimentos.html'
+    template_name = 'ecg/experimentos/experimentos.html'
     model = Experimento
     form_class = ExperimentoForm
 
@@ -51,9 +51,11 @@ class borrarExperimento(DeleteView):
 class editarExperimento(UpdateView):
     model = Experimento
     fields = ['nombre', 'detalle']
+    template_name = 'ecg/experimentos/experimento_edit.html'
 
     def get_success_url(self, **kwargs):
         pk = self.object.pk
+        print(pk)
         experimento = Experimento.objects.get(pk=pk)
         username = experimento.usuario.username
         return reverse_lazy('registros:experimentos', kwargs={'username': username})

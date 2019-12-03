@@ -17,7 +17,7 @@ from dal import autocomplete
 ###########################################################
 class colaboracion(ListView, FormView):
     context_object_name = 'colaboraciones'
-    template_name = 'ecg/colaboraciones.html'
+    template_name = 'ecg/colaboraciones/colaboraciones.html'
     model = Colaboracion
     form_class = ColaboracionForm
 
@@ -67,7 +67,7 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
 # Crear nueva colaboración. BORRAR
 ###########################################################
 class nueva_colaboracion(CreateView):
-    template_name = 'ecg/colaboracion_form.html'
+    template_name = 'ecg/colaboraciones/colaboracion_form.html'
     form_class = ColaboracionForm
     model = Colaboracion
 

@@ -1,31 +1,98 @@
+{% extends 'ecg/userbase.html' %}
+
 {% block content %}
-<!--
-{% for exp in user.experimento_set.all %}
-  <h6>{{ exp.colaboracion_set.all}}</h6>
-{% endfor %}
--->
-{%for colaboracion in colaboraciones %}
-<div class="card mx-1 my-2">
-  <div class="card-body">
+  {% for senal in senales %}
+  <div class="card mx-1 my-2">
+    <div class="card-body">
+      <!--{{ forloop.counter }}-->
 
-    <h5 class="card-title">
-      <a href="{% url 'registros:senalesExp' colaboracion.experimento.id %}">
-        {{ colaboracion.experimento }}
-      </a>
-    </h5>
-    <p class="card-text">
-      Creador: {{ colaboracion.experimento.usuario }}
-    </p>
+      <!--HEADER-->
+      {% if senal.muestras == 0 %}
+        <div class="nomCat">
+            <span class="badge badge-pill badge-light">
+              {{senal.nombre}} &nbsp {{senal.categoria}}
+            </span>
+        </div>
+        
 
-    <p class="card-text">
-      señales: {{ colaboracion.experimento.signal_set.all.count }}
-    </p>
+        <div class="mdl">
+          <div class="modal-content modalSenal">
+              <span class="cls">&times;</span>
+              <h5 class="modalText">Esta señal no tiene muestras</h5>
+          </div>
+        </div>
+      {% else %}
+        {% if senal.categoria == 'Electrocardiograma' %}
+            <a class="nombre" href="{% url 'registros:ecg' senal.id %}">
+                <span class="badge badge-pill badge-danger">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+            </a>
+        {% elif senal.categoria == 'Electromiograma' %}
+            <a class="nombre" href="{% url 'registros:emg' senal.id %}">
+                <span class="badge badge-pill badge-primary">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+            </a>
+        {% elif senal.categoria == 'Oximetría' %}
+            <span class="badge badge-pill badge-success">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
 
+        {% elif senal.categoria == 'Fonocardiograma' %}
+            <a class="nombre" href="{% url 'registros:fcg' senal.id %}">
+                <span class="badge badge-pill badge-dark">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+            </a>
+
+        {% else %}
+            <a class="nombre" href="{% url 'registros:edm' senal.id %}">
+                <span class="badge badge-pill badge-warning">{{senal.nombre}} &nbsp {{senal.categoria}}</span>
+            </a>
+        {% endif %}
+      {% endif %}
+
+      <!--CONTENT-->
+      <div class="card-text">
+        <ul class="cardlist pl-0">
+          <li>
+            Muestras: {{senal.muestras}}
+          </li>
+          <li>
+            <a class="#" href="{% url 'registros:editar' senal.id %}">
+              <i class="material-icons">edit</i>
+            </a>
+            <a class="#" href="{% url 'registros:eliminar' senal.id %}">
+                <i class="material-icons">delete</i>
+            </a>
+            <a class="#" href="{% url 'registros:nueva' senal.id %}">
+                <i class="material-icons">note_add</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!--FOOTER-->
+    <div class="card-footer">
+      <small class="#">
+        {{senal.fecha}}
+      </small>
+
+    </div>
   </div>
-  <div class="card-footer">
-    <small class="#">{{ colaboracion.experimento.fecha }}</small>
-  </div>
-</div>
-{% endfor %}
+  {% endfor %}
 
+{% endblock %}
+
+{% block form %}
+  {% include "ecg/signal_form.html" %}
+{% endblock %}
+
+{% block dashName %}
+  {% with senal1=senales.first %}
+      {{ senal1.experimento }}
+  {% endwith %}
+{% endblock %}
+
+{% block title %}Experimentos{% endblock %}
+
+{% block add %}
+  <button class="add">
+      <i class="material-icons">add</i>
+  </button>
 {% endblock %}

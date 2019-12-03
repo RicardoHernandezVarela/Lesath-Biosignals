@@ -12,7 +12,9 @@
     <div class="card">
       <div class="card-header">
         <h6>
-          <a href="{% url 'registros:senalesExp' experimento.id %}">{{experimento.nombre}}</a>
+          <a href="{% url 'registros:senalesExp' experimento.id %}">
+            {{experimento.nombre}} 
+          </a>          
         </h6>
       </div>
 
@@ -38,9 +40,10 @@
       </div>
 
       <div class="card-footer">
-          <h6>Creado: {{experimento.fecha}}</h6>
+          <h6>Creado en: {{experimento.fecha}}</h6>
           <div class="options">
-            <a href="{% url 'registros:exp-edit' experimento.id %}">
+            <!-- Actualizar experimento -->
+            <a href="{% url 'registros:exp-edit' experimento.id %}" class="editTrigger">
               <i class="material-icons">edit</i>
             </a>
 

@@ -6,10 +6,12 @@ from django.http import HttpResponse
 
 from django.urls import reverse_lazy, reverse
 from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
-from ecg.models import Experimento, Colaboracion, Signal, Descripcion
+from ecg.models import Experimento, Colaboracion, Signal, Descripcion, Datasenal
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
 from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
+
+import json
 
 from ecg.filters import *
 from dal import autocomplete
@@ -190,22 +192,49 @@ def nueva_senal(request, pk):
 
     return render(request, 'ecg/nueva_senal.html', {'key':pk, 'signal':signal, 'categoria': categoria})
 
+
+
+##########################
+# Mover a senales.py
+###########################
+
+
 # Modificar para separa data de la info de la señal.
 @csrf_exempt
 def senal_info(request, pk):
-    senal = request.POST.get('mediciones')
-    sign = senal.split(',')
-    sign = [float(x) for x in sign]
+    body = json.loads(request.body)
+    senal = body['data']
+    freq = body['frecuencia']
 
-    print(type(sign[0]))
-    print(len(sign))
-    df = crear_df(sign)
+    print(len(senal))
+    print(freq)
 
-    signal = Signal.objects.get(pk=pk) # Modificar para separa data de la info de la señal.
-    signal.muestras = len(sign)
+    df = crear_df(senal)
+
+    # Eliminar.
+    signal = Signal.objects.get(pk=pk) 
+    signal.muestras = len(senal)
     signal.data = df
     signal.save()
-    return render(request, 'ecg/simple.html', {'key':pk})
+    # Eliminar.
+    
+    datasets = signal.datasenal_set.all()
+
+    if len(datasets) == 0:
+        dataset = Datasenal(senal=signal, muestras=len(senal), data=df, frecuencia=freq)
+        dataset.save()
+    else:
+        dataset = datasets[0]
+        dataset.muestras = len(senal)
+        dataset.data = df
+        dataset.frecuencia = freq
+        dataset.save()
+    
+    return HttpResponse(len(senal))
+
+
+
+
 
 #Vista para procesar los dato en tiempo real
 @csrf_exempt

@@ -23,7 +23,7 @@ const getURL = (path, change) => {
 }
 
 signalCat.forEach( item => {
-    console.log(item.parentNode.href);
+    //console.log(item.parentNode.href);
     
     switch(item.innerText) {
         case 'Electrocardiograma':
@@ -48,6 +48,6 @@ signalCat.forEach( item => {
             item.parentNode.parentNode.style.background = '#eeff41';
       }
 
-      console.log(item.parentNode.href);
+      //console.log(item.parentNode.href);
 
 });

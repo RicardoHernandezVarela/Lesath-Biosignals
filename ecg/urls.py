@@ -32,11 +32,14 @@ urlpatterns = [
         #Ver las señales existentes dentro del experimento.
         path('experimento/<int:pk>/', senales.senales_exp.as_view(), name='senalesExp'),
 
-        #Tomar una nueva señal / Retomar la señal
+        #Tomar una nueva señal / Retomar la señal.
         path('nuevoregistro/<int:pk>/', senales.nueva_senal, name='nueva'),
 
         #Eliminar una señal.
         path('experimento/<int:pk>/eliminar/', senales.SignalDelete.as_view(), name='eliminar'),
+
+        #Guardar en la base de datos las muestras de la señal.
+        path('info/<int:pk>/', views.senal_info, name='info'),
 
 
 
@@ -46,7 +49,7 @@ urlpatterns = [
         path('editar/<int:pk>/', views.SignalUpdate.as_view(), name='editar'),
 
         
-        path('info/<int:pk>/', views.senal_info, name='info'),
+        
         path('rt/<int:pk>/', views.rt_info, name='rt'),
 
         path('descargarData/<int:pk>/', views.descargar_datos, name='descargar'),

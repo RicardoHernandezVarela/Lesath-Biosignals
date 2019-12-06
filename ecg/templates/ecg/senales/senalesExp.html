@@ -18,8 +18,10 @@
       </div>
       <div class="card-content">
         <div class="detalle">
-          <h6>Evento</h6>
-          <p></p>
+          <h6>Frecuencia</h6>
+          {% with data=senal.datasenal_set.all.first %}
+            <p>{{data.frecuencia}} Hz</p>
+          {% endwith %}
         </div>
         <div class="colaboradores">
           <h6>Experimento de</h6>
@@ -34,7 +36,9 @@
         <div class="muestras">
           <h6>Muestras</h6>
           <span class="signal-muestras">
-              {{senal.muestras}}
+              {% with data=senal.datasenal_set.all.first %}
+                {{data.muestras}}
+              {% endwith %}
           </span>
         </div>
       </div>
@@ -62,12 +66,6 @@
 
 {% block form %}
   {% include "ecg/signal_form.html" %}
-{% endblock %}
-
-{% block dashName %}
-  {% with senal1=senales.first %}
-      {{ senal1.experimento }}
-  {% endwith %}
 {% endblock %}
 
 {% block title %}Señales{% endblock %}

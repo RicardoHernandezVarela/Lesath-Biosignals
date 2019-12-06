@@ -42,6 +42,7 @@ class Signal(models.Model):
 
     categoria = models.CharField(choices=CATEGORIAS, max_length=50)
     fecha = models.DateField(default=datetime.date.today)
+
     muestras = models.IntegerField(default=0)
     data = PickledObjectField(default=0)
 
@@ -53,6 +54,15 @@ class Signal(models.Model):
     
     def __str__(self):
         return self.nombre
+
+class Datasenal(models.Model):
+    senal = models.ForeignKey(Signal, on_delete=models.CASCADE, null=True)
+    muestras = models.IntegerField(default=0)
+    data = PickledObjectField(default=0)
+    frecuencia = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.senal.nombre
 
 class Descripcion(models.Model):
     senal = models.ForeignKey(Signal, on_delete=models.CASCADE, null=True)

@@ -1,0 +1,328 @@
+/*************************************************
+GENERAL
+*************************************************/
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #c2b8b2;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*************************************************
+Contenedor principal
+*************************************************/
+.container {
+    width: 100%;
+    height: 100vh;
+
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(4, minmax(auto-fit, 1fr));
+    grid-template-rows: 8vh 10vh 69vh 3vh 10vh;
+}
+
+/*************************************************
+HEADER
+*************************************************/
+.header {
+    background-color: #197bbd;
+    border-bottom: 3px solid #686963;
+    grid-column: 1/-1;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.logo {
+    grid-column: 2 / 3;
+
+    display: block;
+    margin: 3% auto;
+    font-family: 'Lobster', cursive;
+    font-weight: 400;
+    font-size: 1.7em;
+    color: #CEE7E6;
+}
+
+.biosignals {
+    grid-column: 5 / 6;
+
+    display: block;
+    margin: 3% auto;
+
+    font-family: 'Lobster', cursive;
+    font-weight: 400;
+    font-size: 1.7em;
+    color: #CEE7E6;
+}
+
+.bluetooth {
+    grid-column: 8 / 9;
+
+    display: flex;
+    margin: 10px auto;
+    color: #CEE7E6;
+}
+
+.bluetooth span {
+    margin-right: 10px;
+}
+
+.bluetooth span:hover {
+    cursor: pointer;
+}
+
+.bluetooth a {
+    color: #CEE7E6;
+}
+
+/*************************************************
+SUBHEADER
+*************************************************/
+.subheader {
+    background-color:#c2b8b2; /*#125e8a*/
+    grid-column: 1/-1;   
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.events {
+    grid-column: 4 / 5;
+    background-color: #0F084B;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 4%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.terminal {
+    grid-column: 5 / 6;
+
+    display: block;
+    margin: 3% auto;
+    font-size: 0.8em;
+    color: #125e8a;
+    text-align: center;
+}
+
+.timer {
+    grid-column: 6 / 7;
+    background-color: #0F084B;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 4%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.event-name, .timer-title {
+    margin: 0 auto;
+    margin-top: 15%;
+    color: #C2B8B2;
+    font-size: 0.8em;
+}
+
+.event-value, .timer-value {
+    margin: 0 auto;
+    color: #C2B8B2;
+    font-size: 1em;
+}
+
+
+/*************************************************
+PLOT
+*************************************************/
+.plot {
+    background-color: #c2b8b2;
+    grid-column: 1/-1;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    padding-top: 5px;
+}
+
+.plot h6 {
+    color: #c2b8b2;
+    grid-column: 4/7;
+    font-size: 0.8em;
+    margin: 5px 0;
+    margin-bottom: 15px;
+    padding: 3px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#signal-id {
+    display: none;
+}
+
+#chart {
+    grid-column: 2/-1;
+}
+
+#y-axis {
+    grid-column: 1/2;
+    max-width: 45px; 
+}
+
+/*************************************************
+FRECUENCIA
+*************************************************/
+.frecuencia {
+    grid-column: 1/-1;
+    background-color: #c2b8b2;
+    display: inline-block;
+    font-size: 0.8em;
+    text-align: center;
+    margin-top: 1px;
+    margin-top: 2px;
+}
+
+.frecuencia select {
+    padding: 1px;
+}
+
+/*************************************************
+BOTONES
+*************************************************/
+.buttons {
+    background-color: #c2b8b2;
+    grid-column: 1/-1;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    z-index: 1;
+}
+
+.play {
+    grid-column: 4 / 5;
+    background-color: #197bbd;
+    color: #c2b8b2;
+
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
+
+.stop { 
+    grid-column: 5 / 6;
+    background-color: #197bbd;
+    color: #c2b8b2;
+
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
+
+.save {
+    grid-column: 6 / 7;
+    background-color: #197bbd;
+    color: #c2b8b2;
+
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
+
+.buttons button:active {
+    background-color: #0F084B;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+
+/**************************************
+Ajuste para otros dispositivos
+**************************************/
+@media (min-width: 250px) {
+    .container {
+        grid-template-rows: 8vh 10vh 67vh 5vh 10vh;
+    }
+
+    .biosignals {
+        display: none;
+    }
+
+    .subheader div {
+        margin: 0 20px;
+        margin-top: 4%;
+    }
+
+    .buttons button {
+        margin: 0 5px;
+    }
+
+    #y-axis {
+        margin-left: 1px;
+    }
+}
+
+@media (min-width: 450px) {
+    .container {
+        grid-template-rows: 13vh 18vh 47vh 5vh 17vh;
+    }
+
+    .biosignals {
+        display: block;
+    }
+}
+
+@media (min-width: 600px) {
+    .container {
+        grid-template-rows: 8vh 10vh 67vh 5vh 10vh;
+    }
+
+    .biosignals {
+        display: block;
+    }
+
+    .buttons button {
+        margin: 0 auto;
+    }
+
+    #y-axis {
+        margin-left: 35px;
+    }
+
+    .subheader div {
+        margin: 0 auto;
+        margin-top: 4%;
+    }
+}
+
+@media (min-width: 800px) {
+    .container {
+        grid-template-rows: 8vh 10vh 67vh 5vh 10vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    #y-axis {
+        margin-left: 103px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        grid-template-rows: 8vh 10vh 67vh 5vh 10vh;
+    }
+}

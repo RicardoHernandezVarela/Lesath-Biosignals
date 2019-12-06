@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 from django.urls import reverse_lazy, reverse
 from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
-from ecg.models import Experimento, Colaboracion, Signal, Descripcion
+from ecg.models import Experimento, Colaboracion, Signal, Datasenal
 from users.models import CustomUser
 from ecg.pruebas import hola, ecg, conect_device, registrar_datos
 from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
@@ -41,9 +41,8 @@ class senales_exp(ListView, FormView):
 ###########################################################
 def nueva_senal(request, pk):
     signal = Signal.objects.get(pk=pk)
-    categoria = signal.categoria
 
-    return render(request, 'ecg/senales/nueva_senal.html', {'key':pk, 'signal':signal, 'categoria': categoria})
+    return render(request, 'ecg/senales/nueva_senal.html', {'key':pk, 'signal':signal})
 
 
 ###########################################################

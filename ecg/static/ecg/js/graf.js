@@ -33,7 +33,7 @@ var updateSenal = 100;
 
 /* Rickshaw.js initialization */
 var chartSenal = new Rickshaw.Graph({
-    element: document.querySelector("#chartSenal"),
+    element: document.querySelector("#chart"),
     width: 1*anchura,
     height: 0.9*altura,
     renderer: "line",

@@ -10,6 +10,7 @@ const saveData = document.querySelector('#saveData');
 ********************************************************/
 const id = document.querySelector('#signal-id');
 const signalCat = document.querySelector('#signalCat');
+const evento = document.querySelector('#evento');
 
 /********************************************************
  ELEMENTO DEL DOM PARA SELECCIONAR LA FRECUENCIA.
@@ -20,7 +21,7 @@ const muestreo = document.querySelector('#muestreo');
  ALMACENAR LOS DATOS DEL SENSOR Y ACTUALIZAR LA GRÁFICA
 ********************************************************/
 var datosSensor = [];
-let avance = 200;
+let avance = 100;
 let inicio = 0;
 
 const recibirDatos = (data) => {
@@ -62,21 +63,26 @@ descargar.addEventListener('click', () => {
  CAMBIAR COLOR SEGÚN EL TIPO DE SEÑAL.
 ******************************************************/
 //console.log(id.innerText, signalCat.innerText);
-let categoria = signalCat.innerText;
+const categoria = signalCat.innerText;
+
 
 switch(categoria) {
     case 'Electrocardiograma':
         signalCat.parentNode.style.background = '#d50000';
+        evento.innerText = 'BPM';
         break;
     case 'Electromiograma':
         signalCat.parentNode.style.background = '#0288d1';
+        evento.innerText = 'ES';
          break;
     case 'Fonocardiograma':
         signalCat.parentNode.style.background = '#00695c';
+        evento.innerText = 'BPM';
         break;
     case 'Electrodérmica':
         signalCat.parentNode.style.background = '#ffb300';
         signalCat.parentNode.style.color = '#000';
+        evento.innerText = 'EST';
         break;
     case 'Oximetría':
         signalCat.parentNode.style.background = '#fb8c00';

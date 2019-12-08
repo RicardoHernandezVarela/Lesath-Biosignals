@@ -1,68 +1,74 @@
 {% extends 'ecg/senbase.html' %}
 
-{% block title %}Nueva señal{% endblock %}
-{% block link %}<a class="nav-link" href="{% url 'registros:señales' user.username %}">
-    Ver registros<span class="sr-only">(current)</span>
-</a>{% endblock %}
+{% block title %}Resumen EMG{% endblock %}
 
 {% load static %}
 
 {% block search %}
 <span id="device-name" class="name" style="display:none;">Dispositivo</span>
 
-<a href="{% url 'registros:senalesExp' signal.experimento.id %}" class="boton btnFold">
-    <i class="material-icons">folder</i>
-</a>
-
-<button class="boton" id="connect" type="button" aria-label="Connect">
+<button class="boton" id="connect" type="button" aria-label="Connect" style="display:none;">
     <i class="material-icons">bluetooth_connected</i>
 </button>
 
-<button class="boton" id="disconnect" type="button" aria-label="Disconnect">
+<button class="boton" id="disconnect" type="button" aria-label="Disconnect" style="display:none;">
     <i class="material-icons">bluetooth_disabled</i>
 </button>
 
-<button class="boton" id="download">
+<button class="boton" id="download" style="display:none;">
     <i class="material-icons">cloud_download</i>
 </button>
+
+<div class="opcSenalView">
+    <a href="{% url 'registros:senalesExp' signal.experimento.id %}" class="boton btnFold">
+        <i class="material-icons">folder</i>
+    </a>
+
+    <button class="boton" id="descargar">
+        <i class="material-icons">cloud_download</i>
+    </button>
+</div>
 {% endblock %}
 
 {% block content %}
 <div class="menu">
     <div id="terminal" class="terminal"></div>
 
-    <div class="eventosRT">
-        {% if signal.categoria == 'Electrocardiograma' %}
-            <span class="#">LPM</span>
-        {% elif signal.categoria == 'Electromiograma' %}
-            <span class="#">Evento</span>
-        {% elif signal.categoria == 'Oximetría' %}
-            <span class="#">Evento</span>
-        {% elif signal.categoria == 'Fonocardiograma' %}
-            <span class="#">LPM</span>
-        {% else %}
-            <span class="#">Estado</span>
-        {% endif %}
+    <div class="evtSenal">
+        <div class="eventosRT">
+            {% if signal.categoria == 'Electrocardiograma' %}
+                <span class="#">LPM</span>
+            {% elif signal.categoria == 'Electromiograma' %}
+                <span class="#">Evento</span>
+            {% elif signal.categoria == 'Oximetría' %}
+                <span class="#">Evento</span>
+            {% elif signal.categoria == 'Fonocardiograma' %}
+                <span class="#">LPM</span>
+            {% else %}
+                <span class="#">Estado</span>
+            {% endif %}
 
-        <h5 id="respuesta" class="resp">0</h5>
+            <h5 id="respuesta" class="resp">0</h5>
+        </div>
     </div>
 
-    <div class="segundos">
+    <div class="segundos" style="display:none;">
         <h5 id="tiempo">0</h5>
         <span class="unidad">segundos</span>
     </div>
-
-    <button id="enviar" class="#" style="display:none;">Enviar</button>
 
 </div>
 
 <div class="content">
     <h5 class="nombreSenal">{{signal.categoria}} de {{signal.nombre}}</h5>
-    <div id="chart" class="#">
-        <div id="demo_chart" class="#">
+    <script>
+        let labels = {{ labels }};
+        let muestras = {{ data }};
+        let categoria = 'Electrocardiograma';
+    </script>
 
-                <!--<canvas class="card-text" id="realtime" width="400" height="150" style="margin-left:-4%;"></canvas>-->
-
+    <div id="chartContainer" class="#">
+        <div id="chartSenal" class="#">
         </div>
     </div>
 
@@ -73,7 +79,6 @@
         </div>
     </div>
 
-    <script src="{% static 'ecg/js/realtime.js' %}"></script>
 </div>
 
 <div class="footer">
@@ -88,21 +93,24 @@
     </form>
 
     <div class="opcionesSenal">
-        <button id="start" class="circleBtn opc" type="submit">
+        <button id="play" class="circleBtn opc" type="submit">
             <i class="material-icons">play_arrow</i>
         </button>
 
-        <button id="stop" class="circleBtn opc" type="submit">
-            <i class="material-icons">stop</i>
+        <button id="pause" class="circleBtn opc" type="submit">
+            <i class="material-icons">pause</i>
         </button>
 
-        <button id="guardar" class="circleBtn opc">
-            <i class="material-icons">save</i>
+        <button id="replay" class="circleBtn opc">
+            <i class="material-icons">replay</i>
         </button>
     </div>
-
-    <!--<script src="{% static 'ecg/js/chartRT.js' %}"></script>-->
-    <script src="{% static 'ecg/js/post.js' %}"></script>
+    
+    <script src="{% static 'ecg/js/graf.js' %}"></script>
 </div>
 
 {% endblock %}
+
+
+
+

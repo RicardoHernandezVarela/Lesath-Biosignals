@@ -19,9 +19,7 @@
       <div class="card-content">
         <div class="detalle">
           <h6>Frecuencia</h6>
-          {% with data=senal.datasenal_set.all.first %}
-            <p>{{data.frecuencia}} Hz</p>
-          {% endwith %}
+            <p>{{senal.frecuencia}} Hz</p> <!-- {{senal.frecuencia}} agregar este field al modelo -->
         </div>
         <div class="colaboradores">
           <h6>Experimento de</h6>
@@ -36,9 +34,7 @@
         <div class="muestras">
           <h6>Muestras</h6>
           <span class="signal-muestras">
-              {% with data=senal.datasenal_set.all.first %}
-                {{data.muestras}}
-              {% endwith %}
+              {{senal.muestras}} <!-- {{senal.frecuencia}} -->
           </span>
         </div>
       </div>

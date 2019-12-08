@@ -1,116 +1,99 @@
 {% extends 'ecg/senbase.html' %}
 
-{% block title %}Resumen EMG{% endblock %}
-
 {% load static %}
 
-{% block search %}
-<span id="device-name" class="name" style="display:none;">Dispositivo</span>
-
-<button class="boton" id="connect" type="button" aria-label="Connect" style="display:none;">
-    <i class="material-icons">bluetooth_connected</i>
-</button>
-
-<button class="boton" id="disconnect" type="button" aria-label="Disconnect" style="display:none;">
-    <i class="material-icons">bluetooth_disabled</i>
-</button>
-
-<button class="boton" id="download" style="display:none;">
-    <i class="material-icons">cloud_download</i>
-</button>
-
-<div class="opcSenalView">
-    <a href="{% url 'registros:senalesExp' signal.experimento.id %}" class="boton btnFold">
-        <i class="material-icons">folder</i>
-    </a>
-
-    <button class="boton" id="descargar">
-        <i class="material-icons">cloud_download</i>
-    </button>
-</div>
-{% endblock %}
-
 {% block content %}
-<div class="menu">
-    <div id="terminal" class="terminal"></div>
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <a href="{% url 'home' %}" class="logo">Lesath</a>
+        <h2 class="biosignals">Biosignals</h2>
+        <div class="bluetooth">
+            <span>
+                <a href="{% url 'registros:senalesExp' signal.experimento.id %}">
+                    <i class="material-icons">
+                        folder
+                    </i>
+                </a>
+            </span>
+            <span id="conectar">
+                <i class="material-icons">
+                    bluetooth
+                </i>
+            </span>
 
-    <div class="evtSenal">
-        <div class="eventosRT">
-            {% if signal.categoria == 'Electrocardiograma' %}
-                <span class="#">LPM</span>
-            {% elif signal.categoria == 'Electromiograma' %}
-                <span class="#">Evento</span>
-            {% elif signal.categoria == 'Oximetría' %}
-                <span class="#">Evento</span>
-            {% elif signal.categoria == 'Fonocardiograma' %}
-                <span class="#">LPM</span>
-            {% else %}
-                <span class="#">Estado</span>
-            {% endif %}
-
-            <h5 id="respuesta" class="resp">0</h5>
+            <span id="desconectar">
+                <i class="material-icons">
+                    bluetooth_disabled
+                </i>
+            </span>
+            <span id="descargar">
+                <i class="material-icons">
+                    cloud_download
+                </i>
+            </span>
         </div>
     </div>
 
-    <div class="segundos" style="display:none;">
-        <h5 id="tiempo">0</h5>
-        <span class="unidad">segundos</span>
-    </div>
+    <!-- SUBHEADER -->
+    <div class="subheader">
+        <div class="events">
+            <h6 class="event-name" id="evento"></h6>
+            <span class="event-value">0</span>
+        </div>
 
-</div>
+        <div class="terminal">
+            Ningún dispositivo conectado
+        </div>
 
-<div class="content">
-    <h5 class="nombreSenal">{{signal.categoria}} de {{signal.nombre}}</h5>
-    <script>
-        let labels = {{ labels }};
-        let muestras = {{ data }};
-        let categoria = 'Electrocardiograma';
-    </script>
-
-    <div id="chartContainer" class="#">
-        <div id="chartSenal" class="#">
+        <div class="timer">
+            <h6 class="timer-title">Timer</h6>
+            <span class="timer-value">0</span>
         </div>
     </div>
 
-    <div class="modal">
-        <div class="modal-content modalSenal">
-            <span class="close">&times;</span>
-            <h5 class="modalText">Señal guardada</h5>
-        </div>
+    <!-- PLOT -->
+    <div class="plot">
+        <h6>
+            <span id="signalCat">{{signal.categoria}}</span>
+            <span>de {{signal.nombre}}</span>
+            <span id="signal-id">{{signal.id}}</span>
+        </h6>
+
+        
+        <div id="y-axis"></div>
+        <div id="chart"></div>
     </div>
 
-</div>
-
-<div class="footer">
-    <form id="send-form" class="send-form mr-0" style="display:none;"> <!--style="display:none;"-->
-
-        <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Tiempo de muestreo">
-
-        <button class="mr-0 mb-1" type="submit" aria-label="Send">
-            <i class="material-icons mt-1">send</i>
-        </button>
-
-    </form>
-
-    <div class="opcionesSenal">
-        <button id="play" class="circleBtn opc" type="submit">
-            <i class="material-icons">play_arrow</i>
-        </button>
-
-        <button id="pause" class="circleBtn opc" type="submit">
-            <i class="material-icons">pause</i>
-        </button>
-
-        <button id="replay" class="circleBtn opc">
-            <i class="material-icons">replay</i>
-        </button>
+    <!-- FRECUENCIA -->
+    <div class="frecuencia">
+        <span>Frecuencia</span>
+        <span id="freq">{{signal.frecuencia}}</span>
+        <span>Hz</span>
     </div>
     
-    <script src="{% static 'ecg/js/graf.js' %}"></script>
+    <!-- BUTTONS -->
+    <div class="buttons">
+        <button class="play" id="play">
+            <i class="material-icons">
+                play_arrow
+            </i>  
+        </button>
+        <button class="pause" id="pause">
+            <i class="material-icons">
+                pause
+            </i>  
+        </button>
+        <button class="replay" id="replay">
+            <i class="material-icons">
+                replay
+            </i>  
+        </button>
+    </div>
 </div>
-
+<script src="{% static 'ecg/js/dash.js' %}"></script>
 {% endblock %}
 
-
-
-
+{% block title %}
+    {{signal.categoria}} de {{signal.nombre}}
+{% endblock %}

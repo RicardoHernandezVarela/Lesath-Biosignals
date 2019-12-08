@@ -22,7 +22,7 @@ var plot = new Rickshaw.Graph({
         color: '#446CB3'
     }], undefined, 
     {
-        timeInterval: 300,
+        timeInterval: 100,
         maxDataPoints: 500
     })
 });
@@ -38,6 +38,13 @@ const y_axis = new Rickshaw.Graph.Axis.Y({
     ticks: 5,
     element: yAxis,
 });
+
+/*
+var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: plot,
+    yFormatter: function(y) { return y + "V" }
+} );
+*/
 
 /*******************************************************
  AJUSTAR LAS DIMENSIONES DE LA GRÁFICA.

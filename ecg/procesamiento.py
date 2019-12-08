@@ -1,3 +1,5 @@
+from ecg.models import Experimento, Colaboracion, Signal, Descripcion, Datasenal
+
 def crear_df(data):
     import pandas as pd
 
@@ -28,7 +30,7 @@ def to_download(data):
     numeros = []
     for num in data:
         numeros.append(float(num))
-        numeros.append(',')
+        #numeros.append(',')
 
     return numeros
 
@@ -105,3 +107,23 @@ def proc_edm(data):
         resultado = 'Relajado'
 
     return resultado
+
+def generar_senal(filename, senalEnd, frecuencia):
+    import csv
+
+    dataSenal = []
+
+    with open(filename) as csvDataFile:
+        csvReader = csv.reader(csvDataFile)
+        for row in csvReader:
+            dataSenal.append(row[1])
+
+    df = crear_df(dataSenal)
+
+    senalEnd.muestras = len(dataSenal)
+    senalEnd.frecuencia = frecuencia
+    senalEnd.save()
+
+    dataset = Datasenal(senal=senalEnd, muestras=len(dataSenal), data=df, frecuencia=frecuencia)
+    dataset.save()
+

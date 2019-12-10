@@ -4,6 +4,7 @@
 ********************************************************/
 const descargar = document.querySelector('#descargar');
 const saveData = document.querySelector('#saveData');
+const saving = document.querySelector('#saving');
 
 /********************************************************
  ELEMENTO DEL DOM PARA IDENTIFICAR CADA SEÑAL POR SU ID
@@ -23,6 +24,26 @@ const muestreo = document.querySelector('#muestreo');
 const close = document.querySelector('.close');
 const modal = document.querySelector('.modal');
 const guardada = document.querySelector('#guardada');
+
+/*******************************************************
+ ELEMENTOS DEL DOM DEL TIMER.
+*******************************************************/
+const timer = document.querySelector('.timer-value');
+
+/******************************************************
+ ACTUALIZAR TIMER.
+******************************************************/
+const ajusteFreq = 0.588;
+const freqFinal = parseInt(muestreo.value) * ajusteFreq;
+//console.log(muestreo.value, freqFinal);
+
+const actualizarTimer = (datos, frecuencia) => {
+    let time = Math.floor(datos/frecuencia);
+
+    if(datos <= datosSensor.length) {
+        timer.innerText = time;
+    } 
+};
 
 /********************************************************
  ALMACENAR LOS DATOS DEL SENSOR Y ACTUALIZAR LA GRÁFICA
@@ -45,6 +66,7 @@ const recibirDatos = (data) => {
     if(datosSensor.length % avance === 0) {
         plotDataRT(datosSensor, inicio, avance);
         inicio += avance;
+        actualizarTimer(inicio, freqFinal);
     }
 };
 
@@ -117,6 +139,7 @@ muestreo.addEventListener('change', (evt) => {
 
 const senalGuardada = (data) => {
     console.log(data);
+    saving.style.display = 'none';
     guardada.innerText = `Señal guardada con ${data} muestras.`;
     modal.style.display = 'block';
 }
@@ -148,7 +171,7 @@ const postData = (datos, freq) => {
 }
 
 saveData.addEventListener('click', () => {
-    console.log('save data')
+    saving.style.display = 'block';
     postData(datosSensor, frecuencia);
 });
 

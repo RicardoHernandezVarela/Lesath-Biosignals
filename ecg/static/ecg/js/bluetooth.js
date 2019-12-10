@@ -3,6 +3,7 @@
 ***********************************************************/
 const conectar = document.querySelector('#conectar');
 const desconectar = document.querySelector('#desconectar');
+const terminal = document.querySelector('.terminal');
 
 /**********************************************************
  ELEMENTOS DEL DOM PARA CONTROLAR EL BLUETOOTH
@@ -18,11 +19,12 @@ conectar.addEventListener('click', () => {
         .then(service => obtenerCaracteristicasDelServicio(service))
         .then(characteristics => conectarConCaracteristica(characteristics))
         .then(characteristic => conectarseACambiosDelSensor(characteristic))
-        .catch(err => console.log(`Fallo la conexión, ${err}`))
+        .catch(err => terminal.innerText = "Fallo la conexión")
 });
 
 desconectar.addEventListener('click', () => {
     dispositivo.gatt.disconnect();
+    terminal.innerText = "Desconectado";
 });
 
 /**************************************************************************
@@ -41,6 +43,8 @@ const requerirDispositivosBT = () => {
     selección de dispositivo para conectar, retorna una promesa 
     con el objeto del dispositivo SELECCIONADO. */ 
 
+    terminal.innerText = "Buscando dispositivos...";
+
     return (
     navigator.bluetooth.requestDevice({
         // filters: [myFilters]       // filtros o acceptAllDevices
@@ -56,6 +60,8 @@ const conectarConDispositivoBT = (device) => {
     desconexión entre el navegador y el BT, retorna una promesa con el 
     objeto del dispositivo CONECTADO. */
     
+    terminal.innerText = "Conectando con dispositivo...";
+
     dispositivo = device;
     return device.gatt.connect();
 };
@@ -65,6 +71,8 @@ const conectarConElServicio = (gattserver) => {
     gatt para poder enviar y recibir datos, returna una promesa con el
     objeto con la información del servicio al que se conecto el navegador. */
 
+    terminal.innerText = "Conectando con el servicio...";
+    
     return gattserver.getPrimaryService(servicio);
 };
 
@@ -73,6 +81,8 @@ const obtenerCaracteristicasDelServicio = (service) => {
     dispositivo BT, retorna una promesa con un arreglo que contiene todas
     las características del servicio, en el caso del módulo HM-10 solo hay
     una caracteríastica disponible. */
+
+    terminal.innerText = "Obteniendo características...";
 
     return service.getCharacteristics();
 };
@@ -84,6 +94,8 @@ const conectarConCaracteristica = (characteristics) => {
     es la que se modificara para recibir y enviar datos a través 
     del módulo BT. */
 
+    terminal.innerText = "Conectando a característica";
+
     caracteristica = characteristics[0];
     return caracteristica.startNotifications();
 };
@@ -91,6 +103,8 @@ const conectarConCaracteristica = (characteristics) => {
 const conectarseACambiosDelSensor = (caracteristica) => {
     /* Conectar la característica del modulo BT a la función que procesa los datos que 
     envia el sensor a através del módulo BT */
+
+    terminal.innerText = `Conectado ${dispositivo.name}`;
 
     caracteristica.oncharacteristicvaluechanged = manejarCambios;
 };

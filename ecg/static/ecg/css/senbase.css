@@ -164,6 +164,20 @@ PLOT
     text-align: center;
 }
 
+#saving {
+    grid-column: 4/7;
+    background-color: #125e8a;
+    color: #C2B8B2;
+    border-radius: 10px;
+    max-height: 15px;
+    width: 60px;
+    font-size: 0.65em;
+    text-align: center;
+    margin: 0 auto;
+    padding: 1px;
+    display: none;
+}
+
 #signal-id {
     display: none;
 }

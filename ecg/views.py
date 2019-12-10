@@ -274,23 +274,21 @@ def descargar_datos(request, pk):
 
 def ecg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
-    return render(request, 'ecg/ecg_dash.html', {'signal':signal })
+    return render(request, 'ecg/senales/ecg_dash.html', {'signal':signal })
 
 
 
 def fcg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
 
-    return render(request, 'ecg/fcg_dash.html', {'signal':signal })
+    return render(request, 'ecg/senales/fcg_dash.html', {'signal':signal })
 
 def edm_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
 
-    return render(request, 'ecg/edm_dash.html', {'signal':signal })
+    return render(request, 'ecg/senales/edm_dash.html', {'signal':signal })
 
 def emg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
-    #data = signal.data[0][0:]
-    #muestras = to_float(data)
 
-    return render(request, 'ecg/emg_dash.html', {'signal':signal})
+    return render(request, 'ecg/senales/emg_dash.html', {'signal':signal})

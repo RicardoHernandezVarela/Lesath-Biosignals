@@ -30,7 +30,6 @@ def to_download(data):
     numeros = []
     for num in data:
         numeros.append(float(num))
-        #numeros.append(',')
 
     return numeros
 

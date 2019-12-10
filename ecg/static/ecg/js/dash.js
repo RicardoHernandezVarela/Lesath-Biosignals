@@ -4,6 +4,7 @@
 const id = document.querySelector('#signal-id');
 const signalCat = document.querySelector('#signalCat');
 const evento = document.querySelector('#evento');
+const freq = document.querySelector('#freq');
 
 /*********************************************************
  ELEMENTOS DEL DOM PARA CONTROLAR EL FLUJO DE LA GRÁFICA.
@@ -12,6 +13,8 @@ const replay = document.getElementById("replay");
 const pause = document.getElementById("pause");
 const play = document.getElementById("play");
 
+const timer = document.querySelector('.timer-value');
+
 /*******************************************************
  ELEMENTOS DEL DOM PARA CONFIGURAR LA GRÁFICA.
 ******************************************************/
@@ -19,12 +22,38 @@ const yAxis = document.querySelector('#y-axis');
 const plotContainer = document.querySelector('.plot');
 const chart = document.querySelector("#chart");
 
+/*******************************************************
+ ELEMENTOS DEL DOM PARA CONTROLAR LA VENTANA MODAL.
+*******************************************************/
+const close = document.querySelector('.close');
+const modal = document.querySelector('.modal');
+
+/********************************************************
+ ELEMENTOS DEL DOM PARA DESCARGAR LOS DATOS QUE SE 
+ OBTIENEN EN FORMATO CSV Y GUARDAR EN LA BASE DE DATOS.
+********************************************************/
+const descargar = document.querySelector('#descargar');
+
+/*******************************************************
+ ELEMENTOS DEL DOM PARA OCULTAR.
+*******************************************************/
+const terminal = document.querySelector('.terminal');
+const conectar = document.querySelector('#conectar');
+const desconectar = document.querySelector('#desconectar');
+
+/*******************************************************
+ OCULTAR ELEMENTOS DEL DOM.
+*******************************************************/
+terminal.style.display = 'none';
+conectar.style.display = 'none';
+desconectar.style.display = 'none';
 
 /*****************************************************
  CAMBIAR CARACTERÍSTICAS SEGÚN EL TIPO DE SEÑAL.
 ******************************************************/
 //console.log(id.innerText, signalCat.innerText);
 const categoria = signalCat.innerText;
+console.log(signalCat.parentNode.innerText);
 
 switch(categoria) {
     case 'Electrocardiograma':
@@ -56,14 +85,18 @@ switch(categoria) {
 ***********************************************************/
 var datosSenal = [];
 var url = "/senales/descargarData/" + id + "/"
-console.log(id.innerText);
 
 const obtenerSenal = () => {
 
     fetch(`/senales/descargarData/${id.innerText}/`)
         .then(response => response.json())
         .then(data => {
-            datosSenal = data;
+            if(data.length !== 0) {
+                datosSenal = data;
+            } else {
+                modal.style.display = 'block';
+            }
+            
         })
         .catch(error => console.log('Ocurrio un problema al solicitar los datos', error))
 }
@@ -78,7 +111,7 @@ let intervalo = 100;
 var chartSenal = new Rickshaw.Graph({
     element: chart,
     width: plotContainer.offsetWidth * 0.8,
-    height: plotContainer.offsetHeight * 0.7,
+    height: plotContainer.offsetHeight * 0.85,
     renderer: "line",
     min: "0",
     max: "4",
@@ -115,7 +148,7 @@ y_axis.render();
 const ajustar = (plot) => {
     plot.configure({
         width: plotContainer.offsetWidth * 0.8,
-        height: plotContainer.offsetHeight * 0.8
+        height: plotContainer.offsetHeight * 0.85
     });
 };
 
@@ -125,6 +158,22 @@ window.addEventListener('resize', () => {
 
 /* Ajustar dimensiones de la gráfica */
 var anchoAnterior = plotContainer.offsetWidth;
+
+/******************************************************
+ ACTUALIZAR TIMER.
+******************************************************/
+const ajusteFreq = 0.588;
+const frecuencia = parseInt(freq.innerText) * ajusteFreq;
+
+const actualizarTimer = (datos, frecuencia) => {
+    let time = Math.floor(datos/frecuencia);
+
+    if(datos <= datosSenal.length) {
+        timer.innerText = time;
+    } else {
+        clearInterval(ploter);
+    }
+};
 
 /******************************************************
  ACTUALIZAR LA GRÁFICA.
@@ -156,6 +205,7 @@ const plotData = () => {
         anchoAnterior = anchoNuevo;
     }
 
+    actualizarTimer(inicio, frecuencia);
     chartSenal.render();
 }
 
@@ -172,3 +222,36 @@ play.addEventListener('click', e => {
 
 /* Timer para llamar a la función cada x milisegundos*/
 var ploter = setInterval(plotData, intervalo);
+
+/*******************************************************
+ CONTROLAR LA VENTANA MODAL.
+*******************************************************/
+
+close.addEventListener('click', (evt) => {
+    modal.style.display = 'none';
+});
+
+/*******************************************************
+ DESCARGAR DATOS EN FORMATO CSV.
+*******************************************************/
+const filename = signalCat.parentNode.innerText;
+
+const download_csv = (data) => {
+    var csv = 'Muestra\n';
+
+    data.forEach(function(row) {
+            csv += row;
+            csv += "\n";
+    });
+  
+    var descargarSenal = document.createElement('a');
+
+    descargarSenal.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    descargarSenal.target = '_blank';
+    descargarSenal.download = `${filename}.csv`;
+    descargarSenal.click();
+};
+
+descargar.addEventListener('click', () => {
+    download_csv(datosSenal);
+});

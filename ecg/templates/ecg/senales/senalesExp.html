@@ -64,7 +64,11 @@
   {% include "ecg/signal_form.html" %}
 {% endblock %}
 
-{% block title %}Señales{% endblock %}
+{% block title %}
+  {% with senal1=senales.first %}
+    {{ senal1.experimento.nombre }}
+  {% endwith %}
+{% endblock %}
 
 {% block add %}
   <button class="add">

@@ -1,9 +1,18 @@
+/*******************************************************
+ ELEMENTOS DEL DOM PARA CONTROLAR LA VENTANA MODAL.
+*******************************************************/
 const modalTrigger = document.querySelector('.add')
 const close = document.querySelector('.close')
 const modal = document.querySelector('.modal')
 
+/*******************************************************
+ ELEMENTOS DEL DOM PARA LA CATEGORIA DE LA SEÑAL.
+*******************************************************/
 const signalCat = document.querySelectorAll('.signalCat');
 
+/*******************************************************
+CONTROLAR LA VENTANA MODAL.
+*******************************************************/
 modalTrigger.addEventListener('click', (evt) => {
     modal.style.display = 'block';
 });
@@ -12,6 +21,9 @@ close.addEventListener('click', (evt) => {
     modal.style.display = 'none';
 });
 
+/*******************************************************
+ MODIFICAR URL DE CADA SEÑAL.
+*******************************************************/
 const getURL = (path, change) => {
     let oldPath = path;
     let splitPath = oldPath.split('/');

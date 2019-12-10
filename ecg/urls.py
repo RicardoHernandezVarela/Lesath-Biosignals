@@ -7,6 +7,10 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include(([
 
+        ############################################################
+        # EXPERIMENTOS.
+        ############################################################
+
         #Ver los experimentos del usuario y crear nuevos.
         path('experimentos/<username>/', experimentos.experimentos.as_view(), name='experimentos'),
        
@@ -16,7 +20,10 @@ urlpatterns = [
         #Editar experimento.
         path('editar-experimento/<int:pk>/', experimentos.editarExperimento.as_view(), name='exp-edit'),
 
-        
+
+        ############################################################
+        # COLABORACIONES.
+        ############################################################
 
         #Ver las colaboraciones del usuario y crear nuevas.
         path('colaboraciones/<username>/', colaboraciones.colaboracion.as_view(), name='colaboracion'),
@@ -28,6 +35,9 @@ urlpatterns = [
         path('colaboracionNueva/<username>/', colaboraciones.nueva_colaboracion.as_view(), name='nueva_colaboracion'),
 
 
+        ############################################################
+        # SEÑALES.
+        ############################################################
 
         #Ver las señales existentes dentro del experimento.
         path('experimento/<int:pk>/', senales.senales_exp.as_view(), name='senalesExp'),
@@ -39,7 +49,27 @@ urlpatterns = [
         path('experimento/<int:pk>/eliminar/', senales.SignalDelete.as_view(), name='eliminar'),
 
         #Guardar en la base de datos las muestras de la señal.
-        path('info/<int:pk>/', views.senal_info, name='info'),
+        path('info/<int:pk>/', senales.senal_info, name='info'),
+
+        #Obtener las muestras de una señal.
+        path('descargarData/<int:pk>/', senales.descargar_datos, name='descargar'),
+
+
+        ############################################################
+        # DASHBOARDS.
+        ############################################################
+
+        #Dashboard para señales de ECG.
+        path('ecg/<int:pk>/', senales.ecg_dash, name='ecg'),
+
+        # Dashboard para señales de EMG.
+        path('emg/<int:pk>/', senales.emg_dash, name='emg'),
+
+        # Dashboard para señales de FCG.
+        path('fcg/<int:pk>/', senales.fcg_dash, name='fcg'),
+
+        # Dashboard para señales de EDM.
+        path('edm/<int:pk>/', senales.edm_dash, name='edm'),
 
 
 
@@ -47,20 +77,10 @@ urlpatterns = [
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
         
         path('editar/<int:pk>/', views.SignalUpdate.as_view(), name='editar'),
-
-        
         
         path('rt/<int:pk>/', views.rt_info, name='rt'),
 
-        path('descargarData/<int:pk>/', views.descargar_datos, name='descargar'),
-
-        path('ecg/<int:pk>/', views.ecg_dash, name='ecg'),
-        path('edm/<int:pk>/', views.edm_dash, name='edm'),
-
-        path('emg/<int:pk>/', views.emg_dash, name='emg'),
-        path('fcg/<int:pk>/', views.fcg_dash, name='fcg'),
 
     ], 'registros'), namespace='registros')),
-
 
 ]

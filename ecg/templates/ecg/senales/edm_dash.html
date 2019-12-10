@@ -6,8 +6,12 @@
 <div class="container">
     <!-- HEADER -->
     <div class="header">
-        <a href="{% url 'home' %}" class="logo">Lesath</a>
-        <h2 class="biosignals">Biosignals</h2>
+        <a href="{% url 'home' %}" class="logo">
+            <img src="{% static 'ecg/img/lesath_n.png' %}" alt="logo">
+        </a>
+        <div class="biosignals">
+            <img src="{% static 'ecg/img/biosignal.png' %}" alt="logo">
+        </div>
         <div class="bluetooth">
             <span>
                 <a href="{% url 'registros:senalesExp' signal.experimento.id %}">
@@ -68,7 +72,7 @@
     <!-- FRECUENCIA -->
     <div class="frecuencia">
         <span>Frecuencia</span>
-        <span id="freq">{{signal.frecuencia}}</span>
+        <span id="freq">250</span>
         <span>Hz</span>
     </div>
     
@@ -89,6 +93,16 @@
                 replay
             </i>  
         </button>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close">
+                <i class="material-icons">close</i>
+            </span>
+            
+            <h2>Esta señal aun no tiene muestras.</h2>
+            <a href="{% url 'registros:nueva' signal.id %}">Registrar señal</a>
+        </div>
     </div>
 </div>
 <script src="{% static 'ecg/js/dash.js' %}"></script>

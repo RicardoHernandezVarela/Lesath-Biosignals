@@ -17,9 +17,21 @@ const evento = document.querySelector('#evento');
 ********************************************************/
 const muestreo = document.querySelector('#muestreo');
 
+/*******************************************************
+ ELEMENTOS DEL DOM PARA CONTROLAR LA VENTANA MODAL.
+*******************************************************/
+const close = document.querySelector('.close');
+const modal = document.querySelector('.modal');
+const guardada = document.querySelector('#guardada');
+
 /********************************************************
  ALMACENAR LOS DATOS DEL SENSOR Y ACTUALIZAR LA GRÁFICA
 ********************************************************/
+const sampleECG = [
+    1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6,
+    1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6,
+];
+
 var datosSensor = [];
 let avance = 100;
 let inicio = 0;
@@ -37,8 +49,10 @@ const recibirDatos = (data) => {
 };
 
 /*******************************************************
-DESCARGAR DATOS EN FORMATO CSV.
+ DESCARGAR DATOS EN FORMATO CSV.
 *******************************************************/
+const filename = signalCat.parentNode.innerText;
+
 const download_csv = (data) => {
     var csv = 'Muestra\n';
 
@@ -51,9 +65,9 @@ const download_csv = (data) => {
 
     descargarSenal.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     descargarSenal.target = '_blank';
-    descargarSenal.download = 'Registro.csv';
+    descargarSenal.download = `${filename}.csv`;
     descargarSenal.click();
-}
+};
 
 descargar.addEventListener('click', () => {
     download_csv(datosSensor);
@@ -101,6 +115,12 @@ muestreo.addEventListener('change', (evt) => {
     console.log(evt.target.value);
 });
 
+const senalGuardada = (data) => {
+    console.log(data);
+    guardada.innerText = `Señal guardada con ${data} muestras.`;
+    modal.style.display = 'block';
+}
+
 const checkStatus = (response) => {
     if (response.ok) {
       return Promise.resolve(response);
@@ -124,10 +144,18 @@ const postData = (datos, freq) => {
     fetch(`/senales/info/${id.innerText}/`, config)
       .then(checkStatus)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => senalGuardada(data))
 }
 
 saveData.addEventListener('click', () => {
     console.log('save data')
     postData(datosSensor, frecuencia);
+});
+
+/*******************************************************
+ CONTROLAR LA VENTANA MODAL.
+*******************************************************/
+
+close.addEventListener('click', (evt) => {
+    modal.style.display = 'none';
 });

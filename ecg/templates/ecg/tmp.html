@@ -1,71 +1,56 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock %}</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-
-    <!-- CSS Rickshaw -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.3/rickshaw.min.css" rel="stylesheet">
-
-    {% load static %}
-    <link rel="icon" href="{% static 'ecg/img/logo.png' %}">
-    <!-- Custom styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'ecg/css/regist.css' %}">
-
-
-  </head>
-
-  <body>
-      <div class="wrapper">
-          <div class="header">
-              <nav class="opcionesNav">
-                  <a class="lesathLogo" href="{% url 'home' %}">Lesath</a>
-
-
-                  <div class="botones">
-
-
-                      <!-- AÑADIR EN nueva_senal.html en block search-->
-                      {% block search %}
-                      {% endblock %}
-
-                  </div>
-              </nav>
-          </div>
-
-        <!-- Librerias para graficar -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.0/d3.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.6.5/rickshaw.js"></script>
-
-        <!-- Graphs -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-
-
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-        {% block content %}
-        {% endblock %}
-
-        <!-- BT y plot JavaScript -->
-        <script src="{% static 'ecg/js/BluetoothTerminal.js' %}"></script>
-        <script src="{% static 'ecg/js/main.js' %}"></script>
-
-
-      </div>
-  </body>
-</html>
+<div class="homeContent">
+    <div class="prim"></div>
+    <div class="logo">
+      Lesath
+    </div>
+  
+    <div class="biosignals">
+      Biosignals
+    </div>
+  
+    <div class="sesion">
+  
+      {% if user.is_authenticated %}
+  
+        <div class="bienvUser">
+          Hola {{ user.username }}!
+          <a href="{% url 'useredit' user.id %}">
+            <i class="material-icons">edit</i>
+          </a>
+        </div>
+  
+      {% else %}
+        <div>
+          Inicia sesión o crea una cuenta.
+        </div>
+      {% endif %}
+    </div>
+  
+    <div class="botones">
+      {% if user.is_authenticated %}
+  
+        <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">
+          Señales registradas</a></li>-->
+  
+        <a class="btn left" href="{% url 'registros:experimentos' user.username %}">
+            Experimentos
+        </a>
+  
+        <a class="btn right" href="{% url 'logout' %}">
+            Salir
+        </a>
+      
+      {% else %}
+  
+        <a class="btn left" href="{% url 'login' %}">
+          Iniciar sesión
+        </a>
+  
+        <a class="btn right" href="{% url 'signup' %}">
+          Crear cuenta
+        </a>
+  
+      {% endif %}
+    </div>
+    
+  </div>

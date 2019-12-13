@@ -178,7 +178,7 @@ class SignalDelete(DeleteView):
 class SignalUpdate(UpdateView):
     model = Signal
     fields = ['nombre', 'categoria']
-    template_name = 'ecg/editSignal_form.html'
+    template_name = 'ecg/senales/senalEdit.html'
 
     def get_success_url(self):
         exp = self.object.experimento

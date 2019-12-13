@@ -79,6 +79,10 @@ HEADER
     color: #CEE7E6;
 }
 
+#edit {
+    margin-top: -5px;
+}
+
 /*************************************************
 SUBHEADER
 *************************************************/
@@ -347,7 +351,7 @@ Ajuste para otros dispositivos
 
     .plot h6 {
         color: #c2b8b2;
-        grid-column: 4/7;
+        grid-column: 3/8;
         font-size: 0.65em;
         margin: 0;
         margin-bottom: 5px;
@@ -360,7 +364,12 @@ Ajuste para otros dispositivos
         display: block;  
         margin: 6px auto;
         max-width: 63px;
-      }
+    }
+
+    #edit {
+        margin-top: -7px;
+    }
+
 }
 
 @media (min-width: 450px) {
@@ -424,6 +433,10 @@ Ajuste para otros dispositivos
         margin: 8px auto;
         max-width: 200px;
     }
+
+    #edit {
+        margin-top: -7px;
+    }
 }
 
 @media (min-width: 800px) {
@@ -455,13 +468,17 @@ Ajuste para otros dispositivos
 
     .logo img {
         display: block;  
-        margin: 5px auto;
+        margin: 3px auto;
         max-width: 77px;
     }
 
     .biosignals img {
         display: block;  
-        margin: 7px auto;
+        margin: 4px auto;
         max-width: 200px;
+    }
+
+    #edit {
+        margin-top: -5px;
     }
 }

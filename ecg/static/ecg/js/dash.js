@@ -186,7 +186,7 @@ const plotData = () => {
 
     replay.addEventListener('click', e => {
         inicio = 0;
-    })
+    });
 
     for (var i = 0; i < avance; i++) {
         let tmpData = {
@@ -217,6 +217,12 @@ pause.addEventListener('click', e => {
 });
 
 play.addEventListener('click', e => {
+    ploter = setInterval(plotData, intervalo);
+});
+
+replay.addEventListener('click', e => {
+    inicio = 0;
+    clearInterval(ploter);
     ploter = setInterval(plotData, intervalo);
 });
 

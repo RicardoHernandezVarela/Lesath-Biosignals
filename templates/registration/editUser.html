@@ -10,7 +10,12 @@
   <form class="form" action="" method="post" enctype="multipart/form-data">
     <img src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
     <h1>Editar información</h1>
-
+    <a class="return" href="{% url 'home' %}">
+      <i class="material-icons">
+        keyboard_arrow_left
+      </i>
+      <span>Regresar</span>
+    </a>
     {% csrf_token %}
 
     {% for field in form %}

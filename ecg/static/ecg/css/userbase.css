@@ -103,9 +103,11 @@ DROPDOWN LINKS
   display: none;
   position: absolute;
   background-color: #fafafa;
-  min-width: 160px;
+  min-width: 190px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  margin-left: -140px;
+  text-align: center;
 }
 
 .dropdown-content a {
@@ -206,7 +208,7 @@ CONTENT CARDS
   text-align: center;
   margin: 8px auto;
   padding-top: 12px;
-  font-size: 1em;
+  font-size: 0.8em;
   color: #fafafa;
 }
 
@@ -240,7 +242,7 @@ CONTENT CARDS
 }
 
 .colaboradores-list {
-  font-size: 0.75em;
+  font-size: 0.7em;
   list-style: none;
   padding-left: 5px;
   text-align: left;
@@ -442,6 +444,18 @@ MODAL FORM
   background-color: #1976d2;
 }
 
+.return {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: #9fa8da;
+  margin: 0 auto;
+}
+
+.return span {
+  padding-top: 3px;
+}
+
 /******************************************
 SIGNAL CARDS
 ******************************************/
@@ -500,20 +514,23 @@ SIGNAL CARDS
 /******************************************
 VISTA PARA OTROS DISPOSITIVOS
 ******************************************/
-
 @media screen and (min-width: 250px) {
   .content {
     width: 100%;
   }
 
   .add {
-    margin-top: 560px;
+    margin-top: 500px;
     margin-left: 83%;
   }
 
   .card-footer h6,
   .signal-footer h6 {
     font-size: 0.48em;
+  }
+
+  .card-content h6 {
+    font-size: 0.55em;
   }
   
   .user-info {
@@ -565,13 +582,20 @@ VISTA PARA OTROS DISPOSITIVOS
   }
 
   .add {
-    margin-top: 550px;
+    margin-top: 500px;
     margin-left: 85%;
   }
 
   .card-footer h6,
   .signal-footer h6 {
     font-size: 0.6em;
+  }
+
+  .card-content h6 {
+    text-align: center;
+    margin: 8px auto;
+    color: #00695c;
+    font-size: 0.8em;
   }
 
   .user-info {
@@ -648,5 +672,12 @@ VISTA PARA OTROS DISPOSITIVOS
   
   .modal-content {
     width: 35%;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .add {
+    margin-top: 250px;
+    margin-left: 83%;
   }
 }

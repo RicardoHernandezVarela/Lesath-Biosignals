@@ -4,7 +4,7 @@ GENERAL
 body {
   margin: 0;
   padding: 0;
-  background-color:#05547b;
+  background-color: #05547b;
 }
 
 a {
@@ -12,75 +12,128 @@ a {
 }
 
 /***********************************************
-BIENVENIDA
+ CONTAINER
 ***********************************************/
-.homeContent {
+.container {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 10vh 40vh 10vh 10vh 25vh 5vh;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 8vh 10vh 82vh;
 }
 
-.prim {
+/***********************************************
+ HEADER
+***********************************************/
+header {
   grid-column: 1/-1;
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
 }
 
-.logo {
-  grid-column: 2/7;
-  font-family: 'Lobster', cursive;
-  color: #fff;
-  font-weight: 400;
-  margin: 20px auto;
-  text-align: center;
+header img {
+  grid-column: 5/6;
+  display: block;
+  margin: 0 auto;
+}
+
+.subheader {
+  grid-column: 1/-1;
+  background-color:#05547b;
+}
+
+/***********************************************
+ MAIN
+***********************************************/
+main {
+  grid-column: 1/-1;
+  background-color:#05547b;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 40px 40px auto 180px;
 }
 
 .biosignals {
-  grid-column: 3/6;
-  font-family: 'Lobster', cursive;
-  color: #fff;
-  font-weight: 400;
-  margin: 20px auto;
-  text-align: center;
-}
-
-.sesion {
-  grid-column: 3/6;
-  text-align: center;
-  color: #90caf9;
-}
-
-.bienvUser i {
-  color:#bbdefb;
-}
-
-.botones {
-  grid-column: 2/7;
+  grid-column: 4/6;
+  margin-top: 10px;
+  display: block;
   margin: 0 auto;
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
 }
 
-.left {
-  grid-column: 2/3;
+.biosignals img {
+  margin-top: 10px;
+  max-width: 80px;
 }
 
-.right {
-  grid-column: 3/4;
+.mensaje {
+  grid-column: 3/7;
+  padding-top: 15px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 13px;
+  border-radius: 10px;
+  color: #c2b8b2;
 }
 
-.btn {
-  grid-row: 2/3;
-  background-color:#bbdefb;
-  padding: 10px;
-  border-radius: 5px;
+.mensaje span {
+  margin: 0 auto;
+  margin-top: 5px;
   text-align: center;
+  font-size: 0.8em;
+  box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.2);
 }
 
-.btn:hover {
-  background-color:#e3f2fd;
+.plot {
+  grid-column: 3/8;
+  background-color: #05547b;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-rows: 30px auto;
+  box-shadow: -5px 0px 1px 0px rgba(0,0,0,0.2);
 }
 
+.plot span {
+  display: block;
+  margin: 2px auto;
+  color: #c2b8b2;
+  text-align: center;
+  border-bottom: 1px solid #fff;
+}
+
+/***********************************************
+ OPCIONES
+***********************************************/
+.opciones {
+  grid-column: 3/7;
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #c2b8b2;
+}
+
+.opciones a {
+  text-decoration: none;
+  margin: 8px auto;
+  padding-top: 8px;
+  background-color: #197bbd;
+  border-radius: 5px;
+  color: #c2b8b2;
+  z-index: 1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+/*
+.opciones .edit-user {
+  padding-bottom: 10px;
+  font-size: 0.8em;
+}
+*/
 /***********************************************
 FORM SIGN UP / LOG IN
 ***********************************************/
@@ -139,67 +192,63 @@ FORM SIGN UP / LOG IN
   background-color: #1976d2;
 }
 
+.return {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: #9fa8da;
+  margin: 0 auto;
+}
+
+.return span {
+  padding-top: 3px;
+}
+
 /*********************************************
 VISTA PARA OTROS DISPOSITIVOS
 *********************************************/
 @media screen and (min-width: 250px) {
-  .logo {
-    font-size: 6em;
-    margin-top: 80px;
+  .opciones a {
+    width: 150px;
+    height: 25px;
+}
+
+  .biosignals img {
+    /*display: none;*/
+    padding-top: 13px;
   }
 
-  .biosignals {
-    font-size: 1.5em;
-    margin-top: 0;
+  .mensaje span {
+    font-size: 0.8em;
   }
-
-  .btn {
-    padding: 10px;
-  }
-
 }
 
 @media screen and (min-width: 600px) {
-  .logo {
-    font-size: 7em;
-    margin-top: 20px;
+  .opciones a {
+    width: 250px;
+    height: 25px;
+}
+
+  .biosignals img {
+    display: block;
+    padding-top: 10px;
   }
 
-  .biosignals {
-    font-size: 1.5em;
-    margin-top: 0;
+  .mensaje {
+    padding-top: 20px;
   }
 
-  .sesion {
-    margin-top: 15px;
-  }
-
-  .btn {
-    padding: 8px;
+  .mensaje span {
+    font-size: 1.2em;
   }
 
   .form  {
     margin-top: 20px;
   }
+  
 }
 
 @media screen and (min-width: 800px) {
-  .logo {
-    font-size: 9em;
-  }
-
-  .biosignals {
-    font-size: 2em;
-  }
-
-  .sesion {
-    margin-top: 9%;
-  }
-
-  .btn {
-    padding: 15px;
-  }
-
   .form  {
     margin-top: 60px;
   }

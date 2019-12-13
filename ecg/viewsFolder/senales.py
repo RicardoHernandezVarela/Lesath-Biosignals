@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
 from ecg.models import Experimento, Signal, Datasenal
 from users.models import CustomUser
-from ecg.procesamiento import crear_df, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
+from ecg.procesamiento import crear_df, crear_np_arr, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
 
 import json
 
@@ -58,6 +58,19 @@ class SignalDelete(DeleteView):
         return reverse_lazy('registros:senalesExp', kwargs={'pk': exp.pk})
 
 ############################################################
+# Editar una señal.
+############################################################
+class SignalUpdate(UpdateView):
+    model = Signal
+    fields = ['nombre', 'categoria']
+    template_name = 'ecg/senales/senalEdit.html'
+
+    def get_success_url(self):
+        exp = self.object.experimento
+
+        return reverse_lazy('registros:senalesExp', kwargs={'pk': exp.pk})
+
+############################################################
 # Guardar en la base de datos las muestras de la señal.
 ############################################################
 @csrf_exempt
@@ -69,7 +82,7 @@ def senal_info(request, pk):
     print(len(senal))
     print(freq)
 
-    df = crear_df(senal)
+    df = crear_np_arr(senal)
 
     # Datos de la señal.
     signal = Signal.objects.get(pk=pk) 
@@ -102,9 +115,9 @@ def descargar_datos(request, pk):
 
     if len(datasets) != 0:
         dataset = datasets[0]
-        data = dataset.data[0][0:]
+        data = dataset.data #dataset.data[0][0:]
         
-        muestras = to_download(data)
+        muestras = data.tolist() #to_download(data)
     
     else:
         muestras = []

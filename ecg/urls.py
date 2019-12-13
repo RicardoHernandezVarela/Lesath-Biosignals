@@ -48,6 +48,9 @@ urlpatterns = [
         #Eliminar una señal.
         path('experimento/<int:pk>/eliminar/', senales.SignalDelete.as_view(), name='eliminar'),
 
+        #Editar una señal.
+        path('editar/<int:pk>/', senales.SignalUpdate.as_view(), name='editar'),
+
         #Guardar en la base de datos las muestras de la señal.
         path('info/<int:pk>/', senales.senal_info, name='info'),
 
@@ -76,7 +79,7 @@ urlpatterns = [
 
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
         
-        path('editar/<int:pk>/', views.SignalUpdate.as_view(), name='editar'),
+        
         
         path('rt/<int:pk>/', views.rt_info, name='rt'),
 

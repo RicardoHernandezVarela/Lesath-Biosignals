@@ -107,6 +107,13 @@ def proc_edm(data):
 
     return resultado
 
+def crear_np_arr(data):
+    import numpy as np
+
+    signal = np.around(data, decimals=3)
+
+    return signal
+
 def generar_senal(filename, senalEnd, frecuencia):
     import csv
 
@@ -115,9 +122,9 @@ def generar_senal(filename, senalEnd, frecuencia):
     with open(filename) as csvDataFile:
         csvReader = csv.reader(csvDataFile)
         for row in csvReader:
-            dataSenal.append(row[1])
+            dataSenal.append(float(row[1]))
 
-    df = crear_df(dataSenal)
+    df = crear_np_arr(dataSenal)
 
     senalEnd.muestras = len(dataSenal)
     senalEnd.frecuencia = frecuencia

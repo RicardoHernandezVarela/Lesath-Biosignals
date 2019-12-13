@@ -1,0 +1,77 @@
+{% extends 'ecg/userbase.html' %}
+
+{% block content %}
+  {% if senales|length_is:"0" %}
+  <div class="card-empty">
+    <h6>
+      Este experimento aun no tiene señales, agrega una nueva.
+    </h6>
+  </div>
+  {% endif %}
+  {% for senal in senales %}
+    <div class="signal">
+      <div class="signal-header">
+        <a href="{% url 'registros:ecg' senal.id %}">
+          <span class="signalCat">{{senal.categoria}}</span>
+          <span>de {{senal.nombre}}</span>
+        </a>
+      </div>
+      <div class="card-content">
+        <div class="detalle">
+          <h6>Frecuencia</h6>
+            <p>{{senal.frecuencia}} Hz</p> <!-- {{senal.frecuencia}} agregar este field al modelo -->
+        </div>
+        <div class="colaboradores">
+          <h6>Experimento de</h6>
+          <ul class="colaboradores-list">
+            <li class="creador">
+              {% with senal1=senales.first %}
+                  {{ senal1.usuario }}
+              {% endwith %}
+            </li>
+          </ul>
+        </div>
+        <div class="muestras">
+          <h6>Muestras</h6>
+          <span class="signal-muestras">
+              {{senal.muestras}} <!-- {{senal.frecuencia}} -->
+          </span>
+        </div>
+      </div>
+      <div class="signal-footer">
+          <h6>Creado en: {{senal.fecha}}</h6>
+          <div class="signal-options">
+            <!-- Tomar la señal de nuevo -->
+            <a class="#" href="{% url 'registros:nueva' senal.id %}">
+                <i class="material-icons">note_add</i>
+            </a>
+
+            <!-- Borrar señal -->
+            <form action="{% url 'registros:eliminar' senal.id %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button class="btn-delete signal-delete">
+                  <i class="material-icons">delete</i>
+              </button>
+            </form>
+
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+{% block form %}
+  {% include "ecg/signal_form.html" %}
+{% endblock %}
+
+{% block title %}
+  {% with senal1=senales.first %}
+    {{ senal1.experimento.nombre }}
+  {% endwith %}
+{% endblock %}
+
+{% block add %}
+  <button class="add">
+      <i class="material-icons">add</i>
+  </button>
+{% endblock %}

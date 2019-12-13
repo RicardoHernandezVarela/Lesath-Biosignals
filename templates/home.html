@@ -4,51 +4,46 @@
 {% load static %}
 
 {% block content %}
-<div class="homeContent">
-  
-  <div class="appName">
-    <h5 class="logo">
-      Lesath
-    </h5>
-    <h5 class="biosig">
-      Biosignals
-    </h5>
-  </div>
-  
-  <div class="sesion">
-    {% if user.is_authenticated %}
-    <div class="bienvUser">
-      Hola {{ user.username }}!
-      <a class="#" href="{% url 'useredit' user.id %}">
-        <i class="material-icons">edit</i>
-      </a>
-    </div>
+<div class="container">
+    <header>
+        <img src="{% static 'img/lesath_h.png' %}" alt="">
+    </header>
+    <div class="subheader"></div>
+    <main>
+        <div class="biosignals">
+            <img src="{% static 'img/biosignals.png' %}" alt="">
+        </div>
+        
+        <div class="mensaje">
+            <span>Registra y analiza bioseñales</span>
+        </div>
 
-    <br>
+        <div class="plot">
+            
+            <div id="chart"></div>
+        </div>
 
-    <!--<li><a class="btn btn-outline-primary mx-1" href="{% url 'registros:señales' user.username %}">
-      Señales registradas</a></li>-->
-    <a class="btn btn-light" href="{% url 'registros:experimentos' user.username %}">
-        Experimentos
-    </a>
+        {% if user.is_authenticated %}
+          <div class="opciones">
+              <a class="edit-user" href="{% url 'useredit' user.id %}">
+                <span>Hola {{ user.username }}!</span>
+                <!--<i class="material-icons">edit</i>-->
+              </a>
+              
+              <a href="{% url 'registros:experimentos' user.username %}">
+                Ver experimentos
+              </a>
 
-    <a class="btn btn-light" href="{% url 'logout' %}">
-        Salir
-    </a>
-  
-    {% else %}
-
-    <a class="btn btn-light" href="{% url 'login' %}">
-      Iniciar sesión
-    </a>
-
-    <a class="btn btn-light" href="{% url 'signup' %}">
-      Crear cuenta
-    </a>
-
-    {% endif %}
-  </div>
-  
+              <a href="{% url 'logout' %}">Salir</a>
+          </div>
+        {% else %}
+        <div class="opciones">
+            <a href="{% url 'login' %}">Inicia sesión</a>
+            <span>o</span>
+            <a href="{% url 'signup' %}">Crea una cuenta</a>
+        </div>
+        {% endif %}
+    </main>
 </div>
-
+<script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

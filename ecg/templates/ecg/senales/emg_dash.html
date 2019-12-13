@@ -1,0 +1,118 @@
+{% extends 'ecg/senbase.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <img src="{% static 'ecg/img/lesath_n.png' %}" alt="logo">
+        </a>
+        <div class="biosignals">
+            <img src="{% static 'ecg/img/biosignal.png' %}" alt="logo">
+        </div>
+        <div class="bluetooth">
+            <span>
+                <a href="{% url 'registros:senalesExp' signal.experimento.id %}">
+                    <i class="material-icons">
+                        folder
+                    </i>
+                </a>
+            </span>
+            <span id="conectar">
+                <i class="material-icons">
+                    bluetooth
+                </i>
+            </span>
+
+            <span id="desconectar">
+                <i class="material-icons">
+                    bluetooth_disabled
+                </i>
+            </span>
+            <span id="descargar">
+                <i class="material-icons">
+                    cloud_download
+                </i>
+            </span>
+            <a id="edit" href="{% url 'registros:editar' signal.id %}" class="logo">
+                <i class="material-icons">
+                    edit
+                </i>
+            </a>
+        </div>
+    </div>
+
+    <!-- SUBHEADER -->
+    <div class="subheader">
+        <div class="events">
+            <h6 class="event-name" id="evento"></h6>
+            <span class="event-value">0</span>
+        </div>
+
+        <div class="terminal">
+            Ningún dispositivo conectado
+        </div>
+
+        <div class="timer">
+            <h6 class="timer-title">Timer</h6>
+            <span class="timer-value">0</span>
+        </div>
+    </div>
+
+    <!-- PLOT -->
+    <div class="plot">
+        <h6>
+            <span id="signalCat">{{signal.categoria}}</span>
+            <span>de {{signal.nombre}}</span>
+            <span id="signal-id">{{signal.id}}</span>
+        </h6>
+
+        
+        <div id="y-axis"></div>
+        <div id="chart"></div>
+    </div>
+
+    <!-- FRECUENCIA -->
+    <div class="frecuencia">
+        <span>Frecuencia</span>
+        <span id="freq">{{signal.frecuencia}}</span>
+        <span>Hz</span>
+    </div>
+    
+    <!-- BUTTONS -->
+    <div class="buttons">
+        <button class="play" id="play">
+            <i class="material-icons">
+                play_arrow
+            </i>  
+        </button>
+        <button class="pause" id="pause">
+            <i class="material-icons">
+                pause
+            </i>  
+        </button>
+        <button class="replay" id="replay">
+            <i class="material-icons">
+                replay
+            </i>  
+        </button>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close">
+                <i class="material-icons">close</i>
+            </span>
+            
+            <h2>Esta señal aun no tiene muestras.</h2>
+            <a href="{% url 'registros:nueva' signal.id %}">Registrar señal</a>
+        </div>
+    </div>
+</div>
+<script src="{% static 'ecg/js/dash.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+    {{signal.categoria}} de {{signal.nombre}}
+{% endblock %}

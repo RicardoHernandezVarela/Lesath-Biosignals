@@ -5,16 +5,28 @@
 {% load static %}
 
 {% block content %}
-<div class="text-center">
-  <form class="form-signin" action="" method="post" enctype="multipart/form-data">
-    <img class="mb-4" src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
-    <h1 class="h3 mb-2 font-weight-normal">Inicia sesión</h1>
+<div class="form-container">
+
+  <form class="form" action="" method="post" enctype="multipart/form-data">
+    <img src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
+    <h1>Inicia sesión</h1>
+
     {% csrf_token %}
 
-    {% include 'form-template.html' %}
+    {% for field in form %}
 
-    <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Iniciar sesión</button>
+      <div class="form-field">
+          <span>{{ field.errors }}</span>
+          {{ field.label_tag }}
+          <br>
+          {{ field }}
+      </div>
+
+    {% endfor %}
+
+    <button type="submit">Iniciar sesión</button>
   </form>
+
 </div>
 {% endblock %}
 

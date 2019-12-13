@@ -1,165 +1,255 @@
-/* Layout
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/***********************************************
+GENERAL
+***********************************************/
 body {
   margin: 0;
-  background-color:#f5f5f5;
+  padding: 0;
+  background-color: #05547b;
 }
 
-.footer {
-  margin: 0;
-  bottom: 0;
-  left:0;
-  background-color: #050303;
-  text-align: center;  
-  color: #05547b;
-  width: 100%;
-  height: 5vh;
-  position: fixed;
+a {
+  text-decoration: none;
 }
 
-.logo {
-  font-family: 'Lobster', cursive;
-  color: #fff; /*#EBEBF2;*/
-  
-  font-weight: 400;
-  margin: 0 auto;
-
-  text-align: center;
-
-}
-
-.biosig {
-  font-family: 'Lobster', cursive;
-  color: #fff;
-  font-size: 1.5em;
-  margin: 4% auto;
-  text-align: center;
-}
-
-.antLogo {
-  width: 30px;
-  height: 30px;
-}
-
-li {
-  list-style-type: none;
-}
-  
-  /* Contenido
-  -------------------------------------------------- */
-  /*  */
-
+/***********************************************
+ CONTAINER
+***********************************************/
 .container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
-
-.homeContent {
-  background-color:#05547b;
-  height: 95vh;
-  margin-bottom: 0;
-}
-
-.sesion {
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 5%;
-}
-
-.bienvUser {
-  color: #f5f5f5;
-  text-align: center;
-
-}
-
-.btn-light {
-  margin: 0 1%;
-  width: 120px;
-}
-
-.btn-light:hover {
-  background-color:#05547b;
-}
-/*Formas*/
-
-.text-center {
-    margin-top: 60px;
-}
-
-.form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 8vh 10vh 82vh;
+}
+
+/***********************************************
+ HEADER
+***********************************************/
+header {
+  grid-column: 1/-1;
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+header img {
+  grid-column: 5/6;
+  display: block;
   margin: 0 auto;
 }
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
+
+.subheader {
+  grid-column: 1/-1;
+  background-color:#05547b;
 }
 
-.form-signin .form-control:focus {
-  z-index: 2;
+/***********************************************
+ MAIN
+***********************************************/
+main {
+  grid-column: 1/-1;
+  background-color:#05547b;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 40px 40px auto 180px;
 }
 
+.biosignals {
+  grid-column: 4/6;
+  margin-top: 10px;
+  display: block;
+  margin: 0 auto;
+}
 
-.info input[type="text"], input[type="password"], input[type="email"] {
-  margin-bottom: 8px;
+.biosignals img {
+  margin-top: 10px;
+  max-width: 80px;
+}
+
+.mensaje {
+  grid-column: 3/7;
+  padding-top: 15px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 13px;
+  border-radius: 10px;
+  color: #c2b8b2;
+}
+
+.mensaje span {
+  margin: 0 auto;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 0.8em;
+  box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.2);
+}
+
+.plot {
+  grid-column: 3/8;
+  background-color: #05547b;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-rows: 30px auto;
+  box-shadow: -5px 0px 1px 0px rgba(0,0,0,0.2);
+}
+
+.plot span {
+  display: block;
+  margin: 2px auto;
+  color: #c2b8b2;
+  text-align: center;
+  border-bottom: 1px solid #fff;
+}
+
+/***********************************************
+ OPCIONES
+***********************************************/
+.opciones {
+  grid-column: 3/7;
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #c2b8b2;
+}
+
+.opciones a {
+  text-decoration: none;
+  margin: 8px auto;
+  padding-top: 8px;
+  background-color: #197bbd;
+  border-radius: 5px;
+  color: #c2b8b2;
+  z-index: 1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+/*
+.opciones .edit-user {
+  padding-bottom: 10px;
+  font-size: 0.8em;
+}
+*/
+/***********************************************
+FORM SIGN UP / LOG IN
+***********************************************/
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.form {
+  grid-column: 2/3;
+  display: block;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.form img {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin: 0 auto;
+}
+
+.form h1 {
+  color: #e3f2fd;
+  text-align: center;
+}
+
+.form-field {
+  text-align: center;
+}
+
+.form-field label {
+  color: #9fa8da;
+}
+
+.form-field input {
+  border: none; outline: none;
+  margin: 7px 0;
   border-radius: 10px;
   width: 300px;
-  height: 50px;
+  height: 40px;
+  text-align: center;
 }
 
+.form button {
+  border: none; outline: none;
+  width: 100px;
+  display: block;
+  margin: 15px auto;
+  border-radius: 10px;
+  width: 300px;
+  height: 35px;
+}
 
-  /*Vista para movil*/
+.form button:hover {
+  background-color: #1976d2;
+}
+
+.return {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: #9fa8da;
+  margin: 0 auto;
+}
+
+.return span {
+  padding-top: 3px;
+}
+
+/*********************************************
+VISTA PARA OTROS DISPOSITIVOS
+*********************************************/
 @media screen and (min-width: 250px) {
-  .logo {
-    font-size: 5em;
-    padding-top: 35%;
-    padding-bottom: 5%;
+  .opciones a {
+    width: 150px;
+    height: 25px;
+}
+
+  .biosignals img {
+    /*display: none;*/
+    padding-top: 13px;
   }
 
-  .biosig {
-    margin: 4% auto;
+  .mensaje span {
+    font-size: 0.8em;
   }
 }
 
-  /*Vista para tablet*/
 @media screen and (min-width: 600px) {
-  .logo {
-    font-size: 5em;
-    padding-top: 25%;
-    padding-bottom: 5%;
-  }
-
+  .opciones a {
+    width: 250px;
+    height: 25px;
 }
 
-    /*Vista para escritorio*/
+  .biosignals img {
+    display: block;
+    padding-top: 10px;
+  }
+
+  .mensaje {
+    padding-top: 20px;
+  }
+
+  .mensaje span {
+    font-size: 1.2em;
+  }
+
+  .form  {
+    margin-top: 20px;
+  }
+  
+}
+
 @media screen and (min-width: 800px) {
-  .logo {
-    font-size: 7em;
-    padding-top: 10%;
-    padding-bottom: 1%;
+  .form  {
+    margin-top: 60px;
   }
-
-  .bienvUser {
-    margin: 1% auto;
-    margin-top: -2%;
-  }
-
-  .biosig {
-    margin: 1.5% auto;
-  }
-
 }

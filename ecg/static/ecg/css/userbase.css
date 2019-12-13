@@ -1,8 +1,10 @@
-/*GENERAL*/
+/******************************************
+GENERAL
+******************************************/
 body {
   margin: 0;
   padding: 0;
-  background-color: #edf0fa;
+  background-color: #e0f2f1;
 }
 
 a {
@@ -13,202 +15,669 @@ ul {
   list-style: none;
 }
 
-/*GENERAL*/
-.mdl {
-  display: none;
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-   /* Could be more or less, depending on screen size */
+/******************************************
+LAYOUT
+******************************************/
+.container {
   display: grid;
-  grid-template-columns: 2fr 6fr 1fr;
-  grid-template-areas: "imagen detalles cerrar";
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 8vh auto;
 }
 
-.modalText {
-  grid-area: detalles;
-}
-
-/* The Close Button */
-.cls {
-  grid-area: cerrar;
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.cls:hover,
-.cls:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* HEADER */
-.navbar {
+/******************************************
+HEADER
+******************************************/
+.header {
+  grid-column: 1/-1;
   border-bottom: 3px solid #9e9e9e;
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(30px, 1fr));
 }
 
 .logo {
+  grid-column: 1/3;
+  background-color:#05547B; /*284084;*/
+}
+
+.logo span {
+  color: #e0e0e0;
   font-family: 'Lobster', cursive;
   font-weight: 400;
   font-size: 1.4em;
-  background-color:#284084;
+  text-align: center;
+  display: block;
+  margin: 5px auto;
+}
+
+.logo img {
+  display: block;  
+  margin: 2px auto;
+  max-width: 77px;
+}
+
+.user-options {
+  grid-column: 3/-1;
+  background-color: #1976d2;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(30px, 1fr));
+}
+
+.user-info {
+  grid-column: 2/6;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  margin-top: 4px;
+}
+
+.user-info .person {
+  margin-top: 3px;
+  color: #fafafa;
+}
+
+.user-info span {
+  color: white;
+  margin: 6px;
   text-align: center;
 }
 
-.opciones a {
-  color: #fff;
+/******************************************
+DROPDOWN LINKS
+******************************************/
+.drop-btn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  margin-left: 5px;
 }
 
-.dropdown-menu a {
-  color: #284084;
-
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-top: 2px;
 }
 
-/* HEADER */
-
-/* CONTENIDO */
-.container-fluid {
-  height: 93vh;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fafafa;
+  min-width: 190px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-left: -140px;
+  text-align: center;
 }
 
-.container-fluid .row {
-  height: 93vh;
-  background-color: #edf0fa;
+.dropdown-content a {
+  color: #01579b;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-/* SIDEBAR */
-.sidebar {
-  background-color: #dbe2f6;
-  box-shadow: 10px 0px 10px 0.5px #888888;
-  height: 95vh;
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.drop-btn i:hover {
+  color: #01579b;
+}
+
+/******************************************
+MAIN
+******************************************/
+.main {
+  grid-column: 1/-1;
+  background-color: #e0f2f1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(60px, 1fr));
+}
+
+.content {
+  grid-column: 2/5;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.add {
+  grid-column: 5/6;
+  margin-top: 52%;
+  margin-left: 90%;
   position: fixed;
+
+  background-color: #1976d2;
+  border: #00796b 1px solid;
+  color: #e0f2f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
 }
 
-.opcionesBar li {
-  text-align: center;
-  margin: 1% 0;
-  margin-bottom: 5%;
-  font-size: 95%;
+.add:hover {
+  background-color: #01579b;
 }
 
-.active {
-  background-color: #3E64CE;
-  color: #fff;
+/******************************************
+CONTENT CARDS
+******************************************/
+.card {
+  height: 200px;
   border-radius: 10px;
+  background-color: #e0f2f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 12px;
+  
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 40px auto 40px;
 }
 
-/* SIDEBAR */
-
-/* SUBENCABEZDO */
-.subEnc {
-  border-bottom: 2px solid #9e9e9e;
+.card-header {
+  grid-column: 1/-1;
+  background-color: #01579b;
+  border-radius: 10px 10px 0 0;
 }
 
-/* SUBENCABEZDO */
-
-/* DASH */
-.card-footer {
-  background-color: #728edb;
-  color: #fff;
+.card-header h6 {
+  text-align: center;
+  margin: 8px auto;
+  font-size: 0.9em;
 }
 
-/* DASH CARDS */
-.cardlist {
+.card-header a {
+  color: #fafafa;
+}
+
+.card-empty {
+  height: 50px;
+  background-color: #01579b;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-empty h6 {
+  text-align: center;
+  margin: 8px auto;
+  padding-top: 12px;
+  font-size: 0.8em;
+  color: #fafafa;
+}
+
+.card-content {
+  grid-column: 1/-1;
+  background-color: #fafafa;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card-content h6 {
+  text-align: center;
+  margin: 8px auto;
+  color: #00695c;
+  font-size: 0.8em;
+}
+
+.detalle p {
+  font-size: 0.75em;
+  text-align: center;
+}
+
+.detalle {
+  grid-column: 1/2;
+  border-right: 1px solid #9e9e9e;
+}
+
+.colaboradores {
+  grid-column: 2/3;
+  border-right: 1px solid #9e9e9e;
+}
+
+.colaboradores-list {
+  font-size: 0.7em;
   list-style: none;
-  margin: 0;
-  padding-left: 0;
+  padding-left: 5px;
+  text-align: left;
 }
 
-.cardlist li {
-  margin-top: 6%;
+.muestras {
+  grid-column: 3/-1;
 }
 
-/* DASH CARDS */
+.muestras p {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 3em;
+  font-weight: 400;
+}
 
-/* CONTENIDO */
+.card-footer {
+  grid-column: 1/-1;
+  background-color: #039be5;
+  border-radius:  0 0 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
 
+.card-footer h6,
+.signal-footer h6 {
+  grid-column: 1/2;
+  text-align: center;
+  margin: 13px auto;
+  color: #004d40;
+  font-size: 0.75em;
+}
 
-/****************************
-Otros dispositivos
-*****************************/
+.card-footer .options,
+.signal-footer .signal-options {
+  grid-column: 3/-1;
+  text-align: center;
+  margin-top: 7px;
+}
 
-@media screen and (min-width: 300px) {
-  .opciones {
+.card-footer a,
+.signal-footer a {
+  color: #80cbc4;
+}
+
+.btn-delete, .editTrigger {
+  border: none;
+  background-color: #039be5;
+  color: #80cbc4;
+}
+
+.btn-delete:hover {
+  cursor: pointer;
+}
+
+.editTrigger span {
+  display: none;
+}
+/******************************************
+MODAL FORM
+******************************************/
+.modal, .modalEdit {
+  background-color: #1976d2;
+  z-index: 1;
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+  background-color: #1976d2;
+  width: 60%;
+  margin: 10% auto;
+  padding: 23px;
+  border: 1px solid #888;
+
+  display: grid;
+  grid-template-rows: 50px auto;
+}
+
+.modal-content .close, .closeEdit {
+  display: block;
+  margin: 0 auto;
+  background-color: #bbdefb;
+  border: #00796b 1px solid;
+  color: #1976d2;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.modal-content .close i,
+.closeEdit i {
+  padding-top: 7px;
+}
+
+.modal-content .close:hover {
+  background-color: #fafafa;
+}
+
+.form {
+  display: block;
+  margin: 0 auto;
+}
+
+.form img {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.form h1 {
+  color: #fafafa;
+  text-align: center;
+}
+
+.form-field {
+  text-align: center;
+}
+
+.form-field label {
+  color: #fafafa;
+}
+
+.edit h1, .edit label{
+  color:#284084;
+}
+
+.form-field input {
+  border: none; outline: none;
+  background-color: #bbdefb;
+  color: #009688;
+  margin: 4px 0;
+  border-radius: 10px;
+  width: 250px;
+  height: 30px;
+  text-align: center;
+}
+
+.form-field textarea {
+  background-color: #bbdefb;
+  width: 250px;
+  color: #009688;
+}
+
+.form-field select {
+  border: none; outline: none;
+  background-color: #bbdefb;
+  color: #009688;
+  margin: 10px 0;
+  border-radius: 10px;
+  width: 250px;
+  height: 30px;
+  text-align: center;
+}
+
+.select2-container {
+  padding-bottom: 20px;
+  padding-top: 5px;
+}
+
+.select2-selection {
+  background-color: #bbdefb;
+  color: #009688;
+  width: 250px;
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.form button {
+  border: none; outline: none;
+  background-color: #bbdefb;
+  color: #009688;
+  width: 100px;
+  display: block;
+  margin: 8px auto;
+  border-radius: 10px;
+  width: 250px;
+  height: 35px;
+}
+
+.form button:hover {
+  background-color: #01579b;
+}
+
+.editBTN button:hover {
+  background-color: #1976d2;
+}
+
+.return {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: #9fa8da;
+  margin: 0 auto;
+}
+
+.return span {
+  padding-top: 3px;
+}
+
+/******************************************
+SIGNAL CARDS
+******************************************/
+.signal {
+  height: 140px;
+  border-radius: 10px;
+  background-color: #e0f2f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 12px;
+  
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 40px auto 40px;
+}
+
+.signal-header {
+  grid-column: 1/-1;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.signal-header a {
+  color: #e0f2f1;
+  font-size: 0.85em;
+  display: inline-block;
+  margin: 10px auto;
+}
+
+.signal-content {
+  grid-column: 1/-1;
+}
+
+.signal-footer {
+  grid-column: 1/-1;
+  background-color:#fafafa;
+  border-radius:  0 0 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.signal-delete {
+  background-color:#fafafa;
+}
+
+.creador {
+  text-align: center;
+  font-size: 0.85em;
+}
+
+.signal-muestras {
+  font-size: 0.2em;
+  display: block;
+  text-align: center;
+}
+
+/******************************************
+VISTA PARA OTROS DISPOSITIVOS
+******************************************/
+@media screen and (min-width: 250px) {
+  .content {
+    width: 100%;
+  }
+
+  .add {
+    margin-top: 500px;
+    margin-left: 83%;
+  }
+
+  .card-footer h6,
+  .signal-footer h6 {
+    font-size: 0.48em;
+  }
+
+  .card-content h6 {
+    font-size: 0.55em;
+  }
+  
+  .user-info {
+    grid-column: 2/4;
+  }
+
+  .logo img {
+    display: block;  
+    margin: 3px auto;
+    max-width: 63px;
+  }
+
+  .modal-content {
+    width: 81%;
+  }
+
+  .form-container {
+    margin-left: -3%;
+  }
+
+  .form span {
     margin: 0 auto;
+    font-size: 1em;
   }
 
-  .container-fluid {
-    margin-top: 21%;
+  .signal-muestras {
+    font-size: 1em;
   }
+
+  .signal {
+    margin-top: 8px;
+    margin-bottom: 25px;
+  }
+
+}
+
+@media screen and (min-width: 500px) {
+  /*
+  .logo img{
+    width: 40%;
+    margin-top: -5px;
+  }
+  */
 }
 
 @media screen and (min-width: 600px) {
-  .opciones {
-    margin: 0;
-    margin-right: 1.5%;
+  .content {
+    width: 90%;
   }
 
-  .container-fluid {
-    margin-top: 3%;
+  .add {
+    margin-top: 500px;
+    margin-left: 85%;
   }
 
-  .card-group .card {
-    display: flex;
-    flex: 1 1 33.3%;
-    max-width: 32.3%;
+  .card-footer h6,
+  .signal-footer h6 {
+    font-size: 0.6em;
   }
 
-  .modalSenal {
-    width: 80%;
+  .card-content h6 {
+    text-align: center;
+    margin: 8px auto;
+    color: #00695c;
+    font-size: 0.8em;
   }
 
-  .opUser {
-    font-size: 0.72em;
+  .user-info {
+    grid-column: 2/6;
+  }
+
+  .logo img {
+    display: block;  
+    margin: 2px auto;
+    max-width: 77px;
+  }
+
+  .modal-content {
+    width: 50%;
+  }
+
+  .form-container {
+    margin-left: 0;
+  }
+
+  .signal {
+    margin-top: 15px;
+    margin-bottom: 10px;
   }
 
 }
 
 @media screen and (min-width: 800px) {
-  .opciones {
-    margin: 0;
-    margin-right: 1.5%;
+  .content {
+    width: 90%;
   }
 
-  .container-fluid {
-    margin-top: 3%;
+  .add {
+    margin-top: 550px;
+    margin-left: 85%;
   }
 
-  .card-group .card {
-    display: flex;
-    flex: 1 1 33.3%;
-    max-width: 32.3%;
+  .card-footer h6,
+  .signal-footer h6 {
+    font-size: 0.7em;
   }
 
-  .modalSenal {
-    width: 30%;
+  .user-info {
+    grid-column: 2/6;
   }
 
-  .opUser {
-    font-size: 1em;
-    
+  /*
+  .logo img{
+    width: 27%;
+  }
+  */
 
+  .modal-content {
+    width: 60%;
+  }
+
+  .signal-muestras {
+    font-size: 1.3em;
+  }
+
+}
+
+@media screen and (min-width: 1100px) {
+  .add {
+    margin-top: 550px;
+    margin-left: 90%;
+  }
+
+  /*
+  .logo img{
+    width: 18%;
+  }
+  */
+  
+  .modal-content {
+    width: 35%;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .add {
+    margin-top: 250px;
+    margin-left: 83%;
   }
 }

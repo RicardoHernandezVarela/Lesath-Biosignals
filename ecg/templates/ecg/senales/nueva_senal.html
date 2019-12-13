@@ -1,0 +1,124 @@
+{% extends 'ecg/senbase.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <img src="{% static 'ecg/img/lesath_n.png' %}" alt="logo">
+        </a>
+        <div class="biosignals">
+            <img src="{% static 'ecg/img/biosignal.png' %}" alt="logo">
+        </div>
+        
+        <div class="bluetooth">
+            <span>
+                <a href="{% url 'registros:senalesExp' signal.experimento.id %}">
+                    <i class="material-icons">
+                        folder
+                    </i>
+                </a>
+            </span>
+            <span id="conectar">
+                <i class="material-icons">
+                    bluetooth
+                </i>
+            </span>
+
+            <span id="desconectar">
+                <i class="material-icons">
+                    bluetooth_disabled
+                </i>
+            </span>
+            <span id="descargar">
+                <i class="material-icons">
+                    cloud_download
+                </i>
+            </span>
+        </div>
+    </div>
+
+    <!-- SUBHEADER -->
+    <div class="subheader">
+        <div class="events">
+            <h6 class="event-name" id="evento"></h6>
+            <span class="event-value">0</span>
+        </div>
+
+        <div class="terminal">
+            Ningún dispositivo conectado
+        </div>
+
+        <div class="timer">
+            <h6 class="timer-title">Timer</h6>
+            <span class="timer-value">0</span>
+        </div>
+
+        
+    </div>
+
+    <!-- PLOT -->
+    <div class="plot">
+        <h6>
+            <span id="signalCat">{{signal.categoria}}</span>
+            <span>de {{signal.nombre}}</span>
+            <span id="signal-id">{{signal.id}}</span>
+        </h6>
+
+        
+        <span id="saving">Guardando...</span>
+        
+        <div id="y-axis"></div>
+        <div id="chart"></div>
+    </div>
+
+    <!-- FRECUENCIA -->
+    <div class="frecuencia">
+        <label for="muestreo">Frecuencia</label>
+        <select class="u-full-width" id="muestreo">
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+        </select>
+        <span>Hz</span>
+    </div>
+    
+    <!-- BUTTONS -->
+    <div class="buttons">
+        <button class="play" id="play">
+            <i class="material-icons">
+                play_arrow
+            </i>  
+        </button>
+        <button class="stop" id="stop">
+            <i class="material-icons">
+                stop
+            </i>  
+        </button>
+        <button class="save" id="saveData">
+            <i class="material-icons">
+                save
+            </i>  
+        </button>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close">
+                <i class="material-icons">close</i>
+            </span>
+            
+            <h2 id="guardada"></h2>
+            <a href="{% url 'registros:ecg' signal.id %}">
+                Ver señal
+            </a>
+        </div>
+    </div>
+</div>
+<script src="{% static 'ecg/js/bluetooth.js' %}"></script>
+<script src="{% static 'ecg/js/plotRT.js' %}"></script>
+<script src="{% static 'ecg/js/manejarDatos.js' %}"></script>
+{% endblock %}
+
+{% block title %}Nueva señal{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'ecg/userbase.html' %}
+
+{% block content %}
+  {% if experimentos|length_is:"0" %}
+  <div class="card-empty">
+    <h6>
+      Aun no tienes experimentos, crea uno nuevo.
+    </h6>
+  </div>
+  {% endif %}
+  {% for experimento in experimentos %}
+    <div class="card">
+      <div class="card-header">
+        <h6>
+          <a href="{% url 'registros:senalesExp' experimento.id %}">
+            {{experimento.nombre}} 
+          </a>          
+        </h6>
+      </div>
+
+      <div class="card-content">
+        <div class="detalle">
+          <h6>Detalles</h6>
+          <p>{{experimento.detalle}}</p>
+        </div>
+        <div class="colaboradores">
+          <h6>Colaboradores</h6>
+          <ul class="colaboradores-list">
+            {% for colaboracion in experimento.colaboracion_set.all%}
+              <li>
+                {{colaboracion.colaborador}}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="muestras">
+          <h6>Señales</h6>
+          <p>{{ experimento.signal_set.all.count }}</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+          <h6>Creado en: {{experimento.fecha}}</h6>
+          <div class="options">
+            <!-- Actualizar experimento -->
+            <a href="{% url 'registros:exp-edit' experimento.id %}" class="editTrigger">
+              <i class="material-icons">edit</i>
+            </a>
+
+            <!-- Borrar experimento -->
+            <form action="{% url 'registros:exp-delete' experimento.id %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button class="btn-delete">
+                  <i class="material-icons">delete</i>
+              </button>
+            </form>
+
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+{% block form %}
+  {% include "ecg/experimento_form.html" %}
+{% endblock %}
+
+{% block title %}Experimentos{% endblock %}
+
+{% block add %}
+  <button class="add">
+      <i class="material-icons">add</i>
+  </button>
+{% endblock %}
+

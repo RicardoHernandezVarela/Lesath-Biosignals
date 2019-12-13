@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Lesath{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+
+  <form class="form" action="" method="post" enctype="multipart/form-data">
+    <img src="{% static 'img/avatar.png' %}" alt="" width="72" height="72">
+    <h1>Editar información</h1>
+    <a class="return" href="{% url 'home' %}">
+      <i class="material-icons">
+        keyboard_arrow_left
+      </i>
+      <span>Regresar</span>
+    </a>
+    {% csrf_token %}
+
+    {% for field in form %}
+
+      <div class="form-field">
+          <span>{{ field.errors }}</span>
+          {{ field.label_tag }}
+          <br>
+          {{ field }}
+      </div>
+
+    {% endfor %}
+
+    <button type="submit">Guardar cambios</button>
+  </form>
+
+</div>
+{% endblock %}
+
+

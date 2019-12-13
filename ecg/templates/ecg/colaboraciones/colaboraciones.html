@@ -1,0 +1,69 @@
+{% extends 'ecg/userbase.html' %}
+
+{% block content %}
+  {{username}}
+  {% if colaboraciones|length_is:"0" %}
+    <div class="card-empty">
+      <h6>
+        Aun no tienes colaboraciones, crea una nueva.
+      </h6>
+    </div>
+  {% endif %}
+  {% for colaboracion in colaboraciones %}
+    <div class="card">
+      <div class="card-header">
+        <h6>
+          <a href="{% url 'registros:senalesExp' colaboracion.experimento.id %}">
+            {{ colaboracion.experimento }}
+          </a>
+        </h6>
+      </div>
+
+      <div class="card-content">
+        <div class="detalle">
+          <h6>Detalles</h6>
+          <p>{{ colaboracion.experimento.detalle }}</p>
+        </div>
+        <div class="colaboradores">
+          <h6>Creado por</h6>
+          <ul class="colaboradores-list">
+            <li>
+              {{ colaboracion.experimento.usuario }}
+            </li>
+          </ul>
+        </div>
+        <div class="muestras">
+          <h6>Señales</h6>
+          <p>
+            {{ colaboracion.experimento.signal_set.all.count }}
+          </p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+          <h6>
+            Creado: {{ colaboracion.experimento.fecha }}
+          </h6>
+          <div class="options">
+            <!--
+            <i class="material-icons">edit</i>
+            <i class="material-icons">delete</i>
+            -->
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+{% block form %}
+  {% include "ecg/colaboracion_form.html" %}
+{% endblock %}
+
+{% block title %}Colaboraciones{% endblock %}
+
+{% block add %}
+  <button class="add">
+    <i class="material-icons">add</i>
+  </button>
+{% endblock %}
+

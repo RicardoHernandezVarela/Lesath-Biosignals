@@ -1,5 +1,5 @@
 /********************************************************
- ELEMENTOS DEL DOM PARA DESCARGAR LOS DATOS QUE SE 
+ ELEMENTOS DEL DOM PARA DESCARGAR LOS DATOS QUE SE
  OBTIENEN EN FORMATO CSV Y GUARDAR EN LA BASE DE DATOS.
 ********************************************************/
 const descargar = document.querySelector('#descargar');
@@ -42,7 +42,7 @@ const actualizarTimer = (datos, frecuencia) => {
 
     if(datos <= datosSensor.length) {
         timer.innerText = time;
-    } 
+    }
 };
 
 /********************************************************
@@ -82,7 +82,7 @@ const download_csv = (data) => {
             csv += row;
             csv += "\n";
     });
-  
+
     var descargarSenal = document.createElement('a');
 
     descargarSenal.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
@@ -165,7 +165,6 @@ const postData = (datos, freq) => {
     }
 
     fetch(`/senales/info/${id.innerText}/`, config)
-      .then(checkStatus)
       .then(res => res.json())
       .then(data => senalGuardada(data))
 }

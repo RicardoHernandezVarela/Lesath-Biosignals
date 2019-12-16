@@ -77,7 +77,7 @@ class SignalUpdate(UpdateView):
 def senal_info(request, pk):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    #print(body['data'])
+    print(body['data'])
 
     #body = json.loads(request.body)
     senal = body['data']
@@ -107,7 +107,7 @@ def senal_info(request, pk):
         dataset.frecuencia = freq
         dataset.save()
     
-    return HttpResponse(len(senal))
+    return JsonResponse(len(senal), safe=False)
 
 ############################################################
 # Obtener las muestras de una señal.

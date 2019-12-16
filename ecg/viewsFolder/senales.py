@@ -89,7 +89,7 @@ def senal_info(request, pk):
     df = crear_np_arr(senal)
 
     # Datos de la señal.
-    signal = Signal.objects.get(pk=pk) 
+    signal = Signal.objects.get(pk=pk)
     signal.muestras = len(senal)
     signal.frecuencia = freq
     signal.save()
@@ -106,8 +106,8 @@ def senal_info(request, pk):
         dataset.data = df
         dataset.frecuencia = freq
         dataset.save()
-    
-    return HttpResponse(len(senal))
+
+    return JsonResponse(len(senal), safe=False)
 
 ############################################################
 # Obtener las muestras de una señal.
@@ -120,12 +120,12 @@ def descargar_datos(request, pk):
     if len(datasets) != 0:
         dataset = datasets[0]
         data = dataset.data #dataset.data[0][0:]
-        
+
         muestras = data.tolist() #to_download(data)
-    
+
     else:
         muestras = []
-    
+
     return JsonResponse(muestras, safe=False)
 
 

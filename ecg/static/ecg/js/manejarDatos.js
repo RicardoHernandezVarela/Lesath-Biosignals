@@ -178,11 +178,16 @@ const postData = (datos, freq) => {
 
     fetch(`/senales/info/${id.innerText}/`, config)
 <<<<<<< HEAD
+<<<<<<< HEAD
       .then(checkStatus)
 =======
 >>>>>>> d9b8f1409dee22cd0f95645ed35724b6b120212d
+=======
+      .then(checkStatus)
+>>>>>>> be30fe771b4d7a85da1f114bd40c86507bc5008e
       .then(res => res.json())
       .then(data => senalGuardada(data))
+
 }
 
 saveData.addEventListener('click', () => {

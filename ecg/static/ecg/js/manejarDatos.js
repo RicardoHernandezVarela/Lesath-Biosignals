@@ -53,7 +53,7 @@ const sampleECG = [
     1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6,
 ];
 
-var datosSensor = sampleECG; // [];
+var datosSensor = [];
 let avance = 100;
 let inicio = 0;
 

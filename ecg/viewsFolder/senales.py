@@ -77,7 +77,7 @@ class SignalUpdate(UpdateView):
 def senal_info(request, pk):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    #print(body['data'])
+    print(body['data'])
 
     #body = json.loads(request.body)
     senal = body['data']
@@ -106,7 +106,11 @@ def senal_info(request, pk):
         dataset.data = df
         dataset.frecuencia = freq
         dataset.save()
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> d3fc5b3748128ef289279f52f192cb442d389c84
     return JsonResponse(len(senal), safe=False)
 
 ############################################################

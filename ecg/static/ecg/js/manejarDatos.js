@@ -59,8 +59,10 @@ let inicio = 0;
 
 const recibirDatos = (data) => {
     valor = (parseInt(data)*3.7)/1023;
+    valor = valor.toPrecision(4);
+    valor = parseFloat(valor);
 
-    datosSensor.push(valor.toPrecision(4));
+    datosSensor.push(valor);
 
     /*Graficar*/
     if(datosSensor.length % avance === 0) {

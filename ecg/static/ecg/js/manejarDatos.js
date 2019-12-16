@@ -1,9 +1,5 @@
 /********************************************************
-<<<<<<< HEAD
- ELEMENTOS DEL DOM PARA DESCARGAR LOS DATOS QUE SE 
-=======
  ELEMENTOS DEL DOM PARA DESCARGAR LOS DATOS QUE SE
->>>>>>> d9b8f1409dee22cd0f95645ed35724b6b120212d
  OBTIENEN EN FORMATO CSV Y GUARDAR EN LA BASE DE DATOS.
 ********************************************************/
 const descargar = document.querySelector('#descargar');
@@ -46,11 +42,7 @@ const actualizarTimer = (datos, frecuencia) => {
 
     if(datos <= datosSensor.length) {
         timer.innerText = time;
-<<<<<<< HEAD
-    } 
-=======
     }
->>>>>>> d9b8f1409dee22cd0f95645ed35724b6b120212d
 };
 
 /********************************************************
@@ -61,7 +53,7 @@ const sampleECG = [
     1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6, 1.5, 1.7, 1.8, 1.3, 1.6,
 ];
 
-var datosSensor = [];
+var datosSensor = sampleECG; // [];
 let avance = 100;
 let inicio = 0;
 
@@ -90,11 +82,7 @@ const download_csv = (data) => {
             csv += row;
             csv += "\n";
     });
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> d9b8f1409dee22cd0f95645ed35724b6b120212d
+    
     var descargarSenal = document.createElement('a');
 
     descargarSenal.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
@@ -177,14 +165,7 @@ const postData = (datos, freq) => {
     }
 
     fetch(`/senales/info/${id.innerText}/`, config)
-<<<<<<< HEAD
-<<<<<<< HEAD
       .then(checkStatus)
-=======
->>>>>>> d9b8f1409dee22cd0f95645ed35724b6b120212d
-=======
-      .then(checkStatus)
->>>>>>> be30fe771b4d7a85da1f114bd40c86507bc5008e
       .then(res => res.json())
       .then(data => senalGuardada(data))
 

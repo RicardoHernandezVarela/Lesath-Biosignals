@@ -75,7 +75,11 @@ class SignalUpdate(UpdateView):
 ############################################################
 @csrf_exempt
 def senal_info(request, pk):
-    body = json.loads(request.body)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    #print(body['data'])
+
+    #body = json.loads(request.body)
     senal = body['data']
     freq = body['frecuencia']
 

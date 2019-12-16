@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/home/lesath/lesath/static'
 
 #comentar para deploy/descomentar para development
-"""
+""" 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]

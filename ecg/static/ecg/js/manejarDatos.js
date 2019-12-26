@@ -33,8 +33,7 @@ const timer = document.querySelector('.timer-value');
 /******************************************************
  ACTUALIZAR TIMER.
 ******************************************************/
-const ajusteFreq = 0.588;
-const freqFinal = parseInt(muestreo.value) * ajusteFreq;
+var freqReal = muestreo.value;
 //console.log(muestreo.value, freqFinal);
 
 const actualizarTimer = (datos, frecuencia) => {
@@ -59,16 +58,14 @@ let inicio = 0;
 
 const recibirDatos = (data) => {
     valor = (parseInt(data)*3.7)/1023;
-    valor = valor.toPrecision(4);
-    valor = parseFloat(valor);
-
-    datosSensor.push(valor);
+    
+    datosSensor.push(parseFloat(valor.toPrecision(4)));
 
     /*Graficar*/
     if(datosSensor.length % avance === 0) {
         plotDataRT(datosSensor, inicio, avance);
         inicio += avance;
-        actualizarTimer(inicio, freqFinal);
+        actualizarTimer(inicio, freqReal);
     }
 };
 
@@ -163,7 +160,7 @@ const postData = (datos, freq) => {
         'X-Requested-With': 'XMLHttpRequest'
       }),
 
-      body: JSON.stringify({data: datos, frecuencia: freq })
+      body: JSON.stringify({data: datos, frecuencia: freqReal })
     }
 
     fetch(`/senales/info/${id.innerText}/`, config)

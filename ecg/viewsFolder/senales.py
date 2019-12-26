@@ -135,8 +135,16 @@ def descargar_datos(request, pk):
 
 def ecg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
+    
+    try:
+        dataset = signal.datasenal_set.all()[0]
+        data = dataset.data
+        frecuencia = dataset.frecuencia
+        bpm = ecg_bpm(data, frecuencia)
+    except:
+        bpm = 0
 
-    return render(request, 'ecg/senales/ecg_dash.html', {'signal':signal })
+    return render(request, 'ecg/senales/ecg_dash.html', {'signal':signal, 'bpm':bpm })
 
 ############################################################
 # Dashboard para señales de EMG.

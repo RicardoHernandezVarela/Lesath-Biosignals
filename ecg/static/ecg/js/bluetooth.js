@@ -144,13 +144,40 @@ const send = (caracteristica, data) => {
     caracteristica.writeValue(new TextEncoder().encode(data));
 };
 
+var freqArray = [];
+
+const obtenerFrecuencia = (datos) => {
+    if(freqArray.length === 5) {
+        clearInterval(checkFreq);
+        /* Actualizar frecuencia de muestreo, esta variable 
+        es declarada en manejarDatos.js */
+        freqReal = freqArray[2] - freqArray[1];
+        console.log(freqReal);
+    } else {
+        freqArray.push(datos);
+        console.log(freqReal);
+    }
+}
+
+var checkFreq;
+
 play.addEventListener('click', () => {
     console.log('play');
     send(caracteristica, 'i');
+
+    if(freqArray.length === 0) {
+        checkFreq = setInterval(() => obtenerFrecuencia(datosSensor.length), 1000);
+    }
+    
 });
 
 stop.addEventListener('click', () => {
     console.log('stop');
     send(caracteristica, 'p');
+    clearInterval(checkFreq);
     console.log(datosSensor.length);
 });
+
+/*******************************************************
+ CONTROLAR EL INTERVALO PARA REVISAR LA FRECUENCIA.
+*******************************************************/

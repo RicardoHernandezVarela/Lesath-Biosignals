@@ -84,11 +84,11 @@ switch(categoria) {
  OBTENER LAS MUESTRAS DE LA SEÑAL DESDE LA BASE DE DATOS.
 ***********************************************************/
 var datosSenal = [];
-var url = "/senales/descargarData/" + id + "/"
+var url = `/senales/descargarData/${id.innerText}/`;
 
 const obtenerSenal = () => {
 
-    fetch(`/senales/descargarData/${id.innerText}/`)
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             if(data.length !== 0) {
@@ -101,7 +101,7 @@ const obtenerSenal = () => {
         .catch(error => console.log('Ocurrio un problema al solicitar los datos', error))
 }
 
-obtenerSenal();
+obtenerSenal(url);
 
 /**********************************************************
  ELEMENTOS DE LA GRAFICA DE LA SEÑAL.
@@ -162,8 +162,7 @@ var anchoAnterior = plotContainer.offsetWidth;
 /******************************************************
  ACTUALIZAR TIMER.
 ******************************************************/
-const ajusteFreq = 0.588;
-const frecuencia = parseInt(freq.innerText) * ajusteFreq;
+const frecuencia = parseInt(freq.innerText);
 
 const actualizarTimer = (datos, frecuencia) => {
     let time = Math.floor(datos/frecuencia);
@@ -212,12 +211,21 @@ const plotData = () => {
 /******************************************************
  CONTROLAR EL FLUJO DE LA GRÁFICA.
 ******************************************************/
+var ploting = false;
+
+/* Timer para llamar a la función cada x milisegundos*/
+var ploter = setInterval(plotData, intervalo);
+
 pause.addEventListener('click', e => {
     clearInterval(ploter);
+    ploting = false;
 });
 
 play.addEventListener('click', e => {
-    ploter = setInterval(plotData, intervalo);
+    if(!ploting){
+        ploter = setInterval(plotData, intervalo);
+        ploting = true;
+    }
 });
 
 replay.addEventListener('click', e => {
@@ -225,9 +233,6 @@ replay.addEventListener('click', e => {
     clearInterval(ploter);
     ploter = setInterval(plotData, intervalo);
 });
-
-/* Timer para llamar a la función cada x milisegundos*/
-var ploter = setInterval(plotData, intervalo);
 
 /*******************************************************
  CONTROLAR LA VENTANA MODAL.

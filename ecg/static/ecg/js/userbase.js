@@ -60,6 +60,6 @@ signalCat.forEach( item => {
             item.parentNode.parentNode.style.background = '#eeff41';
       }
 
-      console.log(item.parentNode.href);
+      //console.log(item.parentNode.href);
 
 });

@@ -125,14 +125,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #descomentar para deploy/comentar para development
-STATIC_ROOT = '/home/lesath/lesath/static'
+#STATIC_ROOT = '/home/lesath/lesath/static'
 
 #comentar para deploy/descomentar para development
-"""
+""""""
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-"""
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = 'home'

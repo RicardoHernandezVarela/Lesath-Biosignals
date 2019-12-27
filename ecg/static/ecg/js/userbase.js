@@ -55,11 +55,12 @@ signalCat.forEach( item => {
             break;
         case 'Oximetría':
             item.parentNode.parentNode.style.background = '#fb8c00';
+            item.parentNode.href = getURL(item.parentNode.href, 'oxi');
             break;
         default:
             item.parentNode.parentNode.style.background = '#eeff41';
       }
 
-      //console.log(item.parentNode.href);
+      console.log(item.parentNode.href);
 
 });

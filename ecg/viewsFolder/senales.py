@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 
 from django.urls import reverse_lazy, reverse
 from ecg.forms import ExperimentoForm, ColaboracionForm, SignalForm
-from ecg.models import Experimento, Signal, Datasenal
+from ecg.models import Experimento, Signal, Datasenal, Descripcionecg
 from users.models import CustomUser
 from ecg.procesamiento import crear_df, crear_np_arr, ecg_bpm, to_int, to_float, to_download, edm_units, rt_bpm, proc_edm
 
@@ -128,6 +128,39 @@ def descargar_datos(request, pk):
 
     return JsonResponse(muestras, safe=False)
 
+############################################################
+# Obtener las muestras de una señal de ecg filtrada.
+############################################################
+def ecg_filtrada(request, pk):
+    signal = Signal.objects.get(pk=pk)
+
+    try:
+        descripcion = signal.descripcionecg_set.all()[0]
+        data = descripcion.filtrada
+
+        muestras = data.tolist()
+
+    except:
+        muestras = []
+
+    return JsonResponse(muestras, safe=False)
+
+##################################################################################
+# Obtener las muestras de una señal de ecg hrv(variabilidad del ritmo cardiaco).
+##################################################################################
+def ecg_hrv(request, pk):
+    signal = Signal.objects.get(pk=pk)
+
+    try:
+        descripcion = signal.descripcionecg_set.all()[0]
+        data = descripcion.hrv
+
+        muestras = data.tolist()
+
+    except:
+        muestras = []
+
+    return JsonResponse(muestras, safe=False)
 
 ############################################################
 # Dashboard para señales de ECG.
@@ -135,14 +168,22 @@ def descargar_datos(request, pk):
 
 def ecg_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
-    
+
     try:
-        dataset = signal.datasenal_set.all()[0]
-        data = dataset.data
-        frecuencia = dataset.frecuencia
-        bpm = ecg_bpm(data, frecuencia)
+        descripcion = signal.descripcionecg_set.all()[0]
+        bpm = descripcion.bpm
+        print(descripcion)
     except:
-        bpm = 0
+        from biosppy.signals import ecg
+        info = signal.datasenal_set.all()[0]
+        proces = ecg.ecg(signal=info.data, sampling_rate=info.frecuencia, show=False)
+
+        hrate = proces[6]
+        bpm = int(sum(hrate) / len(hrate))
+
+        descripcion = Descripcionecg(senal=signal, filtrada=proces[1], hrv=proces[6], bpm=bpm)
+        descripcion.save()
+        print(descripcion.bpm)
 
     return render(request, 'ecg/senales/ecg_dash.html', {'signal':signal, 'bpm':bpm })
 
@@ -172,4 +213,13 @@ def edm_dash(request, pk):
     signal = Signal.objects.get(pk=pk)
 
     return render(request, 'ecg/senales/edm_dash.html', {'signal':signal })
+
+############################################################
+# Dashboard para señales de OXI.
+############################################################
+
+def oxi_dash(request, pk):
+    signal = Signal.objects.get(pk=pk)
+
+    return render(request, 'ecg/senales/oxi_dash.html', {'signal':signal })
 

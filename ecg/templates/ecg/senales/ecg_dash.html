@@ -52,12 +52,16 @@
             <span class="event-value">{{bpm}}</span>
         </div>
 
-        <div class="terminal">
-            Ningún dispositivo conectado
+        <div class="vista">
+            <select name="" class="vista-select">
+                <option value="original">Original</option>
+                <option value="filtrada">Filtrada</option>
+                <option value="hrv">HRV</option>
+            </select>
         </div>
 
         <div class="timer">
-            <h6 class="timer-title">Timer</h6>
+            <h6 class="timer-title">Timer(s)</h6>
             <span class="timer-value">0</span>
         </div>
     </div>
@@ -72,7 +76,7 @@
 
         
         <div id="y-axis">
-            <h5 class="volts">Volts</h5> 
+            <h5 class="volts"></h5> 
         </div>
         <div id="chart"></div>
     </div>

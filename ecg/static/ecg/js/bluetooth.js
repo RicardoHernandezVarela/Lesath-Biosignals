@@ -45,13 +45,20 @@ const requerirDispositivosBT = () => {
 
     terminal.innerText = "Buscando dispositivos...";
 
-    return (
-    navigator.bluetooth.requestDevice({
-        // filters: [myFilters]       // filtros o acceptAllDevices
-        optionalServices: [servicio],
-        acceptAllDevices: true
-      })           
-    );
+    /* Revisar si navigator.bluetooth está disponible */
+
+    if(navigator.bluetooth !== undefined){
+        return (
+            navigator.bluetooth.requestDevice({
+                // filters: [myFilters]       // filtros o acceptAllDevices
+                optionalServices: [servicio],
+                acceptAllDevices: true
+            })          
+        );
+    } else {
+        alert('Conexión bluetooth no disponible en este dispositivo o navegador.');
+        return Promise.reject();
+    }
 };
 
 const conectarConDispositivoBT = (device) => {

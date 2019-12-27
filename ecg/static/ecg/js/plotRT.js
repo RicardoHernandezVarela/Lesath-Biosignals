@@ -1,3 +1,8 @@
+/********************************************************
+ ELEMENTO DEL DOM PARA SELECCIONAR LA FRECUENCIA.
+********************************************************/
+const muestreo = document.querySelector('#muestreo');
+
 /*******************************************************
  ELEMENTOS DEL DOM PARA CONFIGURAR LA GRÁFICA.
 ******************************************************/
@@ -9,6 +14,9 @@ const chart = document.querySelector("#chart");
 /*******************************************************
  CONFIGURACIÓN DEL PLOT DE RICKSHAW.JS.
 ******************************************************/
+
+var frecuencia = muestreo.value;
+var freqReal = muestreo.value; 
 
 var plot = new Rickshaw.Graph({
     element: chart,
@@ -22,14 +30,31 @@ var plot = new Rickshaw.Graph({
         color: '#446CB3'
     }], undefined, 
     {
-        timeInterval: 100,
+        timeBase: 0,
+        timeInterval: 1000, //milisegundos
         maxDataPoints: 500
     })
 });
 
+/* Eje X de la gráfica */
+
+var xAxis = new Rickshaw.Graph.Axis.X( {
+    graph: plot,
+    ticks: 3,
+    tickFormat: (x) => {
+        let secs = Math.floor(x/freqReal);
+        
+        if(secs < 0) {
+            return 0
+        } else {
+            return secs
+        }
+    }
+});
+
 /* Eje Y de la gráfica */
 
-const y_axis = new Rickshaw.Graph.Axis.Y({
+var y_axis = new Rickshaw.Graph.Axis.Y({
     graph: plot,
     orientation: 'left',
     tickFormat: function (y) {
@@ -39,12 +64,13 @@ const y_axis = new Rickshaw.Graph.Axis.Y({
     element: yAxis,
 });
 
-/*
 var hoverDetail = new Rickshaw.Graph.HoverDetail( {
     graph: plot,
-    yFormatter: function(y) { return y + "V" }
-} );
-*/
+    formatter: (timer, x, y) => {
+        let secs = Math.floor(x/freqReal);
+        return y.toFixed(2) + ' Volts' + '<br>' + secs + ' sec'
+    }
+});
 
 /*******************************************************
  AJUSTAR LAS DIMENSIONES DE LA GRÁFICA.

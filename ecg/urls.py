@@ -57,6 +57,12 @@ urlpatterns = [
         #Obtener las muestras de una señal.
         path('descargarData/<int:pk>/', senales.descargar_datos, name='descargar'),
 
+        #Obtener las muestras de una señal de ecg filtrada.
+        path('filtrada/<int:pk>/', senales.ecg_filtrada, name='ecgfiltrada'),
+
+        #Obtener las muestras de una señal de ecg hrv(variabilidad del ritmo cardiaco).
+        path('hrv/<int:pk>/', senales.ecg_hrv, name='ecghrv'),
+
 
         ############################################################
         # DASHBOARDS.
@@ -74,13 +80,14 @@ urlpatterns = [
         # Dashboard para señales de EDM.
         path('edm/<int:pk>/', senales.edm_dash, name='edm'),
 
+        # Dashboard para señales de OXI.
+        path('oxi/<int:pk>/', senales.oxi_dash, name='oxi'),
+
+
 
 
 
         path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
-        
-        
-        
         path('rt/<int:pk>/', views.rt_info, name='rt'),
 
 

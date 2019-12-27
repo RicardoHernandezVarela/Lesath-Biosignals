@@ -12,11 +12,7 @@ const saving = document.querySelector('#saving');
 const id = document.querySelector('#signal-id');
 const signalCat = document.querySelector('#signalCat');
 const evento = document.querySelector('#evento');
-
-/********************************************************
- ELEMENTO DEL DOM PARA SELECCIONAR LA FRECUENCIA.
-********************************************************/
-const muestreo = document.querySelector('#muestreo');
+const volts = document.querySelector('.volts');
 
 /*******************************************************
  ELEMENTOS DEL DOM PARA CONTROLAR LA VENTANA MODAL.
@@ -33,9 +29,6 @@ const timer = document.querySelector('.timer-value');
 /******************************************************
  ACTUALIZAR TIMER.
 ******************************************************/
-var freqReal = muestreo.value;
-//console.log(muestreo.value, freqFinal);
-
 const actualizarTimer = (datos, frecuencia) => {
     let time = Math.floor(datos/frecuencia);
 
@@ -65,7 +58,7 @@ const recibirDatos = (data) => {
     if(datosSensor.length % avance === 0) {
         plotDataRT(datosSensor, inicio, avance);
         inicio += avance;
-        actualizarTimer(inicio, freqReal);
+        actualizarTimer(inicio, freqReal); //freqReal definida en plotRT.js
     }
 };
 
@@ -97,42 +90,52 @@ descargar.addEventListener('click', () => {
 /*****************************************************
  CAMBIAR COLOR SEGÚN EL TIPO DE SEÑAL.
 ******************************************************/
-//console.log(id.innerText, signalCat.innerText);
+const catProps = {
+    Electrocardiograma:{
+        unidades: 'BPM',
+        color: '#d50000',
+        fuente: '#c2b8b2'
+    },
+    Electromiograma: {
+        unidades: 'ESF',
+        color:'#0288d1',
+        fuente: '#c2b8b2'
+    },
+    Fonocardiograma: {
+        unidades: 'BPM',
+        color: '#00695c',
+        fuente: '#c2b8b2'
+    },
+    Electrodérmica: {
+        unidades: 'EST',
+        color: '#ffb300',
+        fuente: '#c2b8b2'
+    },
+    Oximetría: {
+        unidades: 'OXI',
+        color: '#fb8c00',
+        fuente: '#000'
+    },
+    default: {
+        unidades: 'Volts',
+        color: '#eeff41',
+        fuente: '#c2b8b2'
+    }
+}
+
 const categoria = signalCat.innerText;
+signalCat.parentNode.style.background = catProps[categoria].color;
+signalCat.parentNode.style.color = catProps[categoria].fuente;
+evento.innerText = catProps[categoria].unidades;
 
-
-switch(categoria) {
-    case 'Electrocardiograma':
-        signalCat.parentNode.style.background = '#d50000';
-        evento.innerText = 'BPM';
-        break;
-    case 'Electromiograma':
-        signalCat.parentNode.style.background = '#0288d1';
-        evento.innerText = 'ES';
-         break;
-    case 'Fonocardiograma':
-        signalCat.parentNode.style.background = '#00695c';
-        evento.innerText = 'BPM';
-        break;
-    case 'Electrodérmica':
-        signalCat.parentNode.style.background = '#ffb300';
-        signalCat.parentNode.style.color = '#000';
-        evento.innerText = 'EST';
-        break;
-    case 'Oximetría':
-        signalCat.parentNode.style.background = '#fb8c00';
-        break;
-    default:
-        signalCat.parentNode.style.background = '#eeff41';
-  }
+volts.innerText = catProps['default'].unidades;
 
 /*****************************************************
  GUARDAR EN LA BASE DE DATOS LAS MUESTRAS DE LA SEÑAL.
 ******************************************************/
-let frecuencia = muestreo.value;
 
 muestreo.addEventListener('change', (evt) => {
-    frecuencia = evt.target.value
+    frecuencia = evt.target.value //frecuencia definida en plotRT.js
     console.log(evt.target.value);
 });
 

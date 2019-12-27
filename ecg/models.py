@@ -7,8 +7,9 @@ from picklefield.fields import PickledObjectField
 
 # Modelos para la base de datos.
 
-#Modelo para una bioseñal.
-
+####################################################################
+# Modelo para un experimento.
+####################################################################
 class Experimento(models.Model):
     usuario = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=255)
@@ -18,6 +19,9 @@ class Experimento(models.Model):
     def __str__(self):
         return self.nombre
 
+####################################################################
+# Modelo para una colaboración.
+####################################################################
 class Colaboracion(models.Model):
     experimento = models.ForeignKey(Experimento, on_delete=models.CASCADE)
     colaborador = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
@@ -25,7 +29,9 @@ class Colaboracion(models.Model):
     def __str__(self):
         return str(self.experimento) +  ' - ' + str(self.colaborador)
 
-
+####################################################################
+# Modelo para una señal.
+####################################################################
 class Signal(models.Model):
     experimento = models.ForeignKey(Experimento, on_delete=models.CASCADE, null=True)
     usuario = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, null=True)
@@ -49,6 +55,9 @@ class Signal(models.Model):
     def __str__(self):
         return self.nombre
 
+####################################################################
+# Modelo para los datos de una señal.
+####################################################################
 class Datasenal(models.Model):
     senal = models.ForeignKey(Signal, on_delete=models.CASCADE, null=True)
     muestras = models.IntegerField(default=0)
@@ -58,9 +67,22 @@ class Datasenal(models.Model):
     def __str__(self):
         return self.senal.nombre
 
+####################################################################
+# Modelo para la descripción de una señal de ECG.
+####################################################################
+class Descripcionecg(models.Model):
+    senal = models.ForeignKey(Signal, on_delete=models.CASCADE, null=True)
+    filtrada = PickledObjectField(default=0)
+    hrv = PickledObjectField(default=0)
+    bpm = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.senal.nombre
 
 
-
+####################################################################
+# Borrar.
+####################################################################
 class Descripcion(models.Model):
     senal = models.ForeignKey(Signal, on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=255)
@@ -68,4 +90,4 @@ class Descripcion(models.Model):
     detalle = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return self.nombre + self.apellido
+        return self.senal.nombre

@@ -112,8 +112,17 @@ SUBHEADER
 
     display: block;
     margin: 3% auto;
-    font-size: 0.8em;
+    font-size: 0.6em;
     color: #125e8a;
+    text-align: center;
+}
+
+.vista-select {
+    margin: 8px auto;
+    border-radius: 10px;
+}
+
+.vista-select > option {
     text-align: center;
 }
 
@@ -134,7 +143,7 @@ SUBHEADER
     margin: 0 auto;
     margin-top: 7px;
     color: #C2B8B2;
-    font-size: 0.5em;
+    font-size: 0.61em;
 }
 
 .event-value, .timer-value {
@@ -391,7 +400,7 @@ Ajuste para otros dispositivos
 
 @media (min-width: 450px) {
     .container {
-        grid-template-rows: 13vh 16vh 49vh 5vh 17vh;
+        grid-template-rows: 8vh 8vh 69vh 5vh 10vh;
     }
 
     .biosignals {
@@ -531,9 +540,9 @@ Ajuste para otros dispositivos
 }
 
 
-@media screen and (max-height: 450px) {
+@media screen and (max-height: 350px) {
     .container {
-        grid-template-rows: 13vh 14vh 49vh 9vh 15vh;
+        grid-template-rows: 14vh 15vh 47vh 9vh 15vh;
     }
 
     .plot {

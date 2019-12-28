@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd1kcblc0r8059e((n22xnd3i4_3%d)w0vk75299p6@07%c@x7f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.85', 'lesath.pythonanywhere.com']
 
@@ -125,14 +125,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #descomentar para deploy/comentar para development
-#STATIC_ROOT = '/home/lesath/lesath/static'
+STATIC_ROOT = '/home/lesath/lesath/static'
 
 #comentar para deploy/descomentar para development
-""""""
+"""
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
+"""
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = 'home'

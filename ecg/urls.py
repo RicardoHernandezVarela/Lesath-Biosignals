@@ -87,10 +87,12 @@ urlpatterns = [
 
 
 
-        path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
-        path('rt/<int:pk>/', views.rt_info, name='rt'),
+        #path('registros/<username>/', views.ver_registros.as_view(), name='señales'),
+        #path('rt/<int:pk>/', views.rt_info, name='rt'),
 
 
     ], 'registros'), namespace='registros')),
 
 ]
+
+

@@ -173,17 +173,24 @@ def ecg_dash(request, pk):
         descripcion = signal.descripcionecg_set.all()[0]
         bpm = descripcion.bpm
         print(descripcion)
+
     except:
-        from biosppy.signals import ecg
-        info = signal.datasenal_set.all()[0]
-        proces = ecg.ecg(signal=info.data, sampling_rate=info.frecuencia, show=False)
 
-        hrate = proces[6]
-        bpm = int(sum(hrate) / len(hrate))
+        try:
+            from biosppy.signals import ecg
+            
+            info = signal.datasenal_set.all()[0]
+            proces = ecg.ecg(signal=info.data, sampling_rate=info.frecuencia, show=False)
 
-        descripcion = Descripcionecg(senal=signal, filtrada=proces[1], hrv=proces[6], bpm=bpm)
-        descripcion.save()
-        print(descripcion.bpm)
+            hrate = proces[6]
+            bpm = int(sum(hrate) / len(hrate))
+
+            descripcion = Descripcionecg(senal=signal, filtrada=proces[1], hrv=proces[6], bpm=bpm)
+            descripcion.save()
+            print(descripcion.bpm)
+
+        except:
+            bpm = 0
 
     return render(request, 'ecg/senales/ecg_dash.html', {'signal':signal, 'bpm':bpm })
 

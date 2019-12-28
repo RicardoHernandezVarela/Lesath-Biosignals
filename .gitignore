@@ -4,4 +4,6 @@ __pycache__
 myvenv
 db.sqlite3
 /static
+/biosense/settings.py
 .DS_Store
+biosense\settings.py

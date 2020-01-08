@@ -19,7 +19,7 @@ conectar.addEventListener('click', () => {
         .then(service => obtenerCaracteristicasDelServicio(service))
         .then(characteristics => conectarConCaracteristica(characteristics))
         .then(characteristic => conectarseACambiosDelSensor(characteristic))
-        .catch(err => terminal.innerText = "Fallo la conexión")
+        .catch(err => terminal.innerText = "Falló la conexión")
 });
 
 desconectar.addEventListener('click', () => {

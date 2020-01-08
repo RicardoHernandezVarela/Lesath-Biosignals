@@ -140,6 +140,11 @@ ajustarPlotProps = async (data) => {
     chartSenal.min = Math.floor(Math.min(...data));
     avance = 20;
 
+    /* Desbloquear botones */
+    play.disabled =  false;
+    pause.disabled =  false;
+    replay.disabled =  false;
+
     volts.innerText = catProps['default'].unidades;
     hoverUnits = catProps['default'].unidades;
 
@@ -147,6 +152,11 @@ ajustarPlotProps = async (data) => {
         clearInterval(ploter);
         chartSenal.series.maxDataPoints = datosSenal.length;
         chartSenal.series[0].color = '#039be5';
+
+        /* Bloquear botones */
+        play.disabled =  true;
+        pause.disabled =  true;
+        replay.disabled =  true;
 
         avance = data.length;
         plotData();

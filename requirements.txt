@@ -1,7 +1,7 @@
 django_autocomplete_light==3.4.1
 biosppy==0.6.1
 numpy==1.16.2
-Django==2.2.10
+Django==2.2.22
 django_filter==2.2.0
 scipy==1.2.1
 matplotlib==3.0.3
